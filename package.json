@@ -1,0 +1,47 @@
+{
+  "name": "ttform",
+  "version": "1.0.0",
+  "description": "Healthy educator workshop form - tackling tobacco",
+  "main": "src/script.js",
+  "scripts": {
+    "start": "npx parcel src/index.html --no-cache",
+    "refreshToken": "vsts-npm-auth -config .npmrc"
+  },
+  "sass": {
+    "includePaths": [
+      "./node_modules"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "targets": {
+      "chrome": "58",
+      "ie": "9"
+    }
+  },
+  "alias": {
+    "vue": "./node_modules/vue/dist/vue.common.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@vue/component-compiler-utils": "^2.6.0",
+    "sass": "^1.17.2",
+    "vue-template-compiler": "^2.6.8"
+  },
+  "dependencies": {
+    "@ccq/ccq-vue-components": "1.0.1",
+    "autoprefixer": "^9.4.7",
+    "axios": "^0.18.0",
+    "material-components-web": "^1.0.1",
+    "parcel-bundler": "^1.11.0",
+    "postcss-modules": "^1.4.1",
+    "vue": "^2.6.8",
+    "vue-hot-reload-api": "^2.3.3",
+    "vuelidate": "^0.7.4"
+  }
+}
