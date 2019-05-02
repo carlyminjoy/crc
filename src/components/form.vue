@@ -1,12 +1,18 @@
 <template>
     <div id="tt-form">
         <form v-show="!submitted">
-            <vmd-text-field v-model="form.firstName" @change="$v.form.firstName.$touch()" :invalid="isInvalid('firstName')" label="First Name" :disabled="loading"></vmd-text-field>
-            <vmd-text-field v-model="form.lastName" @change="$v.form.lastName.$touch()" :invalid="isInvalid('lastName')" label="Surname" :disabled="loading"></vmd-text-field>
-            <vmd-text-field v-model="form.organisation" @change="$v.form.organisation.$touch()" :invalid="isInvalid('organisation')" label="Organisation" :disabled="loading"></vmd-text-field>
-            <vmd-text-field v-model="form.postcode" @change="$v.form.postcode.$touch()" :invalid="isInvalid('postcode')" label="Postcode" :disabled="loading"></vmd-text-field>
-            <vmd-text-field v-model="form.email" @change="$v.form.email.$touch()" :invalid="isInvalid('email')" label="Email" :disabled="loading"></vmd-text-field>
-            <vmd-text-field v-model="form.contactNumber" @change="$v.form.contactNumber.$touch()" :invalid="isInvalid('contactNumber')" label="Contact number" :disabled="loading"></vmd-text-field>
+            <div class="row">
+                <vmd-text-field v-model="form.firstName" @change="$v.form.firstName.$touch()" :invalid="isInvalid('firstName')" label="First Name" :disabled="loading"></vmd-text-field>
+                <vmd-text-field v-model="form.lastName" @change="$v.form.lastName.$touch()" :invalid="isInvalid('lastName')" label="Surname" :disabled="loading"></vmd-text-field>
+            </div>
+            <div class="row">
+                <vmd-text-field v-model="form.organisation" @change="$v.form.organisation.$touch()" :invalid="isInvalid('organisation')" label="Organisation" :disabled="loading"></vmd-text-field>
+                <vmd-text-field v-model="form.postcode" @change="$v.form.postcode.$touch()" :invalid="isInvalid('postcode')" label="Postcode" :disabled="loading"></vmd-text-field>
+            </div>
+            <div class="row">
+                <vmd-text-field v-model="form.email" @change="$v.form.email.$touch()" :invalid="isInvalid('email')" label="Email" :disabled="loading"></vmd-text-field>
+                <vmd-text-field v-model="form.contactNumber" @change="$v.form.contactNumber.$touch()" :invalid="isInvalid('contactNumber')" label="Contact number" :disabled="loading"></vmd-text-field>
+            </div>
             <vmd-text-field v-model="form.dietaryRequirements" label="Dietary Requirements (please specify)" :disabled="loading"></vmd-text-field>
 
             <div class="disclaimer-text">
@@ -23,7 +29,7 @@
 
         <div v-show="submitted" class="success-msg">
             <i class="fa fa-check"></i>
-            <p>Thank you. <br> You will receive a confirmation email shortly.</p>
+            <p>Thank you.<br> You will receive a confirmation email shortly.</p>
         </div>
     </div>
 </template>
@@ -155,20 +161,29 @@ export default {
 <style lang="scss">
 
 div#tt-form {
-    h1, h2, h3, h4, h5, p, div {
+    h1, h2, h3, h4, h5, p, div, label, button {
         font-family: 'Foco CC';
-        font-size: 16px;
-        line-height: 18px;
+        font-size: 14px!important;
+        line-height: 16px!important;
     }
 
     form {
-        max-width: 720px;
         display:flex;
         flex-direction:column;
-        padding: 10px;
+
+        .row {
+            width: 100%;
+            display:flex;
+            flex-wrap:wrap;
+            
+            .mdc-field {
+                min-width: 300px;
+                flex-grow:1;
+            }
+        }
 
         .mdc-field {
-            margin: 10px 0;
+            margin: 1%;
         }
 
         .disclaimer-text {
@@ -181,6 +196,8 @@ div#tt-form {
 
     .success-msg {
         padding: 30px;
+        background: #eee;
+        border-radius: 4px;
         text-align:center;
 
         i {
@@ -189,6 +206,7 @@ div#tt-form {
             border-radius: 50%;
             padding: 10px;
             font-size: 32px;
+            margin-bottom: 20px;
         }
 
         p {

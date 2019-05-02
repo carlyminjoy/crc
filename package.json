@@ -5,6 +5,7 @@
   "main": "src/script.js",
   "scripts": {
     "start": "npx parcel src/index.html --no-cache",
+    "build": "npx parcel build src/index.html --out-dir build --no-source-maps --no-cache",
     "refreshToken": "vsts-npm-auth -config .npmrc"
   },
   "sass": {
