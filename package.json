@@ -1,48 +1,31 @@
 {
-  "name": "ttform",
+  "name": "questquiz",
   "version": "1.0.0",
-  "description": "Healthy educator workshop form - tackling tobacco",
-  "main": "src/script.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "npx parcel src/index.html --no-cache",
-    "build": "npx parcel build src/index.html --out-dir build --no-source-maps --no-cache",
-    "refreshToken": "vsts-npm-auth -config .npmrc"
-  },
-  "sass": {
-    "includePaths": [
-      "./node_modules"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ],
-    "targets": {
-      "chrome": "58",
-      "ie": "9"
-    }
-  },
-  "alias": {
-    "vue": "./node_modules/vue/dist/vue.common.js"
+    "start": "npx parcel ./src/index.html --out-dir dist --no-cache"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@babel/core": "^7.3.4",
-    "@babel/preset-env": "^7.3.4",
-    "@vue/component-compiler-utils": "^2.6.0",
-    "sass": "^1.17.2",
-    "vue-template-compiler": "^2.6.8"
+  "alias": {
+    "vue": "./node_modules/vue/dist/vue.common.js"
   },
   "dependencies": {
-    "@ccq/ccq-vue-components": "1.0.1",
-    "autoprefixer": "^9.4.7",
-    "axios": "^0.18.0",
-    "material-components-web": "^1.0.1",
-    "parcel-bundler": "^1.11.0",
-    "postcss-modules": "^1.4.1",
-    "vue": "^2.6.8",
+    "core-js": "^2.6.5",
+    "jquery": "^3.4.1",
+    "node-sass": "^4.12.0",
+    "parcel-bundler": "^1.12.3",
+    "sass-loader": "^7.1.0",
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.6",
+    "vuex": "^3.1.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.7.0",
+    "@vue/cli-service": "^3.7.0",
+    "sass": "^1.20.1",
     "vue-hot-reload-api": "^2.3.3",
-    "vuelidate": "^0.7.4"
+    "vue-template-compiler": "^2.5.21"
   }
 }
