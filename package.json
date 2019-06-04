@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx parcel ./src/index.html --out-dir dist --no-cache"
+    "start": "npx parcel ./src/index.html --out-dir dist --no-cache",
+    "i-vsts-npm": "npm install -g vsts-npm-auth",
+    "refreshToken": "vsts-npm-auth -config .npmrc"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +14,10 @@
     "vue": "./node_modules/vue/dist/vue.common.js"
   },
   "dependencies": {
+    "@babel/core": "^7.4.5",
+    "@ccq/ccq-vue-components": "^1.2.6",
+    "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
     "core-js": "^2.6.5",
     "jquery": "^3.4.1",
     "node-sass": "^4.12.0",
@@ -19,6 +25,7 @@
     "sass-loader": "^7.1.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
+    "vue2-circle-progress": "^1.2.3",
     "vuex": "^3.1.1"
   },
   "devDependencies": {
