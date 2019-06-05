@@ -9,11 +9,11 @@
 
         <div class="outer-container">
 
-            <div class="results-container">
-                <h3>{{ results}} Your total score is:</h3>
+            <div class="results-container" v-if="latestScorecard">
+                <h3>{{latestScorecard.firstName }}, your total score is: </h3>
 
                 <vue-circle
-                    :progress="results.total || 65"
+                    :progress="latestScorecard.scores.total"
                     :size="150"
                     :reverse="false"
                     line-cap="butt"
@@ -27,6 +27,32 @@
 
                 </vue-circle>
 
+                <div>
+                    <h3>Great news, there are plenty of options to decrease your cancer risk.</h3>
+                </div>
+
+                <div class="category" v-for="(category, index) in scorecards" :key="index">
+                    <h2>{{ category[0].category.toUpperCase() }}</h2>
+
+                    <div class="blue" v-if="category.filter((c) => c.recommendation.includes('Well done')).length > 0">
+                        <h3>You're doing great in the following areas:</h3>
+                        <div v-for="(section, i) in category.filter((c) => c.recommendation.includes('Well done'))" :key="i">
+                            <p>You told us: <em>{{ section.answer }}</em></p>
+                            <p><strong>{{ section.recommendation }}</strong></p>
+                        </div>
+
+                    </div>
+
+                    <div class="grey" v-if="category.filter((c) => !c.recommendation.includes('Well done')).length > 0">
+                        <h3>Recommendations for improvement:</h3>
+                        <div v-for="(section, i) in category.filter((c) => !c.recommendation.includes('Well done'))" :key="i">
+                            <p>You told us: <em>{{ section.answer }}</em></p>
+                            <p><strong>{{ section.recommendation }}</strong></p>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
         </div>
 	</div>
@@ -35,6 +61,7 @@
 <script>
 import { vmdButton } from '@ccq/ccq-vue-components'
 import VueCircle from 'vue2-circle-progress'
+import axios from 'axios'
 
 export default {
     name: 'app',
@@ -44,20 +71,46 @@ export default {
     },
 	data () {
 		return {
-            results: {}
+            results: {},
+            latestScorecard: null
 		}
     },
-    methods: {
-        getScoreCard() {
+    computed: {
+        scorecards() {
             let vm = this;
 
-            
+            if (!vm.latestScorecard) { return [] }
+
+            let scorecards = [];
+
+            Object.keys(vm.latestScorecard.scores).forEach((category) => {
+                if (category !== 'total') {
+                    category = vm.latestScorecard.recommendations.filter((rec) => rec.category === category)
+                    scorecards.push(category)
+                }
+            })
+
+            return scorecards
+        }
+    },
+    methods: {
+        getScoreCard(user) {
+            let vm = this;
+
+            axios
+                .post('https://prod-05.australiaeast.logic.azure.com:443/workflows/df753e6a563e451ea76a06b71d1a4a9e/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pge8rl1wK4YG2jeyFkb3gl38yu97YZAyBzp6Dd6vAxA', {user: user})
+                .then(response => {
+                    this.results = response.data
+                    this.latestScorecard = response.data.scorecards[0].entry
+                })
         }
     },
     mounted () {
         let vm = this;
 
-        vm.getScoreCard();
+        let user = vm.$route.query.user;
+        console.log(vm.$route.query)
+        vm.getScoreCard(user);
     }
 }
 </script>
@@ -125,7 +178,7 @@ body {
 .results-container {
     background:#fff;
     padding: 15px 30px;
-    border-radius: 8px 8px 8px 0;
+    border-radius: 8px;
     max-width: 600px;
     margin: 50px auto;
     height: auto;
@@ -135,64 +188,41 @@ body {
         margin: 30px auto;
     }
 
-    form {
-        display:flex;
-        flex-wrap: wrap;
-        justify-content:space-between;
+    .category {
+        background: #eee;
+        background: $dark-blue;
+        color: #fff;
+        margin-bottom: 30px;
+        @extend %boxshadow;
+        border-radius: 8px;
+        text-align:left;
 
-        div.mdc-text-field {
-            flex-grow: 1;
-            margin: 5px;
-            flex-basis: 100%;
-
-            &.half-width {
-                min-width: 200px;
-                flex-basis: 250px;
-            }
+        h2 {
+            padding: 30px 0 20px 30px;
+            margin: 0;
         }
 
         p {
-            margin: 20px auto;
+            margin: 0;
+        }
 
-            a {
-                text-decoration:none;
-                font-weight:bold;
-                color:$blue;
+        .blue {
+            padding: 15px 30px;
+            background: $blue;
+            color:#fff;
+
+            div {
+                margin: 10px auto;
             }
         }
 
-        button {
-            width: 100%;
-            margin-bottom: 10px;
-        }
-    }
+        .grey {
+            padding: 15px 30px;
+            background:#eee;
+            color:$dark-blue;
 
-
-    ul {
-        list-style-type:none;
-        padding-inline-start: 0;
-        margin-block-start: 0;
-        display:flex;
-        flex-wrap: wrap;
-        justify-content:center;
-        margin-bottom: 30px;
-
-        li {
-            text-transform:capitalize;
-            flex-basis: 25%;
-            flex-grow: 1;
-            border-radius: 4px;
-            margin: 1%;
-            color: #fff;
-            text-align:center;
-            background: $blue;
-            padding: 30px 15px 5px 15px;
-            min-width: 100px;
-            max-width: 165px;
-            @extend %boxshadow;
-
-            i {
-                font-size: 32px;
+            div {
+                margin: 10px auto;
             }
         }
     }
