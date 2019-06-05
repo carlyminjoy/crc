@@ -479,12 +479,13 @@ body {
     li {
         border-bottom: 4px solid #999;
         padding: 15px 6px 15px 6px;
-        font-size: 12px;
+        font-size: 10px;
         text-transform:uppercase;
-        flex-basis: 12.5%;
+        // flex-basis: 12.5%;
         flex-grow:1;
         margin-bottom: -4px;
         transition: all 0.3s ease;
+        display:inline-block;
         // text-align:right;
 
         &.active {
