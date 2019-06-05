@@ -28,26 +28,26 @@
                 </vue-circle>
 
                 <div>
-                    <h3>Great news, there are plenty of options to decrease your cancer risk.</h3>
+                    <h3>Good news, there are plenty of ways to increase your score and reduce your cancer risk.</h3>
                 </div>
 
                 <div class="category" v-for="(category, index) in scorecards" :key="index">
                     <h2>{{ category[0].category.toUpperCase() }}</h2>
 
                     <div class="blue" v-if="category.filter((c) => c.recommendation.includes('Well done')).length > 0">
-                        <h3>You're doing great in the following areas:</h3>
+                        <h2>You're doing great in the following areas:</h2>
                         <div v-for="(section, i) in category.filter((c) => c.recommendation.includes('Well done'))" :key="i">
-                            <p>You told us: <em>{{ section.answer }}</em></p>
+                            <p><strong>You told us: </strong>{{ section.answer }}</p>
                             <p><strong>{{ section.recommendation }}</strong></p>
                         </div>
 
                     </div>
 
                     <div class="grey" v-if="category.filter((c) => !c.recommendation.includes('Well done')).length > 0">
-                        <h3>Recommendations for improvement:</h3>
+                        <h2>You can improve in the following areas:</h2>
                         <div v-for="(section, i) in category.filter((c) => !c.recommendation.includes('Well done'))" :key="i">
-                            <p>You told us: <em>{{ section.answer }}</em></p>
-                            <p><strong>{{ section.recommendation }}</strong></p>
+                            <p><strong>You told us: </strong>{{ section.answer }}</p>
+                            <p><strong>We recommend: </strong>{{ section.recommendation }}</p>
                         </div>
                     </div>
 
@@ -192,18 +192,19 @@ body {
         background: #eee;
         background: $dark-blue;
         color: #fff;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
         @extend %boxshadow;
         border-radius: 8px;
         text-align:left;
 
-        h2 {
+        &>h2 {
             padding: 30px 0 20px 30px;
             margin: 0;
         }
 
         p {
-            margin: 0;
+            margin: 0 0 4px 0;
+            font-size: 16px;
         }
 
         .blue {
@@ -212,7 +213,7 @@ body {
             color:#fff;
 
             div {
-                margin: 10px auto;
+                margin: 20px 0;
             }
         }
 
@@ -222,7 +223,7 @@ body {
             color:$dark-blue;
 
             div {
-                margin: 10px auto;
+                margin: 20px auto;
             }
         }
     }
