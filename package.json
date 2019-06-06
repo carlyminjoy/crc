@@ -25,6 +25,7 @@
     "sass-loader": "^7.1.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
+    "vue-spinners": "^1.0.2",
     "vue2-circle-progress": "^1.2.3"
   },
   "devDependencies": {

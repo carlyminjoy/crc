@@ -9,8 +9,14 @@
 
         <div class="outer-container">
 
-            <div class="results-container" v-if="latestScorecard">
-                <h3>{{latestScorecard.firstName }}, your total score is: </h3>
+            <template v-if='!latestScorecard'>
+                <div>
+                    <square-spinner color='#FCD208' ></square-spinner>
+                </div>
+            </template>
+
+            <div class="results-container" v-else='latestScorecard'>
+                <h1>{{latestScorecard.firstName }}, your total score is: </h1>
 
                 <vue-circle
                     :progress="latestScorecard.scores.total"
@@ -28,11 +34,22 @@
                 </vue-circle>
 
                 <div>
-                    <h3>Good news, there are plenty of ways to increase your score and reduce your cancer risk.</h3>
+                    <h3>
+                        <span v-if='latestScorecard.scores.total >= 75'>
+                            Great work! You are making good choices to help reduce your cancer risk, but there are still further steps you can take.
+                        </span> 
+                        <span v-else-if='latestScorecard.scores.total >= 50'>
+                            You're on the right track. You are making some good choices to help reduce your cancer risk, but there are many more steps you can take.
+                        </span> 
+                        <span v-else>
+                            There is room for improvement to help reduce your cancer risk. The good news is that there are plenty of ways you can do this.
+                        </span> 
+                    </h3>
+                    <br>
                 </div>
 
                 <div class="category" v-for="(category, index) in scorecards" :key="index">
-                    <h2>{{ category.name.toUpperCase() }}</h2>
+                    <h2><i :class='icons[category.name]'></i> &nbsp; &nbsp; {{ category.name.toUpperCase() }}</h2>
 
                     <div class="blue" v-if="category.good.length > 0">
                         <h2>You're doing great in the following areas:</h2>
@@ -47,7 +64,13 @@
                         <h2>Areas for improvement:</h2>
                         <div v-for="(section, i) in category.bad" :key="i">
                             <p><strong>You told us: </strong>{{ section.answer }}</p>
-                            <p><strong>We recommend: </strong><span v-html='section.recommendation'></p>
+                            <p v-if='section.bmi'><strong>Your BMI is: </strong>{{ section.bmi }}</p>
+                            <p><strong>We recommend: </strong>
+
+                            <span v-if='section.bmi'>The range for a healthy weight is between 18.5 and 25.</span>
+                            <span v-html='section.recommendation'></span>
+
+                            </p>
                         </div>
 
 
@@ -81,15 +104,18 @@
 </template>
 
 <script>
+
 import { vmdButton } from '@ccq/ccq-vue-components'
 import VueCircle from 'vue2-circle-progress'
 import axios from 'axios'
+import { SquareSpinner, Cube } from 'vue-spinners/src'
 
 export default {
     name: 'app',
     components: {
         vmdButton,
-        VueCircle
+        VueCircle,
+        SquareSpinner
     },
 	data () {
 		return {
@@ -166,6 +192,15 @@ export default {
                         cta: 'Visit Website'
                     }
                 ]
+            },
+            icons: {
+                uv: 'fas fa-sun',
+                smoking: 'fas fa-smoking',
+                alcohol: 'fas fa-wine-bottle',
+                nutrition: 'fas fa-utensils',
+                weight: 'fas fa-weight',
+                'physical activity': 'fas fa-running',
+                screening: 'fas fa-clinic-medical'
             }
 		}
     },
@@ -291,6 +326,11 @@ body {
 .outer-container {
     background:#eee;
     padding-bottom: 60px;
+
+    .spinner {
+        margin-top:40vh!important
+    }
+
 }
 
 .results-container {
