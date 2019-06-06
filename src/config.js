@@ -104,6 +104,7 @@ export default {
             text: "When outside, how do you protect your skin?"
         },
         {
+            id: 'clothing',
             question: true,
             category: 'uv',
             text: "Do you wear sun protective clothing (e.g. shirt with collar, sleeves and long pants)?",
@@ -127,6 +128,7 @@ export default {
             ]
         },
         {
+            id: 'hat',
             question: true,
             category: 'uv',
             text: "Do you wear a sun protective hat (e.g. broad-brimmed or bucket style)?",
@@ -150,6 +152,7 @@ export default {
             ]
         },
         {
+            id: 'sunscreen',
             question: true,
             category:'uv',
             text: "Do you apply and reapply SPF30+ sunscreen or higher at least every 2 hours?",
@@ -173,6 +176,7 @@ export default {
             ]
         },
         {
+            id: 'shade',
             question: true,
             category:'uv',
             text: "Do you stay in the shade where possible?",
@@ -196,6 +200,7 @@ export default {
             ]
         },
         {
+            id: 'sunglasses',
             question: true,
             category: 'uv',
             text: "Do you wear sunglasses?",
@@ -219,6 +224,7 @@ export default {
             ]
         },
         {
+            id: 'checkSkin',
             question: true,
             category: 'uv',
             text: "Do you regularly check your skin for new spots and changes to existing freckles or moles?",
@@ -242,6 +248,7 @@ export default {
             ]
         },
         {
+            id: 'professionalCheckSkin',
             question: true,
             category: 'uv',
             text: "Do you have your skin checked by a health professional, or speak to them about your skin cancer risk?",
@@ -270,6 +277,7 @@ export default {
             text: "The best thing you can do for your health is to quit smoking. More than 18,000 Australians die from smoking-related diseases each year."
         },
         {
+            id: 'smokingStatus',
             question: true,
             category: 'smoking',
             text: "What is your smoking status?",
@@ -305,6 +313,7 @@ export default {
             ]
         },
         {
+            id: 'householdSmoke',
             question: true,
             category: 'smoking',
             text: "Is your household smoke-free?",
@@ -328,6 +337,7 @@ export default {
             ]
         },
         {
+            id: 'standardDrinks',
             question: true,
             category: 'alcohol',
             text: `How many standard drinks do you typically consume in a day when you drink?<br><br>Examples of 1 standard drink:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/bottle.png'/></span> 1 x 375mL bottle of mid strength beer</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/wine.png'/></span> 100 mL of wine (1 x small glass of wine)</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/glass2.png'/></span> 30 mL of spirits (1 x measure of spirits)</li></ul>`,
@@ -364,6 +374,7 @@ export default {
             ]
         },
         {
+            id: 'fruit',
             question: true,
             category: 'nutrition',
             text: `How many serves of fruit do you eat in a typical day?<br><br>Examples of 1 serve of fruit:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/apple.png'/></span>1 x apple</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/apricots.png'/></span> 2 x apricots</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/fruit.png'/></span>1 cup of fruit</li></ul>`,
@@ -394,6 +405,7 @@ export default {
             ]
         },
         {
+            id: 'vegetables',
             question: true,
             category: 'nutrition',
             text: `How many serves of vegetables do you eat in a typical day?<br><br>Examples of 1 serve of vegetables:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/vegetables.png'/></span>1/2 cup cooked vegetables</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/potato.png'/></span>1/2 medium potato</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/salad.png'/></span>1 cup of salad</li></ul>`,
@@ -430,6 +442,7 @@ export default {
             ]
         },
         {
+            id: 'redMeat',
             question: true,
             category: 'nutrition',
             text: `How many serves of red meat do you eat in a typical week?<br><br>Examples of 1 serve:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/lamb.png'/></span>1 lamb loin chop</li></ul><br>Examples of 2 serves:<ul class='examples'><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/steak.png'/></span>1 porterhouse/scotch fillet steak</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/diced-meat.png'/></span>1 cup diced meat</li></ul>`,
@@ -466,6 +479,7 @@ export default {
             ]
         },
         {
+            id: 'processedMeat',
             question: true,
             category: 'nutrition',
             text: `How many serves of processed meat do you eat in a typical week?<br><br>Example of 1 serve:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/bacon.png'/></span>2 slices of bacon</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/salami.png'/></span>2 slices of salami or ham</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/sausages.png'/></span>2 thin sausages</li></ul>`,
@@ -502,6 +516,7 @@ export default {
             ]
         },
         {
+            id: 'wholegrain',
             question: true,
             category: 'nutrition',
             text: `How often do you choose wholegrain, wholemeal and/or high fibre food varieties? (e.g. brown rice, wholemeal bread)`,
@@ -598,6 +613,7 @@ export default {
             waist: null
         },
         {
+            id: 'exercise',
             question: true,
             category: 'physical activity',
             text: `In a typical week, how many days are you physically active for 30 minutes or more?`,
@@ -634,6 +650,7 @@ export default {
             ]
         },
         {
+            id: 'breastScreening',
             question: true,
             category: 'screening',
             text: "Do you participate in the national breast cancer screening program?",
@@ -669,6 +686,7 @@ export default {
             ]
         },
         {
+            id: 'bowelScreening',
             question: true,
             category: 'screening',
             text: "Do you participate in the national bowel cancer screening program?",
@@ -702,6 +720,7 @@ export default {
             ]
         },
         {
+            id: 'cervicalScreening',
             question: true,
             category: 'screening',
             text: "Do you participate in cervical screening?",

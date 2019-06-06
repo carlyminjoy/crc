@@ -277,6 +277,7 @@ export default {
                 let answer = q.options? q.options.find((o) => o.score === q.score) : null;
 
                 let obj = {
+                    id: q.id,
                     question: q.text,
                     category: q.category,
                     answer: answer ? answer.userResponse : q.userResponse,
