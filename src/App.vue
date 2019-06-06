@@ -3,7 +3,7 @@
         <header>
             <div class='container'>
                 <img src="https://cancerqld.blob.core.windows.net/content/code/global/img/ccq-logo-249x123.png" />
-                <h1>Cancer Risk Score Card</h1>
+                <h3>Cancer Risk Score Card</h3>
             </div>
         </header>
 
@@ -15,7 +15,7 @@
                 </div>
             </template>
 
-            <div class="results-container" v-else='latestScorecard'>
+            <div class="results-container" v-else>
                 <h1>{{latestScorecard.firstName }}, your total score is: </h1>
 
                 <vue-circle
@@ -89,7 +89,6 @@
                                 <a class='img-link' :href='resource.url' target='_blank' v-bind:style="{ backgroundImage: 'url(' + resource.img + ')' }"></a>
                                 <div>
                                     <p>{{ resource.text }}</p>
-                                    <br>
                                     <a :href='resource.url' target='_blank'>{{ resource.cta }}</a>
                                 </div>
                             </li>
@@ -299,7 +298,7 @@ body {
     header {
         height:80px;
         background: #fff;
-        // border-bottom: 3px solid #FCD208;
+        border-bottom: 3px solid $yellow;
 
         .container {
             height:100%;
@@ -310,11 +309,13 @@ body {
                 height: 50px;
                 margin-top: 15px;
             }
-            h1 {
+            h3 {
                 color: $dark-blue;
                 font-family:'Foco CC', 'Roboto', Arial, sans-serif;
                 margin: 0 104px 0 0;
                 letter-spacing: 0;
+                text-transform:uppercase;
+                font-weight:400;
                 line-height: 90px;
             }
         }
@@ -427,16 +428,18 @@ body {
                         padding: 30px;
                         flex-basis:50%;
                         flex-grow:1;
+                        display:flex;
+                        flex-direction:column;
 
                         a {
+                            text-align:center;
                             background:$blue;
                             color:#fff;
                             text-decoration:none;
                             transition:0.3s ease;
-                            width: 100%;
                             padding: 12px 20px 7px 20px;
                             border-radius: 4px;
-                            margin-top: 30px;
+                            margin-top: 10px;
                             @extend %boxshadow;
 
                             &:hover {
@@ -449,6 +452,15 @@ body {
                 }
             }
         }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #app .outer-container .results-container .category .resources-container .resources li {
+        flex-wrap:wrap;
+            a.img-link {
+                height:150px;
+            }
     }
 }
 
@@ -484,8 +496,12 @@ body {
         }
         .outer-container {
             padding-top: 0;
+            padding-bottom: 0;
             .results-container {
                 width: unset;
+                margin:0;
+                border-radius:0;
+                
             }
             .conversation-container {
                 &.mask {
