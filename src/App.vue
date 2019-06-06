@@ -32,23 +32,45 @@
                 </div>
 
                 <div class="category" v-for="(category, index) in scorecards" :key="index">
-                    <h2>{{ category[0].category.toUpperCase() }}</h2>
+                    <h2>{{ category.name.toUpperCase() }}</h2>
 
-                    <div class="blue" v-if="category.filter((c) => c.recommendation.includes('Well done')).length > 0">
+                    <div class="blue" v-if="category.good.length > 0">
                         <h2>You're doing great in the following areas:</h2>
-                        <div v-for="(section, i) in category.filter((c) => c.recommendation.includes('Well done'))" :key="i">
+                        <div v-for="(section, i) in category.good" :key="i">
                             <p><strong>You told us: </strong>{{ section.answer }}</p>
                             <p><strong>{{ section.recommendation }}</strong></p>
                         </div>
 
                     </div>
 
-                    <div class="grey" v-if="category.filter((c) => !c.recommendation.includes('Well done')).length > 0">
+                    <div class="grey" v-if="category.bad.length > 0">
                         <h2>You can improve in the following areas:</h2>
-                        <div v-for="(section, i) in category.filter((c) => !c.recommendation.includes('Well done'))" :key="i">
+                        <div v-for="(section, i) in category.bad" :key="i">
                             <p><strong>You told us: </strong>{{ section.answer }}</p>
                             <p><strong>We recommend: </strong>{{ section.recommendation }}</p>
                         </div>
+
+
+                        <template v-if="tips[category.name]">
+                            <h2>Tips:</h2>
+                            <ul class="tips">
+                                <li v-for="(tip,index) in tips[category.name]" :key="index">{{ tip }}</li>
+                            </ul>
+                        </template>
+
+                    </div>
+
+                    <div class='resources-container' v-if="resources[category.name]">
+                        <ul class="resources">
+                            <li v-for="(resource, index) in resources[category.name]" :key='index'>
+                                <a class='img-link' :href='resource.url' target='_blank' v-bind:style="{ backgroundImage: 'url(' + resource.img + ')' }"></a>
+                                <div>
+                                    <p>{{ resource.text }}</p>
+                                    <br>
+                                    <a :href='resource.url' target='_blank'>{{ resource.cta }}</a>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
 
                 </div>
@@ -72,7 +94,34 @@ export default {
 	data () {
 		return {
             results: {},
-            latestScorecard: null
+            latestScorecard: null,
+            tips: {
+                smoking: {
+                    status: [
+                        'Call Quitline on 13 QUIT (13 7858).',
+                        'Set a quit date and seek support from family and friends.',
+                        'Speak your GP, pharmacist or community health worker and plan your quitting strategy.',
+                        'Avoid situations where you’re tempted to smoke.'
+                    ]
+                },
+                alcohol: {
+                    standardDrinks: [
+                        'Use the standard drink calculator to find how much you’re drinking.',
+                        'Commit to having some alcohol-free days each week.',
+                        'Choose low alcohol or non-alcoholic drinks.'
+                    ]
+                }
+            },
+            resources: {
+                nutrition: [
+                    {
+                        url: 'https://www.biggestmorningtea.com.au/ideas/recipes/',
+                        img: 'https://www.biggestmorningtea.com.au/siteassets/biggest-morning-tea/ideas-and-planning/recipes/fruitskew_thumb.png',
+                        text: `For healthy recipe ideas, visit Australia's Biggest Morning Tea recipes.`,
+                        cta: 'Visit Website'
+                    }
+                ]
+            }
 		}
     },
     computed: {
@@ -85,8 +134,13 @@ export default {
 
             Object.keys(vm.latestScorecard.scores).forEach((category) => {
                 if (category !== 'total') {
-                    category = vm.latestScorecard.recommendations.filter((rec) => rec.category === category)
-                    scorecards.push(category)
+                    let categoryObj = {
+                        name: category
+                    };
+
+                    categoryObj.good = vm.latestScorecard.recommendations.filter((rec) => rec.category === category && rec.recommendation.includes('Well done'))
+                    categoryObj.bad = vm.latestScorecard.recommendations.filter((rec) => rec.category === category && !rec.recommendation.includes('Well done'))
+                    scorecards.push(categoryObj)
                 }
             })
 
@@ -222,8 +276,62 @@ body {
             background:#eee;
             color:$dark-blue;
 
-            div {
+            & > div {
                 margin: 20px auto;
+            }
+
+        }
+        .resources-container {
+            background:#eee;
+            color:$dark-blue;
+            padding: 15px 30px 30px 30px;
+
+            .resources {
+                display:flex;
+                list-style-type:none;
+                padding-inline-start:0;
+                margin-block-start:0;
+
+                li {
+                    background:white;
+                    @extend %boxshadow;
+                    margin:0;
+                    padding:0;
+                    max-width:100%;
+                    display:flex;
+
+                    a.img-link {
+                        padding:0;
+                        margin:0;
+                        height:100%;
+                        flex-basis:50%;
+                        flex-grow:1;
+                        background-size:cover;
+                    }
+                    div {
+                        padding: 30px;
+                        flex-basis:50%;
+                        flex-grow:1;
+
+                        a {
+                            background:$blue;
+                            color:#fff;
+                            text-decoration:none;
+                            transition:0.3s ease;
+                            width: 100%;
+                            padding: 12px 20px 7px 20px;
+                            border-radius: 4px;
+                            margin-top: 30px;
+                            @extend %boxshadow;
+
+                            &:hover {
+                                filter: brightness(0.8);
+                            }
+                        }
+                    }
+                    display:flex;
+                    align-items:center;
+                }
             }
         }
     }
