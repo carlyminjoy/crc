@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="grey" v-if="category.bad.length > 0">
-                        <h2>You can improve in the following areas:</h2>
+                        <h2>Areas for improvement:</h2>
                         <div v-for="(section, i) in category.bad" :key="i">
                             <p><strong>You told us: </strong>{{ section.answer }}</p>
                             <p><strong>We recommend: </strong><span v-html='section.recommendation'></p>
@@ -106,7 +106,7 @@ export default {
                 },
                 alcohol: {
                     standardDrinks: [
-                        `Use the <a href='https://drinkwise.org.au/standard-drinks-calculator/#' target='_blank'>standard drink calculator</a> to find outhow much you’re drinking.`,
+                        `Use the <a href='https://drinkwise.org.au/standard-drinks-calculator/#' target='_blank'>standard drink calculator</a> to find out how much you’re drinking.`,
                         'Commit to having some alcohol-free days each week.',
                         'Choose low alcohol or non-alcoholic drinks.'
                     ]
@@ -183,17 +183,21 @@ export default {
                         name: category
                     };
 
-                    categoryObj.good = vm.latestScorecard.recommendations.filter((rec) => rec.category === category && rec.recommendation.includes('Well done'))
-                    categoryObj.bad = vm.latestScorecard.recommendations.filter((rec) => rec.category === category && !rec.recommendation.includes('Well done'))
+                    categoryObj.good = vm.latestScorecard.recommendations.filter((rec) => rec.category === category && (rec.recommendation.includes('Well done') || rec.recommendation.includes('Great')))
+                    categoryObj.bad = vm.latestScorecard.recommendations.filter((rec) => rec.category === category && !(rec.recommendation.includes('Well done') || rec.recommendation.includes('Great')))
                     
                     if (vm.tips[category]) {
-                        categoryObj.tips = [];
+                        let tips = [];
                         
                         Object.keys(vm.tips[category]).forEach((key) => {
                             if (categoryObj.bad.some((o) => o.id === key)) {
-                                vm.tips[category][key].forEach((t) => categoryObj.tips.push(t))
+                                vm.tips[category][key].forEach((t) => tips.push(t))
                             }
                         })
+
+                        if (tips.length > 0) {
+                            categoryObj.tips = tips;
+                        }
                     }
                     scorecards.push(categoryObj)
                 }
@@ -286,6 +290,7 @@ body {
 
 .outer-container {
     background:#eee;
+    padding-bottom: 60px;
 }
 
 .results-container {
@@ -342,6 +347,12 @@ body {
             ul.tips {
                 margin-top: 10px;
                 padding-inline-start:20px;
+            }
+
+            a {
+                text-decoration:none;
+                color:$blue;
+                font-weight:bold;
             }
 
         }
