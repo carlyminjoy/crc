@@ -8,12 +8,12 @@ export default {
         {
             question: false,
             display:true,
-            text: "By participating in this quiz, you are agreeing to our disclaimer statement."
+            text: `By participating in this quiz, you are agreeing to our <a href='#' target='_blank'>disclaimer statement</a>.`
         },
         {
             question: true,
             category: 'personal',
-            text: "What is your age?",
+            text: "First of all, what is your age?",
             score: null,
             display:true,
             userResponded: false,
@@ -260,13 +260,13 @@ export default {
                 {
                     label: "Yes",
                     score: 30,
-                    userResponse: "Yes, I have my skin checked a by a professional, or speak to them about my skin cancer risk.",
+                    userResponse: "Yes, I have my skin checked by a health professional.",
                     aiResponse: "Well done!"
                 },
                 {
                     label: "No",
                     score: 0,
-                    userResponse: "No, I don't.",
+                    userResponse: "No, I don't have my skin checked by a health professional.",
                     aiResponse: "Speak to your health professional about your skin cancer risk."
                 }
             ]
@@ -637,7 +637,7 @@ export default {
                 {
                     label: "3 - 4",
                     score: 28,
-                    userResponse: "I am physically active for 30 minutes or more for3 - 4 days in a typical week.",
+                    userResponse: "I am physically active for 30 minutes or more for 3 - 4 days in a typical week.",
                     aiResponse: "You're on the right track! To reduce your cancer risk, aim for 1 hour of moderate intensity or 30 minutes of vigorous intensity physical activity every day."
                 },
                 {
@@ -662,17 +662,17 @@ export default {
                 {
                     label: "Yes",
                     score: 70,
-                    userResponse: "I participate in this program.",
+                    userResponse: "I participate in the national breast cancer screening program.",
                     aiResponse: "Well done!"
                 },
                 {
                     label: "No",
                     score: 0,
-                    userResponse: "No, I don't participate in this program.",
+                    userResponse: "No, I don't participate in the national breast cancer screening program.",
                     aiResponse: `Participating in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/breast-screening-1' target='_blank'>National Breast Cancer Screening Program</a> greatly increases the likelihood of early detection of breast cancer and successful treatment.`
                 },
                 {
-                    label: "No - I screen for breast cancer outside of this program (e.g. ultrasound or mammogram).",
+                    label: "No - I screen for breast cancer outside of the national breast cancer screening program (e.g. ultrasound or mammogram).",
                     score: 69.9,
                     userResponse: "No, but I screen for breast cancer outside of this program.",
                     aiResponse: "Well done!"
@@ -692,17 +692,17 @@ export default {
                 {
                     label: "Yes",
                     score: 70,
-                    userResponse: "I participate in this program.",
+                    userResponse: "I participate in the national bowel cancer screening program.",
                     aiResponse: "Well done!"
                 },
                 {
                     label: "No",
                     score: 0,
-                    userResponse: "No, I don't participate in this program.",
+                    userResponse: "No, I don't participate in the national bowel cancer screening program.",
                     aiResponse: `Participating in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-screening-1' target='_blank'>National Bowel Cancer Screening Program</a> greatly increases the likelihood of early detection of bowel cancer and successful treatment.`
                 },
                 {
-                    label: "No - I screen for bowel cancer outside of this program (e.g. colonoscopy).",
+                    label: "No - I screen for bowel cancer outside of the national bowel cancer screening program (e.g. colonoscopy).",
                     score: 69.9,
                     userResponse: "No, but I screen for bowel cancer outside of this program.",
                     aiResponse: "Well done!"
@@ -722,13 +722,13 @@ export default {
                 {
                     label: "Yes",
                     score: 70,
-                    userResponse: "I participate in this program.",
+                    userResponse: "I participate in cervical screening.",
                     aiResponse: "Well done!"
                 },
                 {
                     label: "No",
                     score: 0,
-                    userResponse: "No.",
+                    userResponse: "No, I don't participate in cervical screening.",
                     aiResponse: "Participating in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/cervical-screening-1' target='_blank'>National Cervical Screening Program</a> offers the best protection against cervical cancer."
                 }
             ]

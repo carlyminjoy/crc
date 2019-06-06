@@ -104,7 +104,7 @@
                                     :question=step 
                                     v-on:addstep="addStep()"></postcode>
 
-                            <p v-else>{{ step.text }}</p>
+                            <p v-else v-html='step.text'></p>
 
                         </div>
 
