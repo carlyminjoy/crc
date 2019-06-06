@@ -3,12 +3,12 @@ export default {
         {
             question: false,
             display:true,
-            text: "Hello! Over the next few minutes, we'll be asking some questions about your lifestyle to assess your cancer risk."
+            text: "Hello! Over the next few minutes, we'll be asking you some questions to assess your cancer risk."
         },
         {
             question: false,
             display:true,
-            text: "But first, we need to get a few personal details."
+            text: "By participating in this quiz, you are agreeing to our disclaimer statement."
         },
         {
             question: true,
@@ -669,13 +669,7 @@ export default {
                     label: "No",
                     score: 0,
                     userResponse: "No, I don't participate in this program.",
-                    aiResponse: `Participating in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/breast-screening-1' target='_blank'>National Breast Cancer Screening Program</a> greatly increases the likelihood of early detection of breast cancer and successful treatment.
-                    
-                    <br.<br>Speak to your health professional about breast cancer screening.<br><br>
-
-                    To book a free mammogram, contact 13 20 50.<br><br>
-                    
-                    If you have moved interstate or haven’t received an invitation, <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/useful-links-2' target='_blank'>contact your local BreastScreen Australia provider</a>.`
+                    aiResponse: `Participating in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/breast-screening-1' target='_blank'>National Breast Cancer Screening Program</a> greatly increases the likelihood of early detection of breast cancer and successful treatment.`
                 },
                 {
                     label: "No - I screen for breast cancer outside of this program (e.g. ultrasound or mammogram).",
@@ -705,11 +699,7 @@ export default {
                     label: "No",
                     score: 0,
                     userResponse: "No, I don't participate in this program.",
-                    aiResponse: `Participating in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-screening-1' target='_blank'>National Bowel Cancer Screening Program</a> greatly increases the likelihood of early detection of bowel cancer and successful treatment.
-                    
-                    <br.<br>Speak to your health professional about bowel cancer screening.<br><br>
-                    
-                    If you have moved interstate or haven’t received an invitation, you can check your eligibility for <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-cancer-screeningkit-eligibility' target='_blank'>receiving the national bowel cancer screen kit</a>, or contact the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/Contact' target='_blank'>National Bowel Cancer Program</a>.`
+                    aiResponse: `Participating in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-screening-1' target='_blank'>National Bowel Cancer Screening Program</a> greatly increases the likelihood of early detection of bowel cancer and successful treatment.`
                 },
                 {
                     label: "No - I screen for bowel cancer outside of this program (e.g. colonoscopy).",
