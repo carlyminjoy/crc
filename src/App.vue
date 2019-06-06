@@ -152,7 +152,7 @@ export default {
                     ],
                     bowelScreening: [
                         'Speak to your health professional about bowel cancer screening.', 
-                        `If you have moved interstate or haven’t received an invitation, you can <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-cancer-screeningkit-eligibility' target='_blank'>check your eligibility for receiving the national bowel cancer</a>.`,
+                        `If you have moved interstate or haven’t received an invitation, you can <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-cancer-screeningkit-eligibility' target='_blank'>check your eligibility for receiving the national bowel cancer screening kit</a>.`,
                         `Contact the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/Contact' target='_blank'>National Bowel Cancer Screening Program</a>.`
                     ]
                 }
