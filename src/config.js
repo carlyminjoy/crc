@@ -107,7 +107,7 @@ export default {
             id: 'clothing',
             question: true,
             category: 'uv',
-            text: "Do you wear sun protective clothing (e.g. shirt with collar, sleeves and long pants)?",
+            text: `Do you wear sun protective clothing? e.g. shirt with collar, sleeves and long pants</li>`,
             score: null,
             display:true,
             userResponded: false,
@@ -117,7 +117,7 @@ export default {
                     label: "Yes",
                     score: 30,
                     userResponse: "I wear sun protective clothing.",
-                    aiResponse: "Well done!"
+                    aiResponse: "Well done! It's important to slip on sun protective clothing that covers as much skin as possible."
                 },
                 {
                     label: "No",
@@ -141,7 +141,7 @@ export default {
                     label: "Yes",
                     score: 30,
                     userResponse: "Yes, I wear a sun protective hat outside.",
-                    aiResponse: "Well done!"
+                    aiResponse: "Well done! Always slap on a broad-brimmed or bucket style hat that shades your face, neck and ears."
                 },
                 {
                     label: "No",
@@ -165,7 +165,7 @@ export default {
                     label: "Yes",
                     score: 30,
                     userResponse: "Yes, I apply and reapply SPF30+ sunscreen every 2 hours.",
-                    aiResponse: "Well done!"
+                    aiResponse: "Well done! Slop on SPF 30+ sunscreen to exposed parts of your body 20 minutes before going outdoors and reapply every 2 hours."
                 },
                 {
                     label: "No",
@@ -189,7 +189,7 @@ export default {
                     label: "Yes",
                     score: 30,
                     userResponse: "Yes, I stay in the shade where possible.",
-                    aiResponse: "Well done!"
+                    aiResponse: "Well done! Always seek shade whenever you can, especially when the UV radiation is highest - between 10am and 3pm."
                 },
                 {
                     label: "No",
@@ -213,7 +213,7 @@ export default {
                     label: "Yes",
                     score: 30,
                     userResponse: "Yes, I wear sunglasses.",
-                    aiResponse: "Well done!"
+                    aiResponse: "Well done! Slide on wrap-around, close-fitting sunglasses that meet Australian standards."
                 },
                 {
                     label: "No",
@@ -237,7 +237,7 @@ export default {
                     label: "Yes",
                     score: 30,
                     userResponse: "Yes, I regularly check my skin.",
-                    aiResponse: "Well done!"
+                    aiResponse: "Well done! It's important to develop a regular habit of checking your skin. If you notice any new spots or changes to an existing spot such as size, shape or colour, see your doctor immediately."
                 },
                 {
                     label: "No",
@@ -356,7 +356,7 @@ export default {
                     label: "1 - 2",
                     score: 209.9,
                     userResponse: "I'll typically consume 1 - 2 standard drinks.",
-                    aiResponse: "Okay."
+                    aiResponse: "Good - always try to limit your alcohol consumption to no more than 2 standard drinks per day."
                 },
                 {
                     label: "2",
@@ -399,7 +399,7 @@ export default {
                     label: "2 or more",
                     score: 42,
                     userResponse: "I eat 2 or more serves of fruit in a typical day ",
-                    aiResponse: "Well done!"
+                    aiResponse: "Well done! You should try to eat at least 2 serves of fruit every day."
                 }
                 
             ]
@@ -436,7 +436,7 @@ export default {
                     label: "5 or more",
                     score: 42,
                     userResponse: "I eat 5 or more serves of vegetables in a typical day ",
-                    aiResponse: "Well done!"
+                    aiResponse: "Well done! You should try to eat at least 5 or more serves of vegetables each day."
                 }
                 
             ]
@@ -455,19 +455,19 @@ export default {
                     label: "None",
                     score: 42,
                     userResponse: "I don't eat any red meat.",
-                    aiResponse: "Well done!"
+                    aiResponse: "Well done! Red meat consumption should be limited to no more than 7 serves (455g) per week."
                 },
                 {
                     label: "1 - 4",
                     score: 41.9,
                     userResponse: "I eat 1 - 4 serves of red meat in a typical week.",
-                    aiResponse: "Well done!"
+                    aiResponse: "Well done! Red meat consumption should be limited to no more than 7 serves (455g) per week."
                 },
                 {
                     label: "5 - 7",
                     score: 41.8,
                     userResponse: "I eat 5 - 7 serves of red meat in a typical week ",
-                    aiResponse: "Well done!"
+                    aiResponse: "Well done! Red meat consumption should be limited to no more than 7 serves (455g) per week."
                 },
                 {
                     label: "8 or more",
@@ -644,7 +644,7 @@ export default {
                     label: "5 - 7",
                     score: 42,
                     userResponse: "I am physically active for 30 minutes or more for 5 - 7 days in a typical week.",
-                    aiResponse: "Well done!"
+                    aiResponse: "Well done! 1 hour of moderate intensity or 30 minutes of vigorous intensity physical activity every day is recommended to reduce your cancer risk."
                 }
                 
             ]
@@ -663,7 +663,7 @@ export default {
                     label: "Yes",
                     score: 70,
                     userResponse: "I participate in the national breast cancer screening program.",
-                    aiResponse: "Well done!"
+                    aiResponse: "Well done! Participating in the program greatly increases the likelihood of early detection of breast cancer and successful treatment."
                 },
                 {
                     label: "No",
@@ -693,7 +693,7 @@ export default {
                     label: "Yes",
                     score: 70,
                     userResponse: "I participate in the national bowel cancer screening program.",
-                    aiResponse: "Well done!"
+                    aiResponse: "Well done! Participating in the program greatly increases the likelihood of early detection of bowel cancer and successful treatment."
                 },
                 {
                     label: "No",
@@ -723,7 +723,7 @@ export default {
                     label: "Yes",
                     score: 70,
                     userResponse: "I participate in cervical screening.",
-                    aiResponse: "Well done!"
+                    aiResponse: "Well done! Participating in the program offers the best protection against cervical cancer."
                 },
                 {
                     label: "No",

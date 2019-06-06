@@ -499,7 +499,7 @@ body {
 
 
 .outer-container {
-
+    padding-bottom: 60px;
     background:#eee;
 }
 .conversation-container {
@@ -588,6 +588,7 @@ body {
             &.confirmation-msg {
                 padding: 20px;
                 background:#eee;
+                width: 100%;
             }
 
             a {
@@ -600,6 +601,10 @@ body {
         button {
             width: 100%;
             margin-bottom: 10px;
+
+            &:disabled {
+                background:#eee;
+            }
         }
     }
 
