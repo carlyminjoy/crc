@@ -173,7 +173,7 @@ export default {
 	data () {
 		return {
             state: {
-                showResults: true,
+                showResults: false,
                 loading: false,
                 submitted: false,
                 errors: false,
