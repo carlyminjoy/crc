@@ -34,17 +34,18 @@
 
                 </vue-circle>
 
-
                 <template v-if='categoryResults.green.length > 0'>
 
                     <h3>You're doing great in the following areas:</h3>
 
                     <ul>
                         <template v-for="category in scoredCategories">
-                            <li :key="category.name" v-if="results[category.name] >= 66">
+                            <li @click='rotate($event)' :key="category.name" v-if="results[category.name] >= 66">
 
                                 <i :class="category.icon"></i>
                                 <h4>{{ category.name }}</h4>
+
+                                <p>{{category.desc}}</p>
 
                             </li>
                         </template>
@@ -172,7 +173,7 @@ export default {
 	data () {
 		return {
             state: {
-                showResults: false,
+                showResults: true,
                 loading: false,
                 submitted: false,
                 errors: false,
@@ -202,31 +203,38 @@ export default {
             scoredCategories: [
                 {
                     name: 'uv',
-                    icon: 'fas fa-sun'
+                    icon: 'fas fa-sun',
+                    desc: 'Description.'
                 },
                 {
                     name: 'smoking',
-                    icon: 'fas fa-smoking'
+                    icon: 'fas fa-smoking',
+                    desc: 'Description.'
                 },
                 {
                     name: 'alcohol',
-                    icon: 'fas fa-wine-bottle'
+                    icon: 'fas fa-wine-bottle',
+                    desc: 'Description.'
                 },
                 {
                     name: 'nutrition',
-                    icon: 'fas fa-utensils'
+                    icon: 'fas fa-utensils',
+                    desc: 'Description.'
                 },
                 {
                     name: 'weight',
-                    icon: 'fas fa-weight'
+                    icon: 'fas fa-weight',
+                    desc: 'Description.'
                 },
                 {
                     name: 'physical activity',
-                    icon: 'fas fa-running'
+                    icon: 'fas fa-running',
+                    desc: 'Description.'
                 },
                 {
                     name: 'screening',
-                    icon: 'fas fa-clinic-medical'
+                    icon: 'fas fa-clinic-medical',
+                    desc: 'Description.'
                 }
             ],
             currentStep : null,
@@ -266,6 +274,13 @@ export default {
         }
     },
     methods: {
+        rotate(e) {
+            if (e.target.classList.length === 0) {
+                e.target.classList.add('rotate');
+            } else {
+                (e.target.classList.remove('rotate'))
+            }
+        },
         getRecommendations() {
             let vm = this;
 
@@ -630,10 +645,45 @@ body {
             padding: 30px 15px 5px 15px;
             min-width: 100px;
             max-width: 165px;
+            transition: 1s ease;
             @extend %boxshadow;
+            p {
+                position:absolute;
+                opacity: 0;
+                transition: opacity 0.5s ease;
+            }
 
             i {
                 font-size: 32px;
+            }
+
+            h4, i {
+                opacity: 1;
+                transition: 0.5s ease;
+                pointer-events:none;
+            }
+
+            &:hover {
+                filter: brightness(0.8);
+                cursor:pointer;
+            }
+
+            &.rotate {
+                transform: rotateY(180deg);
+                i, h4 {
+                    opacity: 0;
+                }
+                p {
+                    position:absolute;
+                    opacity: 1;
+                    transform: rotateY(180deg);
+                    text-transform:none;
+                    color:#fff;
+                    top: 0;
+                    right: 15px;
+                    left: 15px;
+                    pointer-events:none;
+                }
             }
         }
     }
