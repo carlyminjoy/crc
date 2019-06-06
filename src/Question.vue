@@ -16,7 +16,7 @@
                     <div v-for="option in question.options" :class="{'selected' : option.score === question.score }" :key="option.label">
 
                         <label :for="id + option.label">{{ option.label }} </label>
-                        <input @input="addStep()" :disabled="selected" v-model="question.score" type="radio" :id="id + option.label" :name="id + option.label" :value="option.score" />
+                        <input @click="addStep(option)" :disabled="selected" v-model="question.score" type="radio" :id="id + option.label" :name="id + option.label" :value="option.score" />
 
                     </div>
                 </div>
@@ -42,11 +42,13 @@ export default {
                 return v.toString(16);
             })
         },
-        addStep() {
-            if (!this.selected) {
-                this.selected = true;
-                this.$emit('addstep')
+        addStep(option) {
+            this.selected = true;
+            if (this.question.score === null) {
+                this.question.score = option.score
             }
+            
+            this.$emit('addstep')
         }
   },
   data() {

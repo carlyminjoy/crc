@@ -1,5 +1,6 @@
 <template>
 	<div id="app">
+
         <header>
             <div class='container'>
                 <img src="https://cancerqld.blob.core.windows.net/content/code/global/img/ccq-logo-249x123.png" />
@@ -17,10 +18,10 @@
             </ul>
 
             <div class="results-container" v-if="state.showResults">
-                <h3>Your total score is:</h3>
+                <h3>Your total score for reducing your cancer risk is:</h3>
 
                 <vue-circle
-                    :progress="results.total || 65"
+                    :progress="results.total"
                     :size="150"
                     :reverse="false"
                     line-cap="butt"
@@ -121,16 +122,6 @@
                         </div>
                     </transition>
 
-                    <transition name="fade" :key="index">
-                        <!-- <div v-if="step.userResponded" class='ai-comment'>
-
-                            <p v-if="step.options"> {{ step.aiResponse }} </p>
-
-                            <p v-else v-html="step.options.find((o) => o.score === step.score ).aiResponse"></p>
-
-                        </div> -->
-                    </transition>
-
                 </template>
 
             </div>
@@ -172,6 +163,7 @@ export default {
     },
 	data () {
 		return {
+            isIe: false,
             state: {
                 showResults: false,
                 loading: false,
@@ -244,24 +236,29 @@ export default {
     },
     watch: {
         currentStep (next, prev) {
-            if (this.steps[next].final) {
-                this.state.activeCategory = 'results'
-                this.calculateResults()
-                setTimeout(() => this.state.showResults = true, timers.med)
+            let vm = this;
+
+            vm.scrollToBottom();
+
+            if (vm.steps[next].final) {
+                vm.state.activeCategory = 'results'
+                vm.calculateResults()
+                setTimeout(() => vm.state.showResults = true, timers.med)
                 return
             }
 
-            if (!this.steps[next].question) {
-                setTimeout(() => this.currentStep++, timers.short)
+            if (!vm.steps[next].question) {
+                setTimeout(() => vm.currentStep++, timers.short)
                 return
             }  else {
-                this.state.activeCategory = this.steps[next].category
+                vm.state.activeCategory = vm.steps[next].category
+                setTimeout(() => vm.scrollToBottom(), 100)
+                setTimeout(() => vm.scrollToBottom(), 1300)
             }
 
-            if (this.steps[next].question && !this.display(this.steps[next])) {
-                setTimeout(() => this.currentStep++, timers.shortest)
+            if (vm.steps[next].question && !vm.display(vm.steps[next])) {
+                setTimeout(() => vm.currentStep++, timers.shortest)
             }
-
         }
     },
     computed: {
@@ -274,6 +271,12 @@ export default {
         }
     },
     methods: {
+        scrollToBottom() {
+            if (this.isIe) {
+                var element = this.$refs.conversationEl;
+                element.scrollTop = element.scrollHeight;
+            }
+        },
         rotate(e) {
             if (e.target.classList.length === 0) {
                 e.target.classList.add('rotate');
@@ -404,12 +407,18 @@ export default {
             vm.results = results;
         },
         addStep() {
-            let display;
+            let vm = this;
 
-            setTimeout(() => this.steps[this.currentStep].userResponded = true, timers.short)
-            setTimeout(() => this.steps[this.currentStep].aiResponded = true, timers.med)
+            vm.scrollToBottom();
+
             setTimeout(() => {
-                this.display(this.steps[this.currentStep + 1]) ? this.currentStep++ : this.currentStep += 2
+                vm.steps[vm.currentStep].userResponded = true
+                vm.scrollToBottom();
+            }, timers.short)
+
+            setTimeout(() => {
+                vm.display(vm.steps[vm.currentStep + 1]) ? vm.currentStep++ : vm.currentStep += 2
+                vm.scrollToBottom();       
             }, timers.short)
         },
         display(step) {
@@ -419,6 +428,14 @@ export default {
     },
     mounted () {
         this.currentStep = 0;
+
+        var ua = window.navigator.userAgent;
+        var isIE = /MSIE|Trident/.test(ua);
+
+        if ( isIE ) {
+            this.isIe = true;
+            this.$refs.conversationEl.classList.add('scroll')
+        }
     }
 }
 </script>
@@ -522,15 +539,29 @@ body {
         -webkit-mask-image: -webkit-gradient(linear, left top, left 20%, from(rgba(0,0,0,0)), to(rgba(0,0,0,1)));
     }
     overflow-y:hidden;
+
+    &.scroll {
+        // overflow-y:scroll!important;
+        max-height: 550px;
+        display:block;
+    }
     margin: 60px auto;
     background:rgba(0,0,0,0);
     padding: 30px;
     max-width: 600px;
     max-height: 500px;
     text-align:left;
+
+    display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
     display:flex;
     flex-direction:column;
-    justify-content:flex-end;
+
+    -webkit-justify-content: flex-end;
+	-moz-justify-content: flex-end;
+	-ms-justify-content: flex-end;
+	justify-content: flex-end;
 
     p {
         margin: 8px 0 3px 0;
