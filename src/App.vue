@@ -562,7 +562,7 @@ body {
         }
 
         .grey {
-            background:$yellow;
+            background:#eee;
             color:$dark-blue;
 
             & > div {
