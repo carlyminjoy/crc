@@ -3,7 +3,7 @@ export default {
         {
             question: false,
             display:true,
-            text: "Hello! Over the next few minutes, we'll be asking you some questions to assess your cancer risk."
+            text: "Hello! Over the next few minutes, we’ll be asking you some questions to recommend ways you can reduce your cancer risk."
         },
         {
             question: false,
