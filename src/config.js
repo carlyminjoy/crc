@@ -140,13 +140,13 @@ export default {
                 {
                     label: "Yes",
                     score: 30,
-                    userResponse: "Yes, I wear a sun protective hat outside.",
+                    userResponse: "I wear a sun protective hat outside.",
                     aiResponse: "Well done! Always slap on a broad-brimmed or bucket style hat that shades your face, neck and ears."
                 },
                 {
                     label: "No",
                     score: 0,
-                    userResponse: "No, I don't wear a sun protective hat outside.",
+                    userResponse: "I don't wear a sun protective hat outside.",
                     aiResponse: "Slap on a broad-brimmed or bucket style hat that shades your face, neck and ears."
                 }
             ]
@@ -164,13 +164,13 @@ export default {
                 {
                     label: "Yes",
                     score: 30,
-                    userResponse: "Yes, I apply and reapply SPF30+ sunscreen every 2 hours.",
+                    userResponse: "I apply and reapply SPF30+ sunscreen every 2 hours.",
                     aiResponse: "Well done! Slop on SPF 30+ sunscreen to exposed parts of your body 20 minutes before going outdoors and reapply every 2 hours."
                 },
                 {
                     label: "No",
                     score: 0,
-                    userResponse: "No, I don't apply and reapply SPF30+ sunscreen every 2 hours.",
+                    userResponse: "I don't apply and reapply SPF30+ sunscreen every 2 hours.",
                     aiResponse: "Slop on SPF 30+ sunscreen to exposed parts of your body 20 minutes before going outdoors and reapply every 2 hours."
                 }
             ]
@@ -188,13 +188,13 @@ export default {
                 {
                     label: "Yes",
                     score: 30,
-                    userResponse: "Yes, I stay in the shade where possible.",
+                    userResponse: "I stay in the shade where possible.",
                     aiResponse: "Well done! Always seek shade whenever you can, especially when the UV radiation is highest - between 10am and 3pm."
                 },
                 {
                     label: "No",
                     score: 0,
-                    userResponse: "No, I don't stay in the shade.",
+                    userResponse: "I don't stay in the shade.",
                     aiResponse: "Seek shade whenever you can, especially when the UV radiation is highest – between 10am and 3pm."
                 }
             ]
@@ -212,13 +212,13 @@ export default {
                 {
                     label: "Yes",
                     score: 30,
-                    userResponse: "Yes, I wear sunglasses.",
+                    userResponse: "I wear sunglasses.",
                     aiResponse: "Well done! Slide on wrap-around, close-fitting sunglasses that meet Australian standards."
                 },
                 {
                     label: "No",
                     score: 0,
-                    userResponse: "No, I don't wear sunglasses.",
+                    userResponse: "I don't wear sunglasses.",
                     aiResponse: "Slide on wrap-around, close-fitting sunglasses that meet Australian standards."
                 }
             ]
@@ -236,13 +236,13 @@ export default {
                 {
                     label: "Yes",
                     score: 30,
-                    userResponse: "Yes, I regularly check my skin.",
+                    userResponse: "I regularly check my skin.",
                     aiResponse: "Well done! It's important to develop a regular habit of checking your skin. If you notice any new spots or changes to an existing spot such as size, shape or colour, see your doctor immediately."
                 },
                 {
                     label: "No",
                     score: 0,
-                    userResponse: "No, I don't regularly check my skin.",
+                    userResponse: "I don't regularly check my skin.",
                     aiResponse: "Develop a regular habit of checking your skin, if you notice any new spots or changes to an existing spot such as size, shape or colour, see your doctor immediately."
                 }
             ]
@@ -260,13 +260,13 @@ export default {
                 {
                     label: "Yes",
                     score: 30,
-                    userResponse: "Yes, I have my skin checked by a health professional.",
+                    userResponse: "I have my skin checked by a health professional.",
                     aiResponse: "Well done!"
                 },
                 {
                     label: "No",
                     score: 0,
-                    userResponse: "No, I don't have my skin checked by a health professional.",
+                    userResponse: "I don't have my skin checked by a health professional.",
                     aiResponse: "Speak to your health professional about your skin cancer risk."
                 }
             ]
@@ -325,13 +325,13 @@ export default {
                 {
                     label: "Yes",
                     score: 105,
-                    userResponse: "Yes, my household is smoke-free.",
+                    userResponse: "my household is smoke-free.",
                     aiResponse: "Great!"
                 },
                 {
                     label: "No.",
                     score: 0,
-                    userResponse: "No, my household is not smoke-free.",
+                    userResponse: "My household is not smoke-free.",
                     aiResponse: "Okay."
                 }
             ]
@@ -668,13 +668,13 @@ export default {
                 {
                     label: "No",
                     score: 0,
-                    userResponse: "No, I don't participate in the national breast cancer screening program.",
+                    userResponse: "I don't participate in the national breast cancer screening program.",
                     aiResponse: `Participating in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/breast-screening-1' target='_blank'>National Breast Cancer Screening Program</a> greatly increases the likelihood of early detection of breast cancer and successful treatment.`
                 },
                 {
                     label: "No - I screen for breast cancer outside of the national breast cancer screening program (e.g. ultrasound or mammogram).",
                     score: 69.9,
-                    userResponse: "No, but I screen for breast cancer outside of this program.",
+                    userResponse: "I screen for breast cancer outside of the national breast cancer screening program.",
                     aiResponse: "Well done!"
                 },
             ]
@@ -698,13 +698,13 @@ export default {
                 {
                     label: "No",
                     score: 0,
-                    userResponse: "No, I don't participate in the national bowel cancer screening program.",
+                    userResponse: "I don't participate in the national bowel cancer screening program.",
                     aiResponse: `Participating in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-screening-1' target='_blank'>National Bowel Cancer Screening Program</a> greatly increases the likelihood of early detection of bowel cancer and successful treatment.`
                 },
                 {
                     label: "No - I screen for bowel cancer outside of the national bowel cancer screening program (e.g. colonoscopy).",
                     score: 69.9,
-                    userResponse: "No, but I screen for bowel cancer outside of this program.",
+                    userResponse: "I screen for bowel cancer outside of the national bowel cancer screening program.",
                     aiResponse: "Well done!"
                 },
             ]
@@ -728,7 +728,7 @@ export default {
                 {
                     label: "No",
                     score: 0,
-                    userResponse: "No, I don't participate in cervical screening.",
+                    userResponse: "I don't participate in cervical screening.",
                     aiResponse: "Participating in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/cervical-screening-1' target='_blank'>National Cervical Screening Program</a> offers the best protection against cervical cancer."
                 }
             ]
