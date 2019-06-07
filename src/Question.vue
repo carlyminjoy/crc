@@ -107,7 +107,7 @@ $dark-blue: #2c3e50;
     }
 
     .ready {
-        padding: 15px 15px 0 5px;
+        padding: 10px 15px 0 5px;
 
         .ask {
         font-weight:bold;

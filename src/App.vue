@@ -1,14 +1,10 @@
 <template>
 	<div id="app">
 
-        <header>
-            <div class='container'>
-                <img src="https://cancerqld.blob.core.windows.net/content/code/global/img/ccq-logo-249x123.png" />
-                <h1>Cancer Risk Quiz</h1>
-            </div>
-        </header>
-
         <div class="outer-container">
+
+            <h1 class='heading'>Cancer Risk Quiz</h1>
+
             <ul class="progress-bar">
                 <li v-for="(route, index) in routes" :key="index"
                     :class="{ 'active' : currentStep && index <= routes.indexOf(state.activeCategory) }">
@@ -454,6 +450,9 @@ $dark-blue: #2c3e50;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
 }
 
+html {
+    margin-top:unset!important;
+}
 body {
     margin: 0;
     padding: 0;
@@ -469,30 +468,30 @@ body {
     height:100vh;
     background: #eee;
 
-    header {
-        height:80px;
-        background: #fff;
-        // border-bottom: 3px solid #FCD208;
+    // header {
+    //     height:80px;
+    //     background: #fff;
+    //     // border-bottom: 3px solid #FCD208;
 
-        .container {
-            height:100%;
-            max-width: 660px;
-            margin: 0 auto;
-            img {
-                float:left;
-                height: 50px;
-                margin-top: 15px;
-            }
-            h1 {
-                color: $dark-blue;
-                font-family:'Foco CC', 'Roboto', Arial, sans-serif;
-                margin: 0 104px 0 0;
-                letter-spacing: 0;
-                line-height: 90px;
-            }
-        }
+    //     .container {
+    //         height:100%;
+    //         max-width: 660px;
+    //         margin: 0 auto;
+    //         img {
+    //             float:left;
+    //             height: 50px;
+    //             margin-top: 15px;
+    //         }
+    //         h1 {
+    //             color: $dark-blue;
+    //             font-family:'Foco CC', 'Roboto', Arial, sans-serif;
+    //             margin: 0 104px 0 0;
+    //             letter-spacing: 0;
+    //             line-height: 90px;
+    //         }
+    //     }
 
-    }
+    // }
 
 }
 
@@ -533,6 +532,11 @@ body {
 .outer-container {
     padding-bottom: 60px;
     background:#eee;
+
+    h1.heading {
+        padding: 30px 0;
+        font-weight: 800;
+    }
 }
 .conversation-container {
     &.mask {
@@ -551,6 +555,7 @@ body {
     max-width: 600px;
     max-height: 500px;
     text-align:left;
+    font-size:16px!important;
 
     display: -webkit-flex;
 	display: -moz-flex;
@@ -564,7 +569,8 @@ body {
 	justify-content: flex-end;
 
     p {
-        margin: 8px 0 3px 0;
+        font-size: 16px!important;
+        margin: 8px 0;
     }
     
     .ai-comment {
@@ -722,26 +728,26 @@ body {
 
 @media screen and (max-width: 800px) {
     #app {
-        header {
-            height: 60px;
-            .container {
-                display:flex;
-                align-items:center;
-                h1 {
-                    padding-top: 5px;
-                    font-size: 24px;
-                    margin: unset;
-                    font-weight:bold;
-                }
+        // header {
+        //     height: 60px;
+        //     .container {
+        //         display:flex;
+        //         align-items:center;
+        //         h1 {
+        //             padding-top: 5px;
+        //             font-size: 24px;
+        //             margin: unset;
+        //             font-weight:bold;
+        //         }
 
-                img {
-                    height: 40px;
-                    float:unset;
-                    margin: 0 20px 0 5px;
-                }
+        //         img {
+        //             height: 40px;
+        //             float:unset;
+        //             margin: 0 20px 0 5px;
+        //         }
                 
-            }
-        }
+        //     }
+        // }
         .progress-bar {
             li {
                 span {
