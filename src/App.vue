@@ -23,7 +23,7 @@
                     :size="150"
                     :reverse="false"
                     line-cap="butt"
-                    :fill='{ gradient: ["#43A047", "#FCD208"], gradientDirection:[30,140,140,60] }'
+                    :fill='{ gradient: ["#0099DA", "#FCD208"], gradientDirection:[30,140,140,60] }'
                     empty-fill="#eee"
                     :animation-start-value="0.0"
                     :start-angle="-(Math.PI / 2)"
@@ -34,36 +34,73 @@
                 </vue-circle>
 
                 <div>
-                    <h3>
-                        <span v-if='latestScorecard.scores.total >= 75'>
-                            Great work! You are making good choices to help reduce your cancer risk, but there are still further steps you can take.
-                        </span> 
-                        <span v-else-if='latestScorecard.scores.total >= 50'>
-                            You're on the right track. You are making some good choices to help reduce your cancer risk, but there are many more steps you can take.
-                        </span> 
-                        <span v-else>
-                            There is room for improvement to help reduce your cancer risk. The good news is that there are plenty of ways you can do this.
-                        </span> 
-                    </h3>
+                    <template v-if='latestScorecard.scores.total === 100'>
+                        <h2>Excellent!</h2><br>
+                        <h3>You are making great choices to help reduce your cancer risk.</h3>
+                    </template> 
+                    <template v-if='latestScorecard.scores.total >= 75'>
+                        <h2>You're doing well</h2>
+                        <h3>You are making good choices to help reduce your cancer risk, but there are still further steps you can take.</h3>
+                    </template> 
+                    <template v-else-if='latestScorecard.scores.total >= 50'>
+                        <h2>On the right track</h2>
+                        <h3>You are making some good choices to help reduce your cancer risk, but there are many more steps you can take.</h3>
+                    </template> 
+                    <template v-else>
+                        <h2>Room for improvement</h2>
+                        <h3>Good news - there are plenty of ways to reduce your cancer risk.</h3>
+                    </template> 
                     <br>
                 </div>
 
                 <div class="category" v-for="(category, index) in scorecards" :key="index">
-                    <h2><i :class='icons[category.name]'></i> &nbsp; &nbsp; {{ category.name.toUpperCase() }}</h2>
+                    <div class='category-heading'>
+                        <h2>
+                            <i :class='icons[category.name]'></i> &nbsp; {{ category.name.toUpperCase() }}
+                            <!-- <div class='expand'>&nbsp; <i class='fa fa-chevron-down'></i></div> -->
 
-                    <div class="blue" v-if="category.good.length > 0">
+                            <span class='category-icons'>
+                                <i class='fa fa-check'></i>{{ category.good.length }}&nbsp;
+                                <i class='fa fa-exclamation'></i>{{ category.bad.length }}
+                            </span>
+                        </h2>
+
+                        <span class='expand-tag' 
+                            @click='expandedCategory = expandedCategory === category.name ? null : category.name'>
+                            <i v-if='expandedCategory !== category.name' class='fa fa-chevron-down'></i>
+                            <i v-else class='fa fa-chevron-up'></i>
+                        </span>
+                    </div>
+
+                    <div class="blue" :class="{'contracted' : expandedCategory !== category.name}" v-if="category.good.length > 0">
                         <h2>You're doing great in the following areas:</h2>
-                        <div v-for="(section, i) in category.good" :key="i">
-                            <p><strong>You told us: </strong>{{ section.answer }}</p>
-                            <p><strong>{{ section.recommendation }}</strong></p>
-                        </div>
+                        <ul>
+                            <li v-for="(section, i) in category.good" :key="i">
+                                <i class='fa fa-check'></i>
+                                <p>{{ section.answer }}</p>
+                                <!-- <p>{{ section.recommendation }}</p> -->
+                            </li>
+                        </ul>
 
                     </div>
 
-                    <div class="grey" v-if="category.bad.length > 0">
+                    <div class="grey" :class="{'contracted' : expandedCategory !== category.name}" v-if="category.bad.length > 0">
                         <h2>Areas for improvement:</h2>
-                        <div v-for="(section, i) in category.bad" :key="i">
-                            <p><strong>You told us: </strong>{{ section.answer }}</p>
+
+                        <ul class='improvements'>
+                            <li v-for="(section, i) in category.bad" :key="i">
+                                <i class='fa fa-exclamation-circle'></i> &nbsp;
+                                <p> {{ section.answer }} <br>
+                                    <strong>
+                                        <span v-if='section.bmi'>Your BMI is: {{ section.bmi }}.<br></span>
+                                        <span v-if='section.bmi'>The range for a healthy weight is between 18.5 and 25.<br></span>
+                                        <span v-html='section.recommendation'>
+                                    </strong>
+                                </p>
+                            </li>
+                        </ul>
+
+                            <!-- <p><strong>You told us: </strong>{{ section.answer }}</p>
                             <p v-if='section.bmi'><strong>Your BMI is: </strong>{{ section.bmi }}</p>
                             <p><strong>We recommend: </strong>
 
@@ -71,7 +108,7 @@
                             <span v-html='section.recommendation'></span>
 
                             </p>
-                        </div>
+                        </div> -->
 
 
                         <template v-if="tips[category.name]">
@@ -83,7 +120,8 @@
 
                     </div>
 
-                    <div class='resources-container' v-if="resources[category.name]">
+                    <div class='resources-container' :class="{'contracted' : expandedCategory !== category.name}" v-if="resources[category.name]">
+                        <h2>Resources and links:</h2>
                         <ul class="resources">
                             <li v-for="(resource, index) in resources[category.name]" :key='index'>
                                 <a class='img-link' :href='resource.url' target='_blank' v-bind:style="{ backgroundImage: 'url(' + resource.img + ')' }"></a>
@@ -95,9 +133,11 @@
                         </ul>
                     </div>
 
+                    <!-- <span v-show='expandedCategory !== category.name' class='expand-tag' @click='expandedCategory = expandedCategory === category.name ? null : category.name'><i class='fa fa-chevron-down'></i></span> -->
                 </div>
 
             </div>
+
         </div>
 	</div>
 </template>
@@ -119,6 +159,7 @@ export default {
 	data () {
 		return {
             results: {},
+            expandedCategory: null,
             latestScorecard: null,
             tips: {
                 smoking: {
@@ -183,12 +224,26 @@ export default {
                 }
             },
             resources: {
+                uv: [
+                    {
+                        url: 'https://cancerqld.org.au/cancer-prevention/understanding-risk/sun-protection/',
+                        img: 'https://cancerqld.blob.core.windows.net/site/content/uploads/2018/11/Sun-family-retail-photo-867x210.jpg',
+                        text: `For more information on sun protection, visit Cancer Council Queensland.`,
+                        cta: `View Website`
+                    },
+                    {
+                        url: 'https://cancerqld.org.au/cancer-prevention/understanding-risk/sun-protection/',
+                        img: 'https://cancerqld.blob.core.windows.net/site/content/uploads/2018/11/Sun-family-retail-photo-867x210.jpg',
+                        text: `For more information on sun protection, visit Cancer Council Queensland.`,
+                        cta: `View Website`
+                    }
+                ],
                 nutrition: [
                     {
                         url: 'https://www.biggestmorningtea.com.au/ideas/recipes/',
                         img: 'https://www.biggestmorningtea.com.au/siteassets/biggest-morning-tea/ideas-and-planning/recipes/fruitskew_thumb.png',
-                        text: `For healthy recipe ideas, visit Australia's Biggest Morning Tea recipes.`,
-                        cta: 'Visit Website'
+                        text: `For healthy recipe ideas, check out Australia's Biggest Morning Tea.`,
+                        cta: 'View Website'
                     }
                 ]
             },
@@ -339,64 +394,205 @@ body {
 
 .results-container {
     background:#fff;
-    padding: 15px 30px;
+    padding: 30px;
     border-radius: 8px;
-    max-width: 600px;
-    margin: 50px auto;
+    max-width: 960px;
+    margin: 30px auto;
     height: auto;
     @extend %boxshadow;
 
     .circle {
-        margin: 30px auto;
+        margin: 30px auto 0 auto;
+    }
+
+    &>div>h3 {
+        max-width: 600px;
+        margin: 20px auto 0 auto;
+        font-weight: 400;
     }
 
     .category {
         background: #eee;
-        background: $dark-blue;
         color: #fff;
-        margin-bottom: 40px;
+        margin: 30px;
         @extend %boxshadow;
         border-radius: 8px;
         text-align:left;
 
+
+        .category-heading {
+            background: $dark-blue;
+            transition: 0.3s ease;
+            border-radius: 8px 8px 0 0;
+            display:flex;
+            justify-content:stretch;
+            // cursor:pointer;
+
+            
+            // div.expand {
+            //     display:inline-block;
+            //     // color:$blue;
+            //     height: 100%;
+            //     width: 40px;
+            //     text-align:right;
+                
+            // }
+
+            h2 {
+                padding: 10px 30px;
+                margin: 0;
+                flex-basis: 300px;
+                flex-grow: 1;
+                span.category-icons {
+                    float:right;
+                    width: 100px;
+                    display:flex;
+                    pointer-events:none;
+                    justify-content:space-between;
+
+                    .fa-check {
+                        color: $blue;
+                    }
+
+                    .fa-exclamation {
+                        color: $yellow;
+                    }
+                }
+            }
+
+            span.expand-tag {
+                flex-basis: 40px;
+                max-width: 40px;
+                flex-shrink:1;
+                background:$blue;
+                padding: 5px 10px;
+                color:#fff;
+                font-size: 24px;
+                border-radius: 0 8px 0 0;
+                transition: 0.5s ease;
+                text-align:center;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+
+                &:hover {
+                    opacity: 0.7;
+                    cursor:pointer;
+                }
+            }
+        }
+
         &>h2 {
-            padding: 30px 0 20px 30px;
+            padding: 15px 30px;
             margin: 0;
             color:#fff;
         }
-
 
         p {
             margin: 0 0 4px 0;
             font-size: 16px!important;
         }
 
-        .blue {
+        .blue, .grey, .resources-container {
+            transition: max-height 0.5s ease, opacity 0.5s ease;
             padding: 15px 30px;
-            background: $blue;
-            color:#fff;
+            max-height: 800px;
+        }
 
-            h3 {
-                color:#fff;
-            }
+        .blue.contracted, .grey.contracted, .resources-container.contracted {
+            transition: max-height 0.5s ease, opacity 0.5s ease;
+            padding: 0;
+            margin:0;
+            opacity: 0;
+            max-height: 0px;
+            height:0;
+            pointer-events:none;
 
-            div {
-                margin: 20px 0;
+            * {
+                margin: 0;
+                padding: 0;
+                opacity: 0;
+                max-height: 0;
             }
         }
 
+        .blue > div,
+        .grey > div {
+            display:flex;
+            flex-wrap:wrap;
+            padding: 10px 15px 0 0;
+
+            p {
+                flex-basis: 200px;
+                min-width: 200px;
+                flex-grow: 1;
+            }
+        }
+
+        .blue {
+            background: $blue;
+            color:#fff;
+
+            h2 {
+                color:#fff;
+            }
+
+            ul {
+                display:flex;
+                flex-wrap: wrap;
+            
+                li{
+                    flex-basis: 380px;
+                    flex-grow:1;
+                    min-width: 380px;
+                    margin: 5px 0;
+                    display:flex;
+                    i {
+                        font-size: 20px;
+                        color:#fff;
+                        margin-right: 15px;
+                    }
+
+                    p {
+                        margin: 0;
+                    }
+                }
+            }
+
+        }
+
         .grey {
-            padding: 15px 30px;
-            background:#eee;
+            background:$yellow;
             color:$dark-blue;
 
             & > div {
                 margin: 20px auto;
+                border-top: 1px solid #dcdcdc;
             }
 
             ul.tips {
                 margin-top: 10px;
                 padding-inline-start:20px;
+            }
+
+            ul.improvements {
+                list-style-type:none;
+                display:flex;
+                flex-wrap:wrap;
+
+                li {
+                    flex-basis: 380px;
+                    flex-grow:1;
+                    min-width: 380px;
+                    margin: 5px 30px 5px 0;
+                    display:flex;
+
+                    i {
+                        // color:$yellow;
+                        margin-right: 15px;
+                        font-size: 24px;
+                    }
+                }
             }
 
             a {
@@ -416,26 +612,30 @@ body {
                 list-style-type:none;
                 padding-inline-start:0;
                 margin-block-start:0;
+                flex-wrap:wrap;
 
                 li {
                     background:white;
                     @extend %boxshadow;
-                    margin:0;
+                    margin:10px;
                     padding:0;
-                    max-width:100%;
+                    min-width:320px;
+                    flex-basis: 320px;
+                    flex-grow:1;
                     display:flex;
+                    max-width: 400px;
 
                     a.img-link {
                         padding:0;
                         margin:0;
                         height:100%;
-                        flex-basis:50%;
+                        flex-basis:45%;
                         flex-grow:1;
                         background-size:cover;
                     }
                     div {
                         padding: 30px;
-                        flex-basis:50%;
+                        flex-basis:45%;
                         flex-grow:1;
                         display:flex;
                         flex-direction:column;
@@ -446,7 +646,7 @@ body {
                             color:#fff;
                             text-decoration:none;
                             transition:0.3s ease;
-                            padding: 12px 20px 7px 20px;
+                            padding: 8px 20px;
                             border-radius: 4px;
                             margin-top: 10px;
                             @extend %boxshadow;
@@ -511,22 +711,23 @@ body {
                 margin:0;
                 border-radius:0;
                 
-            }
-            .conversation-container {
-                &.mask {
-                    -webkit-mask-image: -webkit-gradient(linear, left top, left 10%, from(rgba(0,0,0,0)), to(rgba(0,0,0,1)));
+                .category {
+                    margin: 30px 0;
+                    .grey, .blue, .resources-container {
+                        ul {
+                            padding-inline-start:0;
+
+                            li {
+                                i {
+                                    display:none;
+                                }
+                                min-width:unset;
+                            }
+                        } 
+                    }
                 }
-
-                max-height:calc(100vh - 180px);
-
-                padding: 40px 10px;
-                margin: 20px auto;
-
-                .ai-comment,
-                .user-comment {
-                    max-width: 80%;
-                }
             }
+           
         }
     }
 }
