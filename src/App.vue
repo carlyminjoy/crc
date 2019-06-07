@@ -438,7 +438,8 @@ body {
                 
             // }
 
-            h2 {
+            &>h2 {
+                color:#fff;
                 padding: 10px 30px;
                 margin: 0;
                 flex-basis: 300px;
@@ -488,7 +489,7 @@ body {
             color:#fff;
         }
 
-        p {
+        p, li {
             margin: 0 0 4px 0;
             font-size: 16px!important;
         }
@@ -497,6 +498,10 @@ body {
             transition: max-height 0.5s ease, opacity 0.5s ease;
             padding: 15px 30px;
             max-height: 800px;
+
+            .fa, .svg-inline--fa {
+                font-size: 20px!important;
+            }
         }
 
         .blue.contracted, .grey.contracted, .resources-container.contracted {
@@ -547,7 +552,7 @@ body {
                     min-width: 380px;
                     margin: 5px 0;
                     display:flex;
-                    i {
+                    .fa, .svg-inline--fa {
                         font-size: 20px;
                         color:#fff;
                         margin-right: 15px;
@@ -587,7 +592,7 @@ body {
                     margin: 5px 30px 5px 0;
                     display:flex;
 
-                    i {
+                    .fa, .svg-inline--fa {
                         // color:$yellow;
                         margin-right: 15px;
                         font-size: 24px;
