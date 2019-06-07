@@ -1,11 +1,11 @@
 <template>
 	<div id="app">
-        <header>
+        <!-- <header>
             <div class='container'>
                 <img src="https://cancerqld.blob.core.windows.net/content/code/global/img/ccq-logo-249x123.png" />
                 <h3>Cancer Risk Score Card</h3>
             </div>
-        </header>
+        </header> -->
 
         <div class="outer-container">
 
@@ -276,6 +276,9 @@ $dark-blue: #2c3e50;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
 }
 
+html {
+    margin-top: unset!important;
+}
 body {
     margin: 0;
     padding: 0;
@@ -295,38 +298,38 @@ body {
     height:100vh;
     background: #eee;
 
-    header {
-        height:80px;
-        background: #fff;
-        border-bottom: 3px solid $yellow;
+    // header {
+    //     height:80px;
+    //     background: #fff;
+    //     border-bottom: 3px solid $yellow;
 
-        .container {
-            height:100%;
-            max-width: 660px;
-            margin: 0 auto;
-            img {
-                float:left;
-                height: 50px;
-                margin-top: 15px;
-            }
-            h3 {
-                color: $dark-blue;
-                font-family:'Foco CC', 'Roboto', Arial, sans-serif;
-                margin: 0 104px 0 0;
-                letter-spacing: 0;
-                text-transform:uppercase;
-                font-weight:400;
-                line-height: 90px;
-            }
-        }
+    //     .container {
+    //         height:100%;
+    //         max-width: 660px;
+    //         margin: 0 auto;
+    //         img {
+    //             float:left;
+    //             height: 50px;
+    //             margin-top: 15px;
+    //         }
+    //         h3 {
+    //             color: $dark-blue;
+    //             font-family:'Foco CC', 'Roboto', Arial, sans-serif;
+    //             margin: 0 104px 0 0;
+    //             letter-spacing: 0;
+    //             text-transform:uppercase;
+    //             font-weight:400;
+    //             line-height: 90px;
+    //         }
+    //     }
 
-    }
+    // }
 
 }
 
 .outer-container {
     background:#eee;
-    padding-bottom: 60px;
+    padding: 60px 0;
 
     .spinner {
         margin-top:40vh!important
@@ -359,17 +362,23 @@ body {
         &>h2 {
             padding: 30px 0 20px 30px;
             margin: 0;
+            color:#fff;
         }
+
 
         p {
             margin: 0 0 4px 0;
-            font-size: 16px;
+            font-size: 16px!important;
         }
 
         .blue {
             padding: 15px 30px;
             background: $blue;
             color:#fff;
+
+            h3 {
+                color:#fff;
+            }
 
             div {
                 margin: 20px 0;
@@ -466,26 +475,26 @@ body {
 
 @media screen and (max-width: 800px) {
     #app {
-        header {
-            height: 60px;
-            .container {
-                display:flex;
-                align-items:center;
-                h1 {
-                    padding-top: 5px;
-                    font-size: 24px;
-                    margin: unset;
-                    font-weight:bold;
-                }
+        // header {
+        //     height: 60px;
+        //     .container {
+        //         display:flex;
+        //         align-items:center;
+        //         h1 {
+        //             padding-top: 5px;
+        //             font-size: 24px;
+        //             margin: unset;
+        //             font-weight:bold;
+        //         }
 
-                img {
-                    height: 40px;
-                    float:unset;
-                    margin: 0 20px 0 5px;
-                }
+        //         img {
+        //             height: 40px;
+        //             float:unset;
+        //             margin: 0 20px 0 5px;
+        //         }
                 
-            }
-        }
+        //     }
+        // }
         .progress-bar {
             li {
                 span {
