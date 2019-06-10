@@ -77,9 +77,15 @@
                         <ul>
                             <li v-for="(section, i) in category.good" :key="i">
                                 <i class='fa fa-check'></i>
-                                <p>{{ section.answer }}</p>
+                                <p>{{ section.answer }}
+                                    <span v-if='section.bmi'><strong><br>Your BMI is: {{ section.bmi }}.<br>
+                                    The recommended range is between 18.5 and 25.</strong>
+                                    </span>
+                                </p>
+                                
                                 <!-- <p>{{ section.recommendation }}</p> -->
                             </li>
+                            
                         </ul>
 
                     </div>
@@ -124,7 +130,7 @@
                         <h2>Resources and links:</h2>
                         <ul class="resources">
                             <li v-for="(resource, index) in resources[category.name]" :key='index'>
-                                <a class='img-link' :href='resource.url' target='_blank' v-bind:style="{ backgroundImage: 'url(' + resource.img + ')' }"></a>
+                                <a class='img-link' :class="{ 'download' : resource.download, 'fullwidth' : resource.fullwidth }" :href='resource.url' target='_blank' v-bind:style="{ backgroundImage: 'url(' + resource.img + ')' }"></a>
                                 <div>
                                     <p>{{ resource.text }}</p>
                                     <a :href='resource.url' target='_blank'>{{ resource.cta }}</a>
@@ -226,24 +232,97 @@ export default {
             resources: {
                 uv: [
                     {
-                        url: 'https://cancerqld.org.au/cancer-prevention/understanding-risk/sun-protection/',
-                        img: 'https://cancerqld.blob.core.windows.net/site/content/uploads/2018/11/Sun-family-retail-photo-867x210.jpg',
-                        text: `For more information on sun protection, visit Cancer Council Queensland.`,
-                        cta: `View Website`
+                        url: 'https://cancerqld.blob.core.windows.net/resources/quest/Spot%20the%20difference_FACTSHEET.pdf',
+                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-sunsafety-02.png',
+                        text: `Spot the Difference Factsheet.`,
+                        cta: `Download`,
+                        download: true
                     },
                     {
-                        url: 'https://cancerqld.org.au/cancer-prevention/understanding-risk/sun-protection/',
-                        img: 'https://cancerqld.blob.core.windows.net/site/content/uploads/2018/11/Sun-family-retail-photo-867x210.jpg',
-                        text: `For more information on sun protection, visit Cancer Council Queensland.`,
-                        cta: `View Website`
+                        url: 'https://cancerqld.blob.core.windows.net/resources/quest/skin%20cancer%20outdoor%20work.pdf',
+                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-sunsafety-01.png',
+                        text: `Skin Cancer Outdoor Work`,
+                        cta: `Download`,
+                        download: true
                     }
                 ],
                 nutrition: [
                     {
                         url: 'https://www.biggestmorningtea.com.au/ideas/recipes/',
-                        img: 'https://www.biggestmorningtea.com.au/siteassets/biggest-morning-tea/ideas-and-planning/recipes/fruitskew_thumb.png',
+                        img: 'https://www.cancer.org.au/content/get_involved/events/ABMT_RFL_700x275-v2.png',
                         text: `For healthy recipe ideas, check out Australia's Biggest Morning Tea.`,
-                        cta: 'View Website'
+                        cta: 'View'
+                    },
+                    {
+                        url: 'https://cancerqld.blob.core.windows.net/resources/quest/Healthy%20BBQ_FACTSHEET.pdf',
+                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-eat-01.png',
+                        text: `Healthy BBQ Factsheet`,
+                        cta: 'Download',
+                        download: true
+                    },
+                    {
+                        url: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/resources/18029%20A4%20Men%20Comparethepair_FA.PDF',
+                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-eat-02.png',
+                        text: `Compare the Pair`,
+                        cta: 'Download',
+                        download: true
+                    },
+                    {
+                        url: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/resources/Red%20meat%20-%20processed%20meat%20and%20cancer%20-%20your%20questions%20answered.pdf',
+                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-eat-03.png',
+                        text: `Red Meat, Processed Meat and Cancer`,
+                        cta: 'Download',
+                        download: true
+                    },
+                    
+                ],
+                smoking: [
+                    {
+                        url: 'https://cancerqld.blob.core.windows.net/resources/quest/Harms%20of%20smoking_FACTSHEET.pdf',
+                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-smoking-02.png',
+                        text: `Harms of Smoking Factsheet`,
+                        cta: 'Download',
+                        download: true
+                    },
+                    {
+                        url: 'https://cancerqld.blob.core.windows.net/resources/quest/Benefits%20of%20quitting%20smoking_FACTSHEET.pdf',
+                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-smoking-01.png',
+                        text: `Benefits of Quitting Smoking Factsheet`,
+                        cta: 'Download',
+                        download: true
+                    }
+                ],
+                alcohol: [
+                    {
+                        url: 'https://cancerqld.blob.core.windows.net/resources/quest/Alcohol%20and%20cancer_FACTSHEET.pdf',
+                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-alcohol-01.png',
+                        text: `Alcohol and Cancer Factsheet`,
+                        cta: 'Download',
+                        download: true
+                    },
+                    {
+                        url: 'https://cancerqld.blob.core.windows.net/resources/quest/Food%20swaps_FACTSHEET.pdf',
+                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-alcohol-02.png',
+                        text: `Food Swaps Factsheet`,
+                        cta: 'Download',
+                        download: true
+                    }
+                ],
+                'physical activity': [
+                    {
+                        url: 'https://cancerqld.blob.core.windows.net/resources/quest/Take%20time%20to%20be%20active_FACTSHEET.pdf',
+                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-active-01.png',
+                        text: `Take Time to be Active Factsheet`,
+                        cta: 'Download',
+                        download: true
+                    }
+                ],
+                screening: [
+                    {
+                        url: 'https://cancerqld.org.au/cancer-prevention/early-detection/screening-service/',
+                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-bowel-02.png',
+                        text: `Screening services information`,
+                        cta: 'View'
                     }
                 ]
             },
@@ -303,15 +382,21 @@ export default {
                 .post('https://prod-05.australiaeast.logic.azure.com:443/workflows/df753e6a563e451ea76a06b71d1a4a9e/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pge8rl1wK4YG2jeyFkb3gl38yu97YZAyBzp6Dd6vAxA', {user: user})
                 .then(response => {
                     this.results = response.data
-                    this.latestScorecard = response.data.scorecards[0].entry
+
+                    response.data.scorecards.forEach((card) => {
+                        if (card.entry) {
+                            vm.latestScorecard = card.entry;
+                            return;
+                        }
+                    })
                 })
+
         }
     },
     mounted () {
         let vm = this;
 
         let user = vm.$route.query.user;
-        console.log(vm.$route.query)
         vm.getScoreCard(user);
     }
 }
@@ -337,48 +422,20 @@ html {
 body {
     margin: 0;
     padding: 0;
-    // overflow-y:hidden;
     .m0 {
         margin: 0;
         padding: 0;
     }
 }
 #app {
-	font-family: 'Foco CC', 'Roboto', Helvetica, Arial, sans-serif;
+	font-family: Roboto, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
 	color: $dark-blue;
-	// padding: 30px;
     height:100vh;
     background: #eee;
 
-    // header {
-    //     height:80px;
-    //     background: #fff;
-    //     border-bottom: 3px solid $yellow;
-
-    //     .container {
-    //         height:100%;
-    //         max-width: 660px;
-    //         margin: 0 auto;
-    //         img {
-    //             float:left;
-    //             height: 50px;
-    //             margin-top: 15px;
-    //         }
-    //         h3 {
-    //             color: $dark-blue;
-    //             font-family:'Foco CC', 'Roboto', Arial, sans-serif;
-    //             margin: 0 104px 0 0;
-    //             letter-spacing: 0;
-    //             text-transform:uppercase;
-    //             font-weight:400;
-    //             line-height: 90px;
-    //         }
-    //     }
-
-    // }
 
 }
 
@@ -567,7 +624,7 @@ body {
         }
 
         .grey {
-            background:#eee;
+            background:$yellow;
             color:$dark-blue;
 
             & > div {
@@ -637,6 +694,18 @@ body {
                         flex-basis:45%;
                         flex-grow:1;
                         background-size:cover;
+
+                        &.download {
+                            background-size: auto;
+                            background-repeat:no-repeat;
+                            background-color: $blue;
+                            background-position: center;
+                        }
+
+                        &.fullwidth {
+                            flex-basis: 100%;
+                            width: 100%;
+                        }
                     }
                     div {
                         padding: 30px;
