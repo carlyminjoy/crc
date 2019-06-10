@@ -1,5 +1,5 @@
 <template>
-  <div class="weight" :class="{'expanded' : ready}">
+  <div class="postcode" :class="{'expanded' : ready}">
 
     <span class="dots" v-if="!ready"> 
         <i class='dot fas fa-circle'></i>
@@ -77,7 +77,7 @@ $blue: #0099DA;
 $yellow: #FCD208;
 $dark-blue: #2c3e50;
 
-.weight {
+.postcode {
     max-height: 20px;
     max-width: 30px;
     transition: 0.3s ease;
@@ -115,10 +115,6 @@ $dark-blue: #2c3e50;
 
         label {
             color:#fff;
-        }
-
-        &:hover {
-            background:$blue;
         }
     }
 

@@ -107,7 +107,7 @@ export default {
             id: 'clothing',
             question: true,
             category: 'uv',
-            text: `Do you wear sun protective clothing? e.g. shirt with collar, sleeves and long pants</li>`,
+            text: `Do you wear sun protective clothing (e.g. shirt with collar, sleeves and long pants)?</li>`,
             score: null,
             display:true,
             userResponded: false,
@@ -325,7 +325,7 @@ export default {
                 {
                     label: "Yes",
                     score: 105,
-                    userResponse: "my household is smoke-free.",
+                    userResponse: "My household is smoke-free.",
                     aiResponse: "Great!"
                 },
                 {
@@ -355,19 +355,19 @@ export default {
                 {
                     label: "1 - 2",
                     score: 209.9,
-                    userResponse: "I'll typically consume 1 - 2 standard drinks.",
+                    userResponse: "When I drink, I'll typically consume 1 - 2 standard drinks in a day.",
                     aiResponse: "Good - always try to limit your alcohol consumption to no more than 2 standard drinks per day."
                 },
                 {
                     label: "2",
                     score: 105,
-                    userResponse: "I'll typically consume around 2 standard drinks.",
+                    userResponse: "When I drink, I'll typically consume around 2 standard drinks in a day.",
                     aiResponse: "A little too much! Try to limit your alcohol consumption to no more than 2 standard drinks per day."
                 },
                 {
                     label: "More than 2",
                     score: 0,
-                    userResponse: "I'll typically consume more than 2 standard drinks.",
+                    userResponse: "When I drink, I'll typically consume more than 2 standard drinks in a day.",
                     aiResponse: "Try to limit your alcohol consumption to no more than 2 standard drinks per day."
                 }
                 
@@ -398,7 +398,7 @@ export default {
                 {
                     label: "2 or more",
                     score: 42,
-                    userResponse: "I eat 2 or more serves of fruit in a typical day ",
+                    userResponse: "I eat 2 or more serves of fruit in a typical day.",
                     aiResponse: "Well done! You should try to eat at least 2 serves of fruit every day."
                 }
                 
@@ -429,13 +429,13 @@ export default {
                 {
                     label: "3 - 4",
                     score: 28,
-                    userResponse: "I eat 3 - 4 serves of vegetables in a typical day ",
+                    userResponse: "I eat 3 - 4 serves of vegetables in a typical day.",
                     aiResponse: "Good start! But you should try to eat at least 5 serves of vegetables every day."
                 },
                 {
                     label: "5 or more",
                     score: 42,
-                    userResponse: "I eat 5 or more serves of vegetables in a typical day ",
+                    userResponse: "I eat 5 or more serves of vegetables in a typical day.",
                     aiResponse: "Well done! You should try to eat at least 5 or more serves of vegetables each day."
                 }
                 
@@ -466,13 +466,13 @@ export default {
                 {
                     label: "5 - 7",
                     score: 41.8,
-                    userResponse: "I eat 5 - 7 serves of red meat in a typical week ",
+                    userResponse: "I eat 5 - 7 serves of red meat in a typical week.",
                     aiResponse: "Well done! Red meat consumption should be limited to no more than 7 serves (455g) per week."
                 },
                 {
                     label: "8 or more",
                     score: 0,
-                    userResponse: "I eat 8 or more serves of red meat in a typical week ",
+                    userResponse: "I eat 8 or more serves of red meat in a typical week.",
                     aiResponse: "Try to limit your red meat consumption to no more than 7 serves (455g) per week."
                 }
                 
@@ -503,13 +503,13 @@ export default {
                 {
                     label: "1 - 2",
                     score: 21,
-                    userResponse: "I eat 1 - 2 serves of procssed meat in a typical week ",
+                    userResponse: "I eat 1 - 2 serves of processed meat in a typical week.",
                     aiResponse: "A little too much! Try to avoid processed meat consumption or cut down the amount you currently consume."
                 },
                 {
                     label: "3 or more",
                     score: 0,
-                    userResponse: "I eat 3 or more serves of processed meat in a typical week ",
+                    userResponse: "I eat 3 or more serves of processed meat in a typical week.",
                     aiResponse: "Try to avoid processed meat consumption or cut down the amount you currently consume."
                 }
                 

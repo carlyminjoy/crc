@@ -468,6 +468,10 @@ body {
     height:100vh;
     background: #eee;
 
+    h1, h2, h3, h4, h5, h6 {
+        color:unset;
+    }
+
     // header {
     //     height:80px;
     //     background: #fff;
@@ -540,7 +544,7 @@ body {
 }
 .conversation-container {
     &.mask {
-        -webkit-mask-image: -webkit-gradient(linear, left top, left 20%, from(rgba(0,0,0,0)), to(rgba(0,0,0,1)));
+        -webkit-mask-image: -webkit-gradient(linear, left top, left 10%, from(rgba(0,0,0,0)), to(rgba(0,0,0,1)));
     }
     overflow-y:hidden;
 
@@ -623,10 +627,18 @@ body {
         flex-wrap: wrap;
         justify-content:space-between;
 
+        span.mdc-button__label {
+            font-size:16px!important;
+        }
+
         div.mdc-text-field {
             flex-grow: 1;
             margin: 5px;
             flex-basis: 100%;
+
+            label.mdc-floating-label {
+                font-size: 16px!important;
+            }
 
             &.half-width {
                 min-width: 200px;
@@ -688,13 +700,15 @@ body {
                 position:absolute;
                 opacity: 0;
                 transition: opacity 0.5s ease;
+
             }
 
-            i {
+            i,
+            .svg-inline--fa {
                 font-size: 32px;
             }
 
-            h4, i {
+            h4, i, svg-inline-fa {
                 opacity: 1;
                 transition: 0.5s ease;
                 pointer-events:none;
@@ -716,9 +730,9 @@ body {
                     transform: rotateY(180deg);
                     text-transform:none;
                     color:#fff;
-                    top: 0;
                     right: 15px;
                     left: 15px;
+                    top: 15px;
                     pointer-events:none;
                 }
             }
