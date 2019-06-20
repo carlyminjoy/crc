@@ -39,7 +39,7 @@
                         <template v-for="category in scoredCategories">
                             <li @click='rotate($event)' :key="category.name" v-if="results[category.name] >= 66">
 
-                                <i :class="category.icon"></i>
+                                <img class='category-icon' :src="category.icon" />
                                 <h4>{{ category.name }}</h4>
 
                                 <p>{{category.desc}}</p>
@@ -58,7 +58,7 @@
                         <template v-for="category in scoredCategories">
                             <li :key="category.name" v-if="results[category.name] < 66">
 
-                                <i :class="category.icon"></i>
+                                <img class='category-icon' :src="category.icon" />
                                 <h4>{{ category.name }}</h4>
 
                             </li>
@@ -191,37 +191,37 @@ export default {
             scoredCategories: [
                 {
                     name: 'uv',
-                    icon: 'fas fa-sun',
+                    icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/uv-white.png',
                     desc: 'Description.'
                 },
                 {
                     name: 'smoking',
-                    icon: 'fas fa-smoking',
+                    icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/smoking-white.png',
                     desc: 'Description.'
                 },
                 {
                     name: 'alcohol',
-                    icon: 'fas fa-wine-bottle',
+                    icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/alcohol-white.png',
                     desc: 'Description.'
                 },
                 {
                     name: 'nutrition',
-                    icon: 'fas fa-utensils',
+                    icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/nutrition-white.png',
                     desc: 'Description.'
                 },
                 {
                     name: 'weight',
-                    icon: 'fas fa-weight',
+                    icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/weight-white.png',
                     desc: 'Description.'
                 },
                 {
                     name: 'physical activity',
-                    icon: 'fas fa-running',
+                    icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/physical-activity-white.png',
                     desc: 'Description.'
                 },
                 {
                     name: 'screening',
-                    icon: 'fas fa-clinic-medical',
+                    icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/screening-white.png',
                     desc: 'Description.'
                 }
             ],
@@ -691,7 +691,7 @@ body {
             color: #fff;
             text-align:center;
             background: $blue;
-            padding: 30px 15px 5px 15px;
+            padding: 20px 5px 10px 5px;
             min-width: 100px;
             max-width: 165px;
             transition: 1s ease;
@@ -703,9 +703,9 @@ body {
 
             }
 
-            i,
-            .svg-inline--fa {
-                font-size: 32px;
+            img {
+                height:50px;
+                margin-bottom: 10px;
             }
 
             h4, i, svg-inline-fa {
