@@ -56,7 +56,9 @@
                 <div class="category" v-for="(category, index) in scorecards" :key="index">
                     <div class='category-heading'>
                         <h2>
-                            <i :class='icons[category.name]'></i> &nbsp; {{ category.name.toUpperCase() }}
+                            <span>
+                            <span class='img-container'><img :src='icons[category.name]' /></span>
+                            &nbsp; {{ category.name.toUpperCase() }}</span>
                             <!-- <div class='expand'>&nbsp; <i class='fa fa-chevron-down'></i></div> -->
 
                             <span class='category-icons'>
@@ -327,13 +329,13 @@ export default {
                 ]
             },
             icons: {
-                uv: 'fas fa-sun',
-                smoking: 'fas fa-smoking',
-                alcohol: 'fas fa-wine-bottle',
-                nutrition: 'fas fa-utensils',
-                weight: 'fas fa-weight',
-                'physical activity': 'fas fa-running',
-                screening: 'fas fa-clinic-medical'
+                uv: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/uv-white.png',
+                smoking: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/smoking-white.png',
+                alcohol: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/alcohol-white.png',
+                nutrition: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/nutrition-white.png',
+                weight: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/weight-white.png',
+                'physical activity': 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/physical-activity-white.png',
+                screening: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/screening-white.png'
             }
 		}
     },
@@ -483,6 +485,23 @@ body {
             border-radius: 8px 8px 0 0;
             display:flex;
             justify-content:stretch;
+
+            .img-container {
+                width: 40px;
+                text-align:center;
+                display:inline-block;
+                // border-radius: 50%;
+                height: 40px;
+                justify-content:center;
+                align-items:center;
+                // background:#fff;
+
+                img {
+                    margin-top: 2px;
+                    height:36px;
+                }
+            }
+
             // cursor:pointer;
 
             
@@ -501,6 +520,14 @@ body {
                 margin: 0;
                 flex-basis: 300px;
                 flex-grow: 1;
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+
+                &>span:not(.category-icons) {
+                    display:flex;
+                    align-items:center;
+                }
                 span.category-icons {
                     float:right;
                     width: 100px;
