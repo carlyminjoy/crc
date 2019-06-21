@@ -386,7 +386,7 @@ export default {
                     this.results = response.data
 
                     response.data.scorecards.forEach((card) => {
-                        if (card.entry) {
+                        if (card.entry && !vm.latestScorecard) {
                             vm.latestScorecard = card.entry;
                             return;
                         }
