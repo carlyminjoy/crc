@@ -119,10 +119,10 @@ $dark-blue: #2c3e50;
     }
 
     .ready {
-        padding: 15px;
+        padding: 10px;
 
         .ask {
-        font-weight:bold;
+        // font-weight:bold;
         }
     }
 

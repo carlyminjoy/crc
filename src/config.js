@@ -96,12 +96,18 @@ export default {
         {
             question:false,
             display:true,
-            text: "Did you know the UV radiation from the sun causes more than 95% of all skin cancers? Every year, over 300 Queenslanders die from skin cancer, yet it is almost totally preventable. When UV levels are 3 and above use a combination of sun protection measures to reduce your risk of skin cancer."
+            text: "Okay, thanks for providing your details. Let's begin!",
+            delay: true
+        },
+        {
+            question:false,
+            display:true,
+            text: "First up, let's talk about UV exposure. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/uv.png' />"
         },
         {
             question: false,
             display:true,
-            text: "When outside, how do you protect your skin?"
+            text: `<span class='big'>When outside for extended periods of time, how do you protect your skin?</span>`
         },
         {
             id: 'clothing',
@@ -224,10 +230,15 @@ export default {
             ]
         },
         {
+            question:false,
+            display:true,
+            text: "Okay, next question!"
+        },
+        {
             id: 'checkSkin',
             question: true,
             category: 'uv',
-            text: "Do you regularly check your skin for new spots and changes to existing freckles or moles?",
+            text: `<span class='big'>Do you regularly check your skin for new spots and changes to existing freckles or moles?</span>`,
             score: null,
             display:true,
             userResponded: false,
@@ -251,7 +262,7 @@ export default {
             id: 'professionalCheckSkin',
             question: true,
             category: 'uv',
-            text: "Do you have your skin checked by a health professional, or speak to them about your skin cancer risk?",
+            text: `<span class='big'>Do you have your skin checked by a health professional, or speak to them about your skin cancer risk?</span>`,
             score: null,
             display:true,
             userResponded: false,
@@ -274,13 +285,19 @@ export default {
         {
             question: false,
             display:true,
-            text: "The best thing you can do for your health is to quit smoking. More than 18,000 Australians die from smoking-related diseases each year."
+            text: "Okay! Thanks for answering those questions. Let's move on!",
+            delay: true
+        },
+        {
+            question: false,
+            display:true,
+            text: "Next category: smoking habits. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/smoking.png' />"
         },
         {
             id: 'smokingStatus',
             question: true,
             category: 'smoking',
-            text: "What is your smoking status?",
+            text: `<span class='big'>What is your smoking status?</span>`,
             score: null,
             display:true,
             userResponded: false,
@@ -316,7 +333,7 @@ export default {
             id: 'householdSmoke',
             question: true,
             category: 'smoking',
-            text: "Is your household smoke-free?",
+            text: `<span class='big'>Is your household smoke-free?</span>`,
             score: null,
             display:true,
             userResponded: false,
@@ -329,7 +346,7 @@ export default {
                     aiResponse: "Great!"
                 },
                 {
-                    label: "No.",
+                    label: "No",
                     score: 0,
                     userResponse: "My household is not smoke-free.",
                     aiResponse: "Okay."
@@ -337,10 +354,16 @@ export default {
             ]
         },
         {
+            question: false,
+            display:true,
+            text: "Okay! Let's move on to alcohol habits. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/alcohol.png' />",
+            delay: true
+        },
+        {
             id: 'standardDrinks',
             question: true,
             category: 'alcohol',
-            text: `How many standard drinks do you typically consume in a day when you drink?<br><br>Examples of 1 standard drink:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/bottle.png'/></span> 1 x 375mL bottle of mid strength beer</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/wine.png'/></span> 100 mL of wine (1 x small glass of wine)</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/glass2.png'/></span> 30 mL of spirits (1 x measure of spirits)</li></ul>`,
+            text: `<span class='big'>How many standard drinks do you typically consume in a day when you drink?</span><br><br>Examples of 1 standard drink:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/bottle.png'/></span> 1 x 375mL bottle of mid strength beer</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/wine.png'/></span> 100 mL of wine (1 x small glass of wine)</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/glass2.png'/></span> 30 mL of spirits (1 x measure of spirits)</li></ul>`,
             score: null,
             display:true,
             userResponded: false,
@@ -359,12 +382,6 @@ export default {
                     aiResponse: "Good - always try to limit your alcohol consumption to no more than 2 standard drinks per day."
                 },
                 {
-                    label: "2",
-                    score: 105,
-                    userResponse: "When I drink, I'll typically consume around 2 standard drinks in a day.",
-                    aiResponse: "A little too much! Try to limit your alcohol consumption to no more than 2 standard drinks per day."
-                },
-                {
                     label: "More than 2",
                     score: 0,
                     userResponse: "When I drink, I'll typically consume more than 2 standard drinks in a day.",
@@ -374,10 +391,21 @@ export default {
             ]
         },
         {
+            question: false,
+            display:true,
+            text: "Okay!",
+            delay: true
+        },
+        {
+            question: false,
+            display:true,
+            text: "Let's discuss nutrition. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/nutrition.png' />"
+        },
+        {
             id: 'fruit',
             question: true,
             category: 'nutrition',
-            text: `How many serves of fruit do you eat in a typical day?<br><br>Examples of 1 serve of fruit:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/apple.png'/></span>1 x apple</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/apricots.png'/></span> 2 x apricots</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/fruit.png'/></span>1 cup of fruit</li></ul>`,
+            text: `<span class='big'>How many serves of fruit do you eat in a typical day?</span><br><br>Examples of 1 serve of fruit:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/apple.png'/></span>1 x apple</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/apricots.png'/></span> 2 x apricots</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/fruit.png'/></span>1 cup of fruit</li></ul>`,
             score: null,
             display:true,
             userResponded: false,
@@ -408,7 +436,7 @@ export default {
             id: 'vegetables',
             question: true,
             category: 'nutrition',
-            text: `How many serves of vegetables do you eat in a typical day?<br><br>Examples of 1 serve of vegetables:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/vegetables.png'/></span>1/2 cup cooked vegetables</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/potato.png'/></span>1/2 medium potato</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/salad.png'/></span>1 cup of salad</li></ul>`,
+            text: `<span class='big'>How many serves of vegetables do you eat in a typical day?</span><br><br>Examples of 1 serve of vegetables:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/vegetables.png'/></span>1/2 cup cooked vegetables</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/potato.png'/></span>1/2 medium potato</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/salad.png'/></span>1 cup of salad</li></ul>`,
             score: null,
             display:true,
             userResponded: false,
@@ -445,7 +473,7 @@ export default {
             id: 'redMeat',
             question: true,
             category: 'nutrition',
-            text: `How many serves of red meat do you eat in a typical week?<br><br>Examples of 1 serve:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/lamb.png'/></span>1 lamb loin chop</li></ul><br>Examples of 2 serves:<ul class='examples'><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/steak.png'/></span>1 porterhouse/scotch fillet steak</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/diced-meat.png'/></span>1 cup diced meat</li></ul>`,
+            text: `<span class='big'>How many serves of red meat do you eat in a typical week?</span><br><br>Examples of 1 serve:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/lamb.png'/></span>1 lamb loin chop</li></ul><br>Examples of 2 serves:<ul class='examples'><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/steak.png'/></span>1 porterhouse/scotch fillet steak</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/diced-meat.png'/></span>1 cup diced meat</li></ul>`,
             score: null,
             display:true,
             userResponded: false,
@@ -482,7 +510,7 @@ export default {
             id: 'processedMeat',
             question: true,
             category: 'nutrition',
-            text: `How many serves of processed meat do you eat in a typical week?<br><br>Example of 1 serve:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/bacon.png'/></span>2 slices of bacon</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/salami.png'/></span>2 slices of salami or ham</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/sausages.png'/></span>2 thin sausages</li></ul>`,
+            text: `<span class='big'>How many serves of processed meat do you eat in a typical week?</span><br><br>Example of 1 serve:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/bacon.png'/></span>2 slices of bacon</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/salami.png'/></span>2 slices of salami or ham</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/sausages.png'/></span>2 thin sausages</li></ul>`,
             score: null,
             display:true,
             userResponded: false,
@@ -519,7 +547,7 @@ export default {
             id: 'wholegrain',
             question: true,
             category: 'nutrition',
-            text: `How often do you choose wholegrain, wholemeal and/or high fibre food varieties? (e.g. brown rice, wholemeal bread)`,
+            text: `<span class='big'>How often do you choose wholegrain, wholemeal and/or high fibre food varieties? </span><br>(e.g. brown rice, wholemeal bread)`,
             score: null,
             display:true,
             userResponded: false,
@@ -553,10 +581,21 @@ export default {
             ]
         },
         {
+            question: false,
+            display:true,
+            text: "Okay! That's it for nutrition.",
+            delay: true
+        },
+        {
+            question: false,
+            display:true,
+            text: "Next, let's talk about weight. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/weight.png' />"
+        },
+        {
             id:"weight",
             question: true,
             category: 'weight',
-            text: "Being overweight or obese increases the risk of some types of cancer, including bowel, breast and oesophagus.",
+            text: `<span class='big'>Please share your weight status with us by using the BMI calculator or your waist measurement.</span>`,
             score: null,
             display: true,
             userResponded: false,
@@ -586,10 +625,10 @@ export default {
             id: "bmi",
             question: true,
             category: 'weight',
-            text: "Please enter your height (cm) and weight (kg):",
+            text: `<span class='big'>Please enter your height (cm) and weight (kg):</span>`,
             userInput: true,
             score: null,
-            display: 'this.steps[23].score === "bmi"',
+            display: `this.steps.find((s) => s.id === 'weight').score === 'bmi'`,
             userResponded: false,
             userResponse: '',
             aiResponded: false,
@@ -602,10 +641,10 @@ export default {
             id: "waist",
             question: true,
             category: 'weight',
-            text: "Please enter your waist measurement:",
+            text: "<span class='big'>Please enter your waist measurement:</span>",
             userInput: true,
             score: null,
-            display: 'this.steps[23].score === "waist"',
+            display: `this.steps.find((s) => s.id === 'weight').score === 'waist'`,
             userResponded: false,
             userResponse: '',
             aiResponded: false,
@@ -613,10 +652,21 @@ export default {
             waist: null
         },
         {
+            question: false,
+            display:true,
+            text: "Okay! We're almost done!",
+            delay: true
+        },
+        {
+            question: false,
+            display:true,
+            text: "Let's talk about physical activity. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/physical-activity.png' />"
+        },
+        {
             id: 'exercise',
             question: true,
             category: 'physical activity',
-            text: `In a typical week, how many days are you physically active for 30 minutes or more?`,
+            text: `<span class='big'>In a typical week, how many days are you physically active for 30 minutes or more?</span>`,
             score: null,
             display:true,
             userResponded: false,
@@ -650,10 +700,16 @@ export default {
             ]
         },
         {
+            question: false,
+            display: '(["59", "74"].includes(this.steps[2].score) && this.steps[3].score === "f") || (["59", "74"].includes(this.steps[2].score)) || (["39", "49", "64", "74"].includes(this.steps[2].score) && this.steps[3].score === "f")',
+            text: "Thanks! We're up to the final category - screening. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/screening.png' />",
+            delay: true
+        },
+        {
             id: 'breastScreening',
             question: true,
             category: 'screening',
-            text: "Do you participate in the national breast cancer screening program?",
+            text: "<span class='big'>Do you participate in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/breast-screening-1' target='_blank'>National Breast Cancer Screening Program</a>?</span>",
             score: null,
             display: '["59", "74"].includes(this.steps[2].score) && this.steps[3].score === "f"',
             userResponded: false,
@@ -683,7 +739,7 @@ export default {
             id: 'bowelScreening',
             question: true,
             category: 'screening',
-            text: "Do you participate in the national bowel cancer screening program?",
+            text: `<span class='big'>Do you participate in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-screening-1' target='_blank'>National Bowel Cancer Screening Program</a>?</span>`,
             score: null,
             display: '["59", "74"].includes(this.steps[2].score)',
             userResponded: false,
@@ -713,7 +769,7 @@ export default {
             id: 'cervicalScreening',
             question: true,
             category: 'screening',
-            text: "Do you participate in cervical screening?",
+            text: `<span class='big'>Do you participate in the national cervical screening program (replaces the previous Pap test)?</span>`,
             score: null,
             display: '["39", "49", "64", "74"].includes(this.steps[2].score) && this.steps[3].score === "f"',
             userResponded: false,
@@ -736,7 +792,7 @@ export default {
         {
             question:false,
             display:true,
-            text: "Okay! Let's calculate your results...",
+            text: "Great! You've answered all the questions. Let's calculate your results...",
             final:true
         }
     ]

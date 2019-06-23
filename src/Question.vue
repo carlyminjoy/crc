@@ -28,7 +28,8 @@
 
 <script>
 import { setTimeout } from 'timers';
-const timer = 1200;
+// const timer = 1200;
+const timer = 1;
 
 export default {
   name: 'Question',
@@ -110,8 +111,8 @@ $dark-blue: #2c3e50;
         padding: 10px 15px 0 5px;
 
         .ask {
-        font-weight:bold;
-            margin-bottom: 10px;
+        // font-weight:bold;
+        margin-bottom: 10px;
         }
     }
 

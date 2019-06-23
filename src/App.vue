@@ -14,7 +14,7 @@
             </ul>
 
             <div class="results-container" v-if="state.showResults">
-                <h3>Your total score for reducing your cancer risk is:</h3>
+                <h2>Your total score is:</h2>
 
                 <vue-circle
                     :progress="results.total"
@@ -31,18 +31,44 @@
 
                 </vue-circle>
 
+                <span v-if='results.total === 100'>
+                    <h3>Well done!</h3>
+                </span>
+
+                <span v-else-if='results.total > 75'>
+                    <h3>You're doing well</h3>
+                    <p>Well done - a few small changes can further reduce your cancer risk.</p>
+                </span>
+
+                <span v-else-if='results.total > 50'>
+                    <h3>You're on the right track</h3>
+                    <p>Well done - there are plenty of ways you can reduce your cancer risk.</p>
+                </span>
+
+                <span v-else>
+                    <h3>Room for improvement</h3>
+                    <p>Good news - there are plenty of ways you can reduce your cancer risk.</p>
+                </span>
+
+                <br><br>
+
+
                 <template v-if='categoryResults.green.length > 0'>
 
-                    <h3>You're doing great in the following areas:</h3>
+                    <h2>You're doing great in the following areas:</h2>
 
                     <ul>
                         <template v-for="category in scoredCategories">
-                            <li @click='rotate($event)' :key="category.name" v-if="results[category.name] >= 66">
+                            <li @click='rotate($event, category)' :key="category.name" v-if="results[category.name] >= 66">
 
-                                <img class='category-icon' :src="category.icon" />
-                                <h4>{{ category.name }}</h4>
+                                <div class='front'>
+                                    <img class='category-icon' :src="category.icon" />
+                                    <h4>{{ category.name }}</h4>
+                                </div>
 
-                                <p>{{category.desc}}</p>
+                                <div class='back'>
+                                    <p>{{category.desc}}</p>
+                                </div>
 
                             </li>
                         </template>
@@ -52,14 +78,20 @@
 
                 <template v-if='categoryResults.amber.length > 0 || categoryResults.red.length > 0'>
 
-                    <h3>The areas you could improve in are:</h3>
+                    <h2>The areas you could improve in are:</h2>
 
                     <ul>
                         <template v-for="category in scoredCategories">
-                            <li :key="category.name" v-if="results[category.name] < 66">
+                            <li @click='rotate($event, category)' :key="category.name" v-if="results[category.name] < 66">
 
-                                <img class='category-icon' :src="category.icon" />
-                                <h4>{{ category.name }}</h4>
+                                    <div class='front' v-if='!category.rotated'>
+                                        <img class='category-icon' :src="category.icon" />
+                                        <h4>{{ category.name }}</h4>
+                                    </div>
+                                
+                                    <div class='back' v-on:leave='' v-if='category.rotated'>
+                                        <p>{{category.desc}}</p>
+                                    <div>
 
                             </li>
                         </template>
@@ -141,10 +173,14 @@ import axios from 'axios'
 
 
 const timers = {
-    shortest: 500,
-    short: 1000,
-    med: 2000,
-    long: 3000
+    // shortest: 500,
+    // short: 1000,
+    // med: 2000,
+    // long: 3000
+    shortest: 1,
+    short: 1,
+    med: 1,
+    long: 1
 }
 
 export default {
@@ -192,37 +228,44 @@ export default {
                 {
                     name: 'uv',
                     icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/uv-white.png',
-                    desc: 'Description.'
+                    desc: 'Ultraviolet (UV) radiation from the sun causes 95% of all skin cancers.',
+                    rotated: false
                 },
                 {
                     name: 'smoking',
                     icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/smoking-white.png',
-                    desc: 'Description.'
+                    desc: 'Smoking is the cause of 15,500 cancer cases in Australia each year. ',
+                    rotated: false
                 },
                 {
                     name: 'alcohol',
                     icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/alcohol-white.png',
-                    desc: 'Description.'
+                    desc: 'Alcohol consumption increases your risk of 7 different types of cancer.',
+                    rotated: false
                 },
                 {
                     name: 'nutrition',
                     icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/nutrition-white.png',
-                    desc: 'Description.'
+                    desc: 'Poor nutrition is the cause of 7000 cancer cases in Australia each year. ',
+                    rotated: false
                 },
                 {
                     name: 'weight',
                     icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/weight-white.png',
-                    desc: 'Description.'
+                    desc: 'Being overweight and obesity is the cause of 4,000 cancer cases in Australia each year. ',
+                    rotated: false
                 },
                 {
                     name: 'physical activity',
                     icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/physical-activity-white.png',
-                    desc: 'Description.'
+                    desc: 'Over 1,800 cancer cases can be prevented each year if Australians were more physical active.',
+                    rotated: false
                 },
                 {
                     name: 'screening',
                     icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/screening-white.png',
-                    desc: 'Description.'
+                    desc: 'Early diagnosis of cancer greatly increases the likelihood of successful treatment.',
+                    rotated: false
                 }
             ],
             currentStep : null,
@@ -244,7 +287,7 @@ export default {
             }
 
             if (!vm.steps[next].question) {
-                setTimeout(() => vm.currentStep++, timers.short)
+                setTimeout(() => vm.currentStep++, (vm.steps[next].delay ? timers.long : timers.med))
                 return
             }  else {
                 vm.state.activeCategory = vm.steps[next].category
@@ -273,11 +316,13 @@ export default {
                 element.scrollTop = element.scrollHeight;
             }
         },
-        rotate(e) {
+        rotate(e, cat) {
             if (e.target.classList.length === 0) {
                 e.target.classList.add('rotate');
+                cat.rotated = true
             } else {
                 (e.target.classList.remove('rotate'))
+                cat.rotated = false
             }
         },
         getRecommendations() {
@@ -367,7 +412,7 @@ export default {
 
                     if (step.score !== null) {
                         if (step.category === 'weight') {
-                            if (step.id) { results.weight = step.score }
+                            if (step.id !== 'weight') { results.weight = step.score }
 
                         } else if (results[step.category] !== undefined) {
                             results[step.category] += Math.round(step.score);
@@ -456,6 +501,11 @@ html {
 body {
     margin: 0;
     padding: 0;
+
+    .big {
+        font-size: 18px;
+        font-weight:bold;
+    }
     // overflow-y:hidden;
 }
 #app {
@@ -470,6 +520,10 @@ body {
 
     h1, h2, h3, h4, h5, h6 {
         color:unset;
+    }
+
+    h1 {
+        margin: 0;
     }
 
     // header {
@@ -515,8 +569,9 @@ body {
     li {
         border-bottom: 4px solid #999;
         padding: 15px 6px 15px 6px;
-        font-size: 10px;
-        text-transform:uppercase;
+        font-size: 14px;
+        font-family: 'Foco CC', 'Roboto', Arial, sans-serif;
+        text-transform:capitalize;
         // flex-basis: 12.5%;
         flex-grow:1;
         margin-bottom: -4px;
@@ -585,6 +640,11 @@ body {
         margin: 6px auto 6px 0;
         height: auto;
         @extend %boxshadow;
+
+        img {
+            height:20px;
+            margin: 0 10px -3px;
+        }
 
         a {
             text-decoration:none;
@@ -683,7 +743,6 @@ body {
         margin-bottom: 30px;
 
         li {
-            text-transform:capitalize;
             flex-basis: 25%;
             flex-grow: 1;
             border-radius: 4px;
@@ -696,45 +755,45 @@ body {
             max-width: 165px;
             transition: 1s ease;
             @extend %boxshadow;
-            p {
-                position:absolute;
-                opacity: 0;
-                transition: opacity 0.5s ease;
-
-            }
-
-            img {
-                height:50px;
-                margin-bottom: 10px;
-            }
-
-            h4, i, svg-inline-fa {
-                opacity: 1;
-                transition: 0.5s ease;
-                pointer-events:none;
-            }
 
             &:hover {
                 filter: brightness(0.8);
                 cursor:pointer;
             }
 
+            .front {
+                text-transform:capitalize;
+                opacity: 1;
+                transition: 1s ease;
+                pointer-events:none;
+            
+                img {
+                    height:50px;
+                    margin-bottom: 10px;
+                }
+            }
+
+            .back {
+                transform: rotateY(180deg);
+                opacity: 0;
+                transition: 1s ease;
+                pointer-events:none;
+                position:absolute;
+                top:0;
+                padding:10px;
+            }
+
             &.rotate {
                 transform: rotateY(180deg);
-                i, h4 {
-                    opacity: 0;
-                }
-                p {
-                    position:absolute;
-                    opacity: 1;
-                    transform: rotateY(180deg);
-                    text-transform:none;
-                    color:#fff;
-                    right: 15px;
-                    left: 15px;
-                    top: 15px;
-                    pointer-events:none;
-                }
+
+                    .front {
+                        opacity: 0;
+                    }
+
+                    .back {
+                        opacity: 1;
+                    }
+                
             }
         }
     }
@@ -815,4 +874,26 @@ body {
 .delay-extra-fade-enter-active, .delay-extra-fade-leave-active {
   transition-delay: 1.7s;
 }
+
+
+.flipcard-enter-active {
+    transition-delay:0.5s;
+    height:auto;
+}
+
+
+.flipcard-leave-active {
+  transition: all 0.1s;
+}
+
+.flipcard-enter {
+    opacity: 0;
+    height:0;
+}
+
+.flipcard-leave-to {
+  opacity: 0;
+  height:0;
+}
+
 </style>
