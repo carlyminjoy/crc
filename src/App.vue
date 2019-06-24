@@ -173,14 +173,10 @@ import axios from 'axios'
 
 
 const timers = {
-    // shortest: 500,
-    // short: 1000,
-    // med: 2000,
-    // long: 3000
-    shortest: 1,
-    short: 1,
-    med: 1,
-    long: 1
+    shortest: 500,
+    short: 1000,
+    med: 2000,
+    long: 3000
 }
 
 export default {
