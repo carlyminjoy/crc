@@ -81,6 +81,10 @@ $dark-blue: #2c3e50;
     max-height: 20px;
     max-width: 30px;
     transition: 0.3s ease;
+    
+    label.mdc-floating-label {
+        font-size:16px important;
+    }
 
     &.expanded {
         max-height:500px;
@@ -120,10 +124,6 @@ $dark-blue: #2c3e50;
 
     .ready {
         padding: 10px;
-
-        .ask {
-        // font-weight:bold;
-        }
     }
 
     .dots {
@@ -157,6 +157,14 @@ $dark-blue: #2c3e50;
     0% {font-size:6px;color:#555;}
     50% {font-size:8px;color:#0099DA;}
     0% {font-size:6px;color:#555;}
+}
+
+</style>
+
+<style lang='scss'>
+
+.postcode .ready .responses .mdc-field label.mdc-floating-label {
+    font-size:16px !important;
 }
 
 </style>

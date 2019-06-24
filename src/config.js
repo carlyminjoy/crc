@@ -349,7 +349,7 @@ export default {
                     label: "No",
                     score: 0,
                     userResponse: "My household is not smoke-free.",
-                    aiResponse: "Okay."
+                    aiResponse: ""
                 }
             ]
         },

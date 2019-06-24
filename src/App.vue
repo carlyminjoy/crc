@@ -91,7 +91,7 @@
                             
                                 <div class='back'>
                                     <p>{{category.desc}}</p>
-                                <div>
+                                </div>
 
                             </li>
                         </template>
@@ -777,12 +777,13 @@ body {
                 position:absolute;
                 top:0;
                 padding:10px;
+                height: 100%;
 
                 p {
                     display:flex;
                     align-items:center;
                     justify-content:center;
-                    height:calc(100% - 30px);
+                    height:calc(100% - 10px);
                 }
             }
 
