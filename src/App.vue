@@ -155,7 +155,7 @@
 import { vmdButton } from '@ccq/ccq-vue-components'
 import VueCircle from 'vue2-circle-progress'
 import axios from 'axios'
-import { SquareSpinner, Cube } from 'vue-spinners/src'
+import { SquareSpinner } from 'vue-spinners/src/components/SquareSpinner.vue'
 
 export default {
     name: 'app',
@@ -176,6 +176,11 @@ export default {
                         'Set a quit date and seek support from family and friends.',
                         'Speak your GP, pharmacist or community health worker and plan your quitting strategy.',
                         'Avoid situations where you’re tempted to smoke.'
+                    ],
+                    householdSmoke: [
+                        'Encourage those who smoke to quit by speaking with their GP or calling Quitline on 13 7848.',
+                        'Make your house and car smoke-free environments.',
+                        'Follow the <a href="https://quithq.initiatives.qld.gov.au/quit-support/help-others-quit/dos-and-donts/" target="_blank">dos and don’ts</a> of helping others to quit.'
                     ]
                 },
                 alcohol: {
@@ -188,6 +193,9 @@ export default {
                 nutrition: {
                     fruit: [
                         'Try adding fruit to your favourite breakfast cereal or make fruit a go-to snack when you’re on the go.'
+                    ],
+                    vegetables: [
+                        'Try raw vegie sticks and dip as a quick snack, or reduce the meat and increase the vegetables on your pizza, curry and stir fry.'
                     ],
                     redMeat: [
                         'Choose fish, poultry or legumes instead of red meat for some meals.'
@@ -203,12 +211,14 @@ export default {
                     bmi: [
                         'Eat a healthy diet full of fruit, vegetables, and wholegrains.',
                         'Try to be active for at least 30 minutes every day.',
-                        'Limit consumption of junk foods and sugary drinks. '
+                        'Limit consumption of junk foods and sugary drinks. ',
+                        'Speak with your GP or visit <a href="https://www.gethealthyqld.com.au/" target="_blank">get healthy</a> for free personal health coaching.'
                     ],
                     waist: [
                         'Eat a healthy diet full of fruit, vegetables, and wholegrains.',
                         'Try to be active for at least 30 minutes every day.',
-                        'Limit consumption of junk foods and sugary drinks. '
+                        'Limit consumption of junk foods and sugary drinks.',
+                        'Speak with your GP or visit <a href="https://www.gethealthyqld.com.au/" target="_blank">get healthy</a> for free personal health coaching.'
                     ]
                 },
                 "physical activity": {
@@ -228,6 +238,11 @@ export default {
                         'Speak to your health professional about bowel cancer screening.', 
                         `If you have moved interstate or haven’t received an invitation, you can <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-cancer-screeningkit-eligibility' target='_blank'>check your eligibility for receiving the national bowel cancer screening kit</a>.`,
                         `Contact the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/Contact' target='_blank'>National Bowel Cancer Screening Program</a>.`
+                    ],
+                    cervicalScreening: [
+                        'Speak to your health professional about the national cervical cancer screening program.', 
+                        `Visit cancer Council's <a href='https://www.cancer.org.au/cervicalscreening/' target='_blank'>cervical screening website</a> for more information or;`,
+                        `Contact the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/cervical-screening-1' target='_blank'>National Cervical Screening Program</a>.`
                     ]
                 }
             },
@@ -249,12 +264,6 @@ export default {
                     }
                 ],
                 nutrition: [
-                    {
-                        url: 'https://www.biggestmorningtea.com.au/ideas/recipes/',
-                        img: 'https://www.cancer.org.au/content/get_involved/events/ABMT_RFL_700x275-v2.png',
-                        text: `For healthy recipe ideas, check out Australia's Biggest Morning Tea.`,
-                        cta: 'View'
-                    },
                     {
                         url: 'https://cancerqld.blob.core.windows.net/resources/quest/Healthy%20BBQ_FACTSHEET.pdf',
                         img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-eat-01.png',
@@ -317,14 +326,6 @@ export default {
                         text: `Take Time to be Active Factsheet`,
                         cta: 'Download',
                         download: true
-                    }
-                ],
-                screening: [
-                    {
-                        url: 'https://cancerqld.org.au/cancer-prevention/early-detection/screening-service/',
-                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-bowel-02.png',
-                        text: `Screening services information`,
-                        cta: 'View'
                     }
                 ]
             },
