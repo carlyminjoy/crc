@@ -84,14 +84,14 @@
                         <template v-for="category in scoredCategories">
                             <li @click='rotate($event, category)' :key="category.name" v-if="results[category.name] < 66">
 
-                                    <div class='front' v-if='!category.rotated'>
-                                        <img class='category-icon' :src="category.icon" />
-                                        <h4>{{ category.name }}</h4>
-                                    </div>
-                                
-                                    <div class='back' v-on:leave='' v-if='category.rotated'>
-                                        <p>{{category.desc}}</p>
-                                    <div>
+                                <div class='front'>
+                                    <img class='category-icon' :src="category.icon" />
+                                    <h4>{{ category.name }}</h4>
+                                </div>
+                            
+                                <div class='back'>
+                                    <p>{{category.desc}}</p>
+                                <div>
 
                             </li>
                         </template>
@@ -777,6 +777,13 @@ body {
                 position:absolute;
                 top:0;
                 padding:10px;
+
+                p {
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    height:calc(100% - 30px);
+                }
             }
 
             &.rotate {

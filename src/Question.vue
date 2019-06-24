@@ -28,8 +28,7 @@
 
 <script>
 import { setTimeout } from 'timers';
-// const timer = 1200;
-const timer = 1;
+const timer = 1200;
 
 export default {
   name: 'Question',
