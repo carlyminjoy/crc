@@ -374,7 +374,7 @@ export default {
                 }
             })
 
-            return scorecards.sort((a,b) => a._ts > b._ts)
+            return scorecards
         }
     },
     methods: {
@@ -384,9 +384,11 @@ export default {
             axios
                 .post('https://prod-05.australiaeast.logic.azure.com:443/workflows/df753e6a563e451ea76a06b71d1a4a9e/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pge8rl1wK4YG2jeyFkb3gl38yu97YZAyBzp6Dd6vAxA', {user: user})
                 .then(response => {
-                    this.results = response.data
+                    this.results = response.data.scorecards.sort((a,b) => a._ts - b._ts)
 
-                    response.data.scorecards.forEach((card) => {
+                    console.log(response)
+
+                    this.results.forEach((card) => {
                         if (card.entry && !vm.latestScorecard) {
                             vm.latestScorecard = card.entry;
                             return;
