@@ -374,7 +374,7 @@ export default {
                 }
             })
 
-            return scorecards
+            return scorecards.sort((a,b) => a._ts > b._ts)
         }
     },
     methods: {
