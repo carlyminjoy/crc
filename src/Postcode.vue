@@ -11,8 +11,8 @@
             <div class='ask' v-html='question.text'></div>
 
             <div class="responses" :class="{'hide' : selected}">
-                <vmd-text-field v-model="postcode" label="Postcode"> </vmd-text-field>
-                <vmd-button varient="raised" text='Okay' v-if='!disabled' @click="addStep()"></vmd-button>
+                <vmd-text-field id='postcode' v-model="postcode" label="Postcode"> </vmd-text-field>
+                <vmd-button id='postcode-btn' varient="raised" :text='postcode' v-if='!disabled' @click="addStep()"></vmd-button>
             </div>
 
         </div>
