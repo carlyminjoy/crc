@@ -703,7 +703,7 @@ export default {
         },
         {
             question: false,
-            display: '(["59", "74"].includes(this.steps[2].score) && this.steps[3].score === "f") || (["59", "74"].includes(this.steps[2].score)) || (["39", "49", "64", "74"].includes(this.steps[2].score) && this.steps[3].score === "f")',
+            display: '([64, "74"].includes(this.steps[2].score) && this.steps[3].score === "f") || (["64", "74"].includes(this.steps[2].score)) || (["39", "49", "64", "74"].includes(this.steps[2].score) && this.steps[3].score === "f")',
             text: "Thanks! We're up to the final category - screening. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/screening.png' />",
             delay: true
         },
@@ -713,7 +713,7 @@ export default {
             category: 'screening',
             text: "<span class='big'>Do you participate in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/breast-screening-1' target='_blank'>National Breast Cancer Screening Program</a>?</span>",
             score: null,
-            display: '["59", "74"].includes(this.steps[2].score) && this.steps[3].score === "f"',
+            display: '["64", "74"].includes(this.steps[2].score) && this.steps[3].score === "f"',
             userResponded: false,
             aiResponded: false,
             options: [
@@ -743,7 +743,7 @@ export default {
             category: 'screening',
             text: `<span class='big'>Do you participate in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-screening-1' target='_blank'>National Bowel Cancer Screening Program</a>?</span>`,
             score: null,
-            display: '["59", "74"].includes(this.steps[2].score)',
+            display: '["64", "74"].includes(this.steps[2].score)',
             userResponded: false,
             aiResponded: false,
             options: [
