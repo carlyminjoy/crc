@@ -13,10 +13,16 @@
 
                 <div class="responses" :class="{'hide' : selected }">
 
-                    <div v-for="option in question.options" :class="{'selected' : option.score === question.score }" :key="option.label">
+                    <div v-for="(option, index) in question.options" :class="{ 'selected' : option.score === question.score }" :key="index">
 
-                        <label :for="id + option.label">{{ option.label }} </label>
-                        <input @click="addStep(option)" :disabled="selected" v-model="question.score" type="radio" :id="id + option.label" :name="id + option.label" :value="option.score" />
+                        <label :class='id' :for="id + index">{{ option.label }} </label>
+                        <input @click="addStep(option)" 
+                                :id="id + index" 
+                                :disabled="selected" 
+                                v-model="question.score" 
+                                type="radio" 
+                                :name="id + option.label" 
+                                :value="option.score" />
 
                     </div>
                 </div>
@@ -37,6 +43,9 @@ export default {
   ],
   methods: {
       getGuid() {
+            if (this.question.id) {
+                return this.question.id
+            }
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                 var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);

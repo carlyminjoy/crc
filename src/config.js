@@ -11,6 +11,7 @@ export default {
             text: `By participating in this quiz, you are agreeing to our <a href='#' target='_blank'>disclaimer statement</a>.`
         },
         {
+            id: 'age',
             question: true,
             category: 'personal',
             text: "First of all, what is your age?",
@@ -58,6 +59,7 @@ export default {
             ]
         },
         {
+            id: 'gender',
             question: true,
             category: 'personal',
             text: "What is your gender?",

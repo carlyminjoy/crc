@@ -107,7 +107,7 @@
 
                     <p>By submitting this form, you are agreeing to our <a href='https://cancerqld.org.au/about-us/our-privacy-policy/read-our-privacy-position-statement/' target='_blank'>Privacy Collection Statement</a>.</p>
 
-                    <vmd-button v-if='!state.submitted' :disabled="submitBtnDisabled" :loading="state.loading" text='Get My Cancer Risk Scorecard' @click="sendResults()"></vmd-button>
+                    <vmd-button v-if='!state.submitted' :disabled="state.loading" :loading="state.loading" text='Get My Cancer Risk Scorecard' @click="sendResults()"></vmd-button>
                     <p v-else class="confirmation-msg">Thank you! Your form has been submitted.<br>You will receive an email shortly with your recommendations.</p>
                 </form>
 
