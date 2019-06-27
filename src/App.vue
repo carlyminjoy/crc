@@ -33,22 +33,22 @@
                 </vue-circle>
 
                 <span v-if='results.total === 100'>
-                    <h3>Well done!</h3>
+                    <h2>Well done!</h2>
                 </span>
 
                 <span v-else-if='results.total > 75'>
-                    <h3>You're doing well</h3>
-                    <p>Well done - a few small changes can further reduce your cancer risk.</p>
+                    <h2>You're doing well</h2>
+                    <h3>Well done - a few small changes can further reduce your cancer risk.</h3>
                 </span>
 
                 <span v-else-if='results.total > 50'>
-                    <h3>You're on the right track</h3>
-                    <p>Well done - there are plenty of ways you can reduce your cancer risk.</p>
+                    <h2>You're on the right track</h2>
+                    <h3>Well done - there are plenty of ways you can reduce your cancer risk.</h3>
                 </span>
 
                 <span v-else>
-                    <h3>Room for improvement</h3>
-                    <p>Good news - there are plenty of ways you can reduce your cancer risk.</p>
+                    <h2>Room for improvement</h2>
+                    <h3>Good news - there are plenty of ways you can reduce your cancer risk.</h3>
                 </span>
 
                 <br><br>
@@ -693,6 +693,10 @@ body {
     margin: 50px auto;
     height: auto;
     @extend %boxshadow;
+
+    h3 {
+        font-weight: 400;
+    }
 
     .circle {
         margin: 30px auto;
