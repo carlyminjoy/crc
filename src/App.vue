@@ -464,7 +464,7 @@ body {
     @extend %boxshadow;
 
     .circle {
-        margin: 30px auto 0 auto;
+        margin: 30px auto;
     }
 
     &>div>h3 {
