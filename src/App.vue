@@ -102,7 +102,7 @@
                                     <strong>
                                         <span v-if='section.bmi'>Your BMI is: {{ section.bmi }}.<br></span>
                                         <span v-if='section.bmi'>The range for a healthy weight is between 18.5 and 25.<br></span>
-                                        <span v-html='section.recommendation'>
+                                        <span v-if='section.bmi >= 25' v-html='section.recommendation'>
                                     </strong>
                                 </p>
                             </li>
