@@ -381,7 +381,7 @@ export default {
                     label: "1 - 2",
                     score: 209.9,
                     userResponse: "When I drink, I'll typically consume 1 - 2 standard drinks in a day.",
-                    aiResponse: "Good - always try to limit your alcohol consumption to no more than 2 standard drinks per day."
+                    aiResponse: "Great - always try to limit your alcohol consumption to no more than 2 standard drinks per day."
                 },
                 {
                     label: "More than 2",
