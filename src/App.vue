@@ -9,7 +9,8 @@
                 <li v-for="(route, index) in routes" :key="index"
                     :class="{ 'active' : currentStep && index <= routes.indexOf(state.activeCategory) }">
 
-                    <span>{{route}}</span>
+                    <span>{{ route == 'uv' ? 'UV' : route 
+                        }}</span>
                 </li>
             </ul>
 
@@ -98,7 +99,7 @@
                     </ul>
                 </template>
 
-                <h3>To receive your Cancer Risk Scorecard and tips to reduce your cancer risk, please enter your information below:</h3>
+                <h3>To receive your Cancer Risk Scorecard with your detailed results and tips to reduce your cancer risk, please enter your details below:</h3>
 
                 <form>
                     <vmd-text-field class='half-width' label='First Name' v-model="form.firstName"></vmd-text-field>
@@ -204,17 +205,6 @@ export default {
                 lastName: '',
                 emailAddress: ''
             },
-            routes: [
-                'personal',
-                'uv', 
-                'smoking',
-                'alcohol',
-                'nutrition',
-                'weight',
-                'physical activity',
-                'screening',
-                'results'
-            ],
             categoryResults: {
                 red: [],
                 green: [],
@@ -297,6 +287,36 @@ export default {
         }
     },
     computed: {
+        routes() {
+            if (this.steps[2].score && this.steps[3].score && 
+                ([64, "74"].includes(this.steps[2].score) && this.steps[3].score === "f") 
+                || (["64", "74"].includes(this.steps[2].score)) 
+                || (["39", "49", "64", "74"].includes(this.steps[2].score) && this.steps[3].score === "f")) {
+
+                return [
+                    'personal',
+                    'uv', 
+                    'smoking',
+                    'alcohol',
+                    'nutrition',
+                    'weight',
+                    'physical activity',
+                    'screening',
+                    'results'
+                ]
+            } 
+
+            return [
+                'personal',
+                'uv', 
+                'smoking',
+                'alcohol',
+                'nutrition',
+                'weight',
+                'physical activity',
+                'results'
+            ]
+        },
         submitBtnDisabled() {
             let vm = this;
 

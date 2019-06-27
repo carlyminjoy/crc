@@ -74,7 +74,7 @@ export default {
                 vm.question.bmi = bmi;
     
                 if (bmi < 18.5) {
-                    vm.question.score = 210;
+                    vm.question.score = 105;
                     vm.question.aiResponse = 'You might be underweight, consider talking to your health professional.'
                 } else if (bmi < 24.9) {
                     vm.question.score = 210;

@@ -104,7 +104,7 @@ export default {
         {
             question:false,
             display:true,
-            text: "First up, let's talk about UV exposure. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/uv.png' />"
+            text: "First up, let's talk about ultraviolet radiation (UV) from the sun. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/uv.png' />"
         },
         {
             question: false,
@@ -358,7 +358,7 @@ export default {
         {
             question: false,
             display:true,
-            text: "Okay! Let's move on to alcohol habits. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/alcohol.png' />",
+            text: "Okay! Let's move on to alcohol consumption. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/alcohol.png' />",
             delay: true
         },
         {
@@ -682,19 +682,19 @@ export default {
                 },
                 {
                     label: "1 - 2",
-                    score: 14,
+                    score: 70,
                     userResponse: "I am physically active for 30 minutes or more for 1 - 2 days in a typical week.",
                     aiResponse: "You're on the right track! To reduce your cancer risk, aim for 1 hour of moderate intensity or 30 minutes of vigorous intensity physical activity every day."
                 },
                 {
                     label: "3 - 4",
-                    score: 28,
+                    score: 140,
                     userResponse: "I am physically active for 30 minutes or more for 3 - 4 days in a typical week.",
                     aiResponse: "You're on the right track! To reduce your cancer risk, aim for 1 hour of moderate intensity or 30 minutes of vigorous intensity physical activity every day."
                 },
                 {
                     label: "5 - 7",
-                    score: 42,
+                    score: 210,
                     userResponse: "I am physically active for 30 minutes or more for 5 - 7 days in a typical week.",
                     aiResponse: "Well done! 1 hour of moderate intensity or 30 minutes of vigorous intensity physical activity every day is recommended to reduce your cancer risk."
                 }
