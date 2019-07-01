@@ -468,6 +468,31 @@ export default {
 
             results.total = Math.round(total / Object.keys(results).length)
             vm.results = results;
+            vm.sendResults()
+        },
+        storeResults() {
+            let vm = this;
+            
+            let postData = {
+                age: vm.steps[2].score,
+                gender: vm.steps[3].score,
+                postcode: vm.steps[4].score,
+                uv: vm.results.uv,
+                smoking: vm.results.smoking,
+                alcohol: vm.results.alcohol,
+                nutrition: vm.results.nutrition,
+                weight: vm.results.weight,
+                physicalActivity: vm.results['physical activity'],
+                screening: vm.results.screening,
+                total: vm.results.total
+            }
+
+            let url = 'POST URL'
+
+            axios.post(url, postData)
+                .then((res) => console.log(res))
+                .catch((e) => console.log(e))
+            
         },
         addStep() {
             let vm = this;
@@ -533,9 +558,14 @@ body {
         position:relative;
         display:inline-block;
 
-        .fa {
+        .fa-question-circle {
             cursor:pointer;
+            transition: 0.3s ease;
             color:$yellow;
+
+            &:hover {
+                color:$dark-blue;
+            }
         }
 
         .info-text {
