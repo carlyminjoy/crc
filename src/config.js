@@ -8,7 +8,7 @@ export default {
         {
             question: false,
             display:true,
-            text: `By participating in this quiz, you are agreeing to our <a href='#' target='_blank'>disclaimer statement</a>.`
+            text: `<em>The results of this quiz provide generalised recommendations on how you can reduce your cancer risk based on the answers you provide.<br><br> These should not be used as a substitute for advice from a qualified medical professional who can advise you about your own individual medical needs.<br><br>See our <a href='#' target='_blank'>disclaimer</a>.</em>`
         },
         {
             id: 'age',
