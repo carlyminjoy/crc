@@ -80,12 +80,12 @@
                             <li v-for="(section, i) in category.good" :key="i">
                                 <i class='fa fa-check'></i>
                                 <p>{{ section.answer }}
-                                    <span v-if='section.bmi'><strong><br>Your BMI is: {{ section.bmi }}.<br>
+                                    <span v-if='section.bmi'><strong><br><br>Your BMI is: {{ section.bmi }}.<br><br>
                                     The recommended range is between 18.5 and 25.</strong>
                                     </span>
                                 </p>
                                 
-                                <p>{{ section.recommendation }}</p>
+                                <!-- <p>{{ section.recommendation }}</p> -->
                             </li>
                             
                         </ul>
@@ -100,9 +100,9 @@
                                 <i class='fa fa-exclamation-circle'></i> &nbsp;
                                 <p> {{ section.answer }} <br>
                                     <strong>
-                                        <span v-if='section.bmi'>Your BMI is: {{ section.bmi }}.<br></span>
-                                        <span v-if='section.bmi'>The range for a healthy weight is between 18.5 and 25.<br></span>
-                                        <span v-if='section.bmi >= 25' v-html='section.recommendation'>
+                                        <span v-if='section.bmi'><br>Your BMI is: {{ section.bmi }}.<br><br></span>
+                                        <span v-if='section.bmi'>The range for a healthy weight is between 18.5 and 25. </span>
+                                        <span v-html='section.recommendation'>
                                     </strong>
                                 </p>
                             </li>
@@ -119,7 +119,7 @@
                         </div> -->
 
 
-                        <template v-if="tips[category.name] && (category.name != 'weight' && category[0].bmi < 25)">
+                        <template v-if="category.tips">
                             <h2 class="m0">Tips:</h2>
                             <ul class="tips">
                                 <li v-for="(tip,index) in category.tips" :key="index" v-html='tip'></li>
@@ -361,14 +361,18 @@ export default {
                         let tips = [];
                         
                         Object.keys(vm.tips[category]).forEach((key) => {
-                            if (categoryObj.bad.some((o) => o.id === key)) {
+                            let badCategoryObj = categoryObj.bad.find((o) => o.id === key)
+                            // if (categoryObj.bad.some((o) => o.id === key)) {
+
+                            if (badCategoryObj && !(badCategoryObj.bmi && parseInt(badCategoryObj.bmi) < 20)) {
                                 vm.tips[category][key].forEach((t) => tips.push(t))
                             }
+                            
                         })
 
                         if (tips.length > 0) {
                             categoryObj.tips = tips;
-                        }
+                        } 
                     }
                     scorecards.push(categoryObj)
                 }
