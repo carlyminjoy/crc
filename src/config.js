@@ -559,7 +559,7 @@ export default {
                     label: "Never",
                     score: 0,
                     userResponse: "I never choose wholegrain, wholemeal and/or high fibre food varieties.",
-                    aiResponse: "Try to choose wholegrain and wholemeal varieties for at lest half your daily serves of breads and cereals."
+                    aiResponse: "Try to choose wholegrain and wholemeal varieties for at least half your daily serves of breads and cereals."
                 },
                 {
                     label: "Some of the time",
