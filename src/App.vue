@@ -15,7 +15,10 @@
             </ul>
 
             <div class="results-container" v-if="state.showResults">
-                <h2>Your total score is:</h2>
+                <div class='total-score'>
+                    Your total score is: 
+                    <div class='info'><i class='fa fa-question-circle'></i><div class='info-text'>This score is out of 100, the lower your score, the more opportunities you have to reduce your cancer risk by making healthy lifestyle choices.</div></div>
+                </div>
 
                 <vue-circle
                     :progress="results.total"
@@ -522,6 +525,40 @@ body {
         font-size: 18px;
         font-weight:bold;
     }
+
+    .info {
+        position:relative;
+        display:inline-block;
+
+        .fa {
+            cursor:pointer;
+            color:$yellow;
+        }
+
+        .info-text {
+            @extend %boxshadow;
+            visibility:hidden;
+            position:absolute;
+            z-index:1;
+            width: 220px;
+            text-align:center;
+            background:$dark-blue;
+            color:#fff;
+            font-size: 14px;
+            font-weight: 400;
+            border-radius: 8px;
+            padding: 8px 10px;
+            opacity:0;
+            transition: 0.3s ease;
+        }
+
+        &:hover {
+            .info-text {
+                visibility:visible;
+                opacity:1;
+            }
+        }
+    }
     // overflow-y:hidden;
 }
 #app {
@@ -693,6 +730,16 @@ body {
     margin: 50px auto;
     height: auto;
     @extend %boxshadow;
+
+    .total-score {
+        font-size: 24px;
+        font-weight:600;
+        margin-top: 10px;
+
+        i {
+            font-size: 16px;
+        }
+    }
 
     h3 {
         font-weight: 400;
