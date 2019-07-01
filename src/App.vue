@@ -85,7 +85,7 @@
                                     </span>
                                 </p>
                                 
-                                <!-- <p>{{ section.recommendation }}</p> -->
+                                <p>{{ section.recommendation }}</p>
                             </li>
                             
                         </ul>
@@ -119,7 +119,7 @@
                         </div> -->
 
 
-                        <template v-if="tips[category.name]">
+                        <template v-if="tips[category.name] && (category.name != 'weight' && category[0].bmi < 25)">
                             <h2 class="m0">Tips:</h2>
                             <ul class="tips">
                                 <li v-for="(tip,index) in category.tips" :key="index" v-html='tip'></li>
