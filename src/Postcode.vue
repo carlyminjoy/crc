@@ -11,8 +11,8 @@
             <div class='ask' v-html='question.text'></div>
 
             <div class="responses" :class="{'hide' : selected}">
-                <vmd-text-field id='postcode' v-model="postcode" label="Postcode"> </vmd-text-field>
-                <vmd-button id='postcode-btn' varient="raised" :text='postcode' v-if='!disabled' @click="addStep()"></vmd-button>
+                <vmd-text-field id='postcode' v-model.trim="postcode" label="Postcode"> </vmd-text-field>
+                <vmd-button id='postcode-btn' varient="raised" :disabled='disabled' :text='postcode' v-if='this.postcode !== ""' @click="addStep()"></vmd-button>
             </div>
 
         </div>
@@ -36,7 +36,7 @@ export default {
   ],
   computed: {
       disabled() {
-          return this.selected || this.postcode === ''
+          return this.selected || this.postcode === '' || this.postcode.length !== 4 || parseInt(this.postcode).toString() !== this.postcode
       }
   },
   methods: {

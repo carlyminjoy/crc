@@ -101,6 +101,14 @@ export default {
 
 <style lang='scss' scoped>
 
+%boxshadow {
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
+    -ms-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
+    -o-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
+}
+
 $blue: #0099DA;
 $yellow: #FCD208;
 $dark-blue: #2c3e50;
@@ -119,8 +127,8 @@ $dark-blue: #2c3e50;
         padding: 10px 15px 0 5px;
 
         .ask {
-        // font-weight:bold;
-        margin-bottom: 10px;
+            margin-bottom: 10px;
+            
         }
     }
 

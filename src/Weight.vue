@@ -14,11 +14,11 @@
 
                 <div v-if="question.id === 'bmi'">
 
-                    <label for="height">Height:</label>
-                    <input v-model="question.height" type="number" name="height" /> cm
+                    <label for="height">Height: &nbsp;</label>
+                    <input v-model="question.height" type="number" name="height" />&nbsp; cm
                     <br><br>
-                    <label for="weight">Weight:</label>
-                    <input v-model="question.weight" type="number" name="weight" /> kg
+                    <label for="weight">Weight: &nbsp;</label>
+                    <input v-model="question.weight" type="number" name="weight" />&nbsp; kg
                 </div>
 
                 <div v-else>
@@ -27,19 +27,21 @@
 
             </div>
 
-            <button :class="{ 'selected' : selected }" v-if='!disabled' @click="addStep()">Okay</button>
+            <vmd-button :class="{ 'selected' : selected }" text='Okay' :disabled='disabled' @click="addStep()"></vmd-button>
         </div>
   </div>
 </template>
 
 <script>
 import { setTimeout } from 'timers';
+import { vmdButton } from '@ccq/ccq-vue-components'
 
 const timer = 1200;
 
 export default {
   name: 'Weight',
   components: {
+      vmdButton
   },
   props: [
       'question',
@@ -48,9 +50,15 @@ export default {
   computed: {
       disabled() {
           if (this.question.id === 'bmi') {
-              return !this.question.height || !this.question.weight || this.selected;
+              return !this.question.height || !this.question.weight || this.selected 
+                    || parseInt(this.question.height).toString() !== this.question.height
+                    || parseInt(this.question.height) < 0
+                    || parseInt(this.question.weight) < 0
+                    || parseInt(this.question.weight).toString() !== this.question.weight;
           } else {
               return !this.question.waist || this.selected
+                    || parseInt(this.question.waist) < 0
+                    || parseInt(this.question.waist).toString() !== this.question.waist;
           }
       }
   },
@@ -195,7 +203,7 @@ $dark-blue: #2c3e50;
 
     .responses {
         display:flex;
-        flex-wrap: wrap;
+        // flex-wrap: wrap;
 
         input {
             padding: 5px;
