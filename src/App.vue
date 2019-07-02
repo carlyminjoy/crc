@@ -108,13 +108,13 @@
                 <h3>To receive your Cancer Risk Scorecard with your detailed results and tips to reduce your cancer risk, please enter your details below:</h3>
 
                 <form>
-                    <vmd-text-field class='half-width' label='First Name' v-model="form.firstName"></vmd-text-field>
-                    <vmd-text-field class='half-width' label='Last Name' v-model="form.lastName"></vmd-text-field>
-                    <vmd-text-field label='Email Address' v-model="form.emailAddress"></vmd-text-field>
+                    <vmd-text-field class='half-width' label='First Name' v-model="$v.form.firstName.$model" :invalid='$v.form.firstName.$error'></vmd-text-field>
+                    <vmd-text-field class='half-width' label='Last Name' v-model="$v.form.lastName.$model" :invalid='$v.form.lastName.$error'></vmd-text-field>
+                    <vmd-text-field label='Email Address' type='email' v-model="$v.form.emailAddress.$model" :invalid='$v.form.emailAddress.$error'></vmd-text-field>
 
                     <p>By submitting this form, you are agreeing to our <a href='https://cancerqld.org.au/about-us/our-privacy-policy/read-our-privacy-position-statement/' target='_blank'>Privacy Collection Statement</a>.</p>
 
-                    <vmd-button v-if='!state.submitted' :disabled="state.loading" :loading="state.loading" text='Get My Cancer Risk Scorecard' @click="sendResults()"></vmd-button>
+                    <vmd-button v-if='!state.submitted' :disabled="state.loading || $v.$anyError || formDisabled" :loading="state.loading" text='Get My Cancer Risk Scorecard' @click="sendResults()"></vmd-button>
                     <p v-else class="confirmation-msg">Thank you! Your form has been submitted.<br>You will receive an email shortly with your recommendations.</p>
                 </form>
 
@@ -168,15 +168,23 @@
 <script>
 
 import { default as conversation } from './config.js'
-import JQuery from 'jquery'
-let $ = JQuery
+import { default as scoredCategories } from './scoredCategories.js'
 import { default as Question } from './Question.vue'
 import { default as Weight } from './Weight.vue'
 import { default as Postcode } from './Postcode.vue'
 import { setTimeout } from 'timers';
 import { vmdButton, vmdTextField } from '@ccq/ccq-vue-components'
+import { validationMixin } from 'vuelidate';
+import { 
+    required, 
+    email,
+    minLength,
+    maxLength
+} from 'vuelidate/lib/validators'; 
 import VueCircle from 'vue2-circle-progress'
 import axios from 'axios'
+import JQuery from 'jquery'
+let $ = JQuery
 
 
 const timers = {
@@ -188,6 +196,7 @@ const timers = {
 
 export default {
     name: 'app',
+    mixins: [validationMixin],
     components: {
         Question,
         Weight,
@@ -200,7 +209,7 @@ export default {
 		return {
             isIe: false,
             state: {
-                showResults: false,
+                showResults: true,
                 loading: false,
                 submitted: false,
                 errors: false,
@@ -216,60 +225,36 @@ export default {
                 green: [],
                 amber: []
             },
-            scoredCategories: [
-                {
-                    name: 'uv',
-                    icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/uv-white.png',
-                    desc: 'Ultraviolet (UV) radiation from the sun causes 95% of all skin cancers.',
-                    rotated: false
-                },
-                {
-                    name: 'smoking',
-                    icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/smoking-white.png',
-                    desc: 'Smoking is the cause of 15,500 cancer cases in Australia each year. ',
-                    rotated: false
-                },
-                {
-                    name: 'alcohol',
-                    icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/alcohol-white.png',
-                    desc: 'Alcohol consumption increases your risk of 7 different types of cancer.',
-                    rotated: false
-                },
-                {
-                    name: 'nutrition',
-                    icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/nutrition-white.png',
-                    desc: 'Poor nutrition is the cause of 7000 cancer cases in Australia each year. ',
-                    rotated: false
-                },
-                {
-                    name: 'weight',
-                    icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/weight-white.png',
-                    desc: 'Being overweight and obesity is the cause of 4,000 cancer cases in Australia each year. ',
-                    rotated: false
-                },
-                {
-                    name: 'physical activity',
-                    icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/physical-activity-white.png',
-                    desc: 'Over 1,800 cancer cases can be prevented each year if Australians were more physical active.',
-                    rotated: false
-                },
-                {
-                    name: 'screening',
-                    icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/screening-white.png',
-                    desc: 'Early diagnosis of cancer greatly increases the likelihood of successful treatment.',
-                    rotated: false
-                }
-            ],
             currentStep : null,
             results: '',
+            scoredCategories: scoredCategories,
             steps: conversation.steps
 		}
+    },
+    validations: {
+        form: {
+            firstName: {
+                required,
+                minLength: minLength(3),
+                maxLength: maxLength(50)
+            },
+            lastName: {
+                required,
+                minLength: minLength(3),
+                maxLength: maxLength(50)
+            },
+            emailAddress: {
+                required,
+                email,
+                maxLength: maxLength(80)
+            },
+        }
     },
     watch: {
         currentStep (next, prev) {
             let vm = this;
 
-            vm.scrollToBottom();
+            // vm.scrollToBottom();
 
             if (vm.steps[next].final) {
                 vm.state.activeCategory = 'results'
@@ -283,8 +268,8 @@ export default {
                 return
             }  else {
                 vm.state.activeCategory = vm.steps[next].category
-                setTimeout(() => vm.scrollToBottom(), 100)
-                setTimeout(() => vm.scrollToBottom(), 1300)
+                // setTimeout(() => vm.scrollToBottom(), 100)
+                // setTimeout(() => vm.scrollToBottom(), 1300)
             }
 
             if (vm.steps[next].question && !vm.display(vm.steps[next])) {
@@ -293,35 +278,35 @@ export default {
         }
     },
     computed: {
-        routes() {
-            if (this.steps[2].score && this.steps[3].score && 
-                ([64, "74"].includes(this.steps[2].score) && this.steps[3].score === "f") 
+        formDisabled() {
+            let vm = this;
+
+            return vm.form.firstName.length <= 1 || vm.form.lastName.length <= 1 || vm.form.emailAddress.length <= 6
+        },
+        displayScreening() {
+            return this.steps[2].score && this.steps[3].score && 
+                (["64", "74"].includes(this.steps[2].score) && this.steps[3].score === "f") 
                 || (["64", "74"].includes(this.steps[2].score)) 
-                || (["39", "49", "64", "74"].includes(this.steps[2].score) && this.steps[3].score === "f")) {
-
-                return [
-                    'personal',
-                    'uv', 
-                    'smoking',
-                    'alcohol',
-                    'nutrition',
-                    'weight',
-                    'physical activity',
-                    'screening',
-                    'results'
-                ]
-            } 
-
-            return [
+                || (["39", "49", "64", "74"].includes(this.steps[2].score) && this.steps[3].score === "f")
+        },
+        routes() {
+            let generatedRoutes = [
                 'personal',
                 'uv', 
                 'smoking',
                 'alcohol',
                 'nutrition',
                 'weight',
-                'physical activity',
-                'results'
+                'physical activity'
             ]
+            
+            if (this.displayScreening) {
+                generatedRoutes.push('screening')
+            } 
+
+            generatedRoutes.push('results')
+
+            return generatedRoutes
         },
         submitBtnDisabled() {
             let vm = this;
@@ -376,7 +361,7 @@ export default {
         async getToken() {
             let vm = this;
             return new Promise(async (resolve, reject) => {
-            let token = await grecaptcha.execute('6LdVoXkUAAAAAJSPi9AzIFrcumZGtaqoD7vc_nHH', { "action": "webform" });
+                let token = await grecaptcha.execute('6LdVoXkUAAAAAJSPi9AzIFrcumZGtaqoD7vc_nHH', { "action": "webform" });
                 token && token !== undefined ? resolve(token) : reject(false);
             })
         },
@@ -468,13 +453,33 @@ export default {
 
             results.total = Math.round(total / Object.keys(results).length)
             vm.results = results;
-            vm.sendResults()
+            vm.storeResults()
         },
         storeResults() {
             let vm = this;
+
+            let bmi = vm.steps.find(s => s.id === 'bmi').bmi;
+            let waist = vm.steps.find(s => s.id === 'waist').waist;
+
+            let age;
+            
+            switch (vm.steps[2].score) {
+                case '24':
+                    age = '18-24'
+                case '39':
+                    age = '25-39'
+                case '49':
+                    age = '40-49'
+                case '64':
+                    age = '50-64'
+                case '74':
+                    age = '65-74'
+                case '75':
+                    age = '75+'
+            }
             
             let postData = {
-                age: vm.steps[2].score,
+                age: age,
                 gender: vm.steps[3].score,
                 postcode: vm.steps[4].score,
                 uv: vm.results.uv,
@@ -482,12 +487,14 @@ export default {
                 alcohol: vm.results.alcohol,
                 nutrition: vm.results.nutrition,
                 weight: vm.results.weight,
+                bmi: bmi,
+                waist: waist,
                 physicalActivity: vm.results['physical activity'],
                 screening: vm.results.screening,
                 total: vm.results.total
             }
 
-            let url = 'POST URL'
+            let url = 'https://prod-16.australiaeast.logic.azure.com:443/workflows/472070d88d9f4f4899e2c2ad200967d0/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=caau2HrVCDbyNa256L0-a38ko8Q3r-rMJnkaPWxTOng'
 
             axios.post(url, postData)
                 .then((res) => console.log(res))
@@ -501,13 +508,13 @@ export default {
 
             setTimeout(() => {
                 vm.steps[vm.currentStep].userResponded = true
+                vm.display(vm.steps[vm.currentStep + 1]) ? vm.currentStep++ : vm.currentStep += 2
                 vm.scrollToBottom();
             }, timers.short)
 
-            setTimeout(() => {
-                vm.display(vm.steps[vm.currentStep + 1]) ? vm.currentStep++ : vm.currentStep += 2
-                vm.scrollToBottom();       
-            }, timers.short)
+            // setTimeout(() => {
+            //     vm.scrollToBottom();       
+            // }, timers.short)
         },
         display(step) {
             let displayExpression = step.display;
@@ -579,7 +586,7 @@ body {
             color:#fff;
             font-size: 14px;
             font-weight: 400;
-            border-radius: 8px;
+            border-radius: 4px;
             padding: 8px 10px;
             opacity:0;
             transition: 0.3s ease;
@@ -780,6 +787,7 @@ body {
 
     .circle {
         margin: 30px auto;
+        padding-left: 10px;
     }
 
     form {
