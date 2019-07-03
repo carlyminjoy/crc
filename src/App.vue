@@ -1,11 +1,5 @@
 <template>
 	<div id="app">
-        <!-- <header>
-            <div class='container'>
-                <img src="https://cancerqld.blob.core.windows.net/content/code/global/img/ccq-logo-249x123.png" />
-                <h3>Cancer Risk Score Card</h3>
-            </div>
-        </header> -->
 
         <div class="outer-container">
 
@@ -52,8 +46,7 @@
                         <h2>
                             <span>
                             <span class='img-container'><img :src='icons[category.name]' /></span>
-                            &nbsp; {{ category.name.toUpperCase() }}</span>
-                            <!-- <div class='expand'>&nbsp; <i class='fa fa-chevron-down'></i></div> -->
+                            {{ category.name.toUpperCase() }}</span>
 
                             <span class='category-icons'>
                                 <i class='fa fa-check'></i>{{ category.good.length }}&nbsp;
@@ -79,7 +72,6 @@
                                     </span>
                                 </p>
                                 
-                                <!-- <p>{{ section.recommendation }}</p> -->
                             </li>
                             
                         </ul>
@@ -102,17 +94,6 @@
                             </li>
                         </ul>
 
-                            <!-- <p><strong>You told us: </strong>{{ section.answer }}</p>
-                            <p v-if='section.bmi'><strong>Your BMI is: </strong>{{ section.bmi }}</p>
-                            <p><strong>We recommend: </strong>
-
-                            <span v-if='section.bmi'>The range for a healthy weight is between 18.5 and 25.</span>
-                            <span v-html='section.recommendation'></span>
-
-                            </p>
-                        </div> -->
-
-
                         <template v-if="category.tips">
                             <h2 class="m0">Tips:</h2>
                             <ul class="tips">
@@ -134,12 +115,8 @@
                             </li>
                         </ul>
                     </div>
-
-                    <!-- <span v-show='expandedCategory !== category.name' class='expand-tag' @click='expandedCategory = expandedCategory === category.name ? null : category.name'><i class='fa fa-chevron-down'></i></span> -->
                 </div>
-
             </div>
-
         </div>
 	</div>
 </template>
@@ -149,6 +126,8 @@
 import { vmdButton } from '@ccq/ccq-vue-components'
 import VueCircle from 'vue2-circle-progress'
 import axios from 'axios'
+import { default as Tips } from './tips.js'
+import { default as Resources } from './resources.js'
 
 export default {
     name: 'app',
@@ -161,166 +140,8 @@ export default {
             results: {},
             expandedCategory: null,
             latestScorecard: null,
-            tips: {
-                smoking: {
-                    smokingStatus: [
-                        'Call Quitline on 13 QUIT (13 7858).',
-                        'Set a quit date and seek support from family and friends.',
-                        'Speak your GP, pharmacist or community health worker and plan your quitting strategy.',
-                        'Avoid situations where you’re tempted to smoke.'
-                    ],
-                    householdSmoke: [
-                        'Encourage those who smoke to quit by speaking with their GP or calling Quitline on 13 7848.',
-                        'Make your house and car smoke-free environments.',
-                        'Follow the <a href="https://quithq.initiatives.qld.gov.au/quit-support/help-others-quit/dos-and-donts/" target="_blank">dos and don’ts</a> of helping others to quit.'
-                    ]
-                },
-                alcohol: {
-                    standardDrinks: [
-                        `Use the <a href='https://drinkwise.org.au/standard-drinks-calculator/#' target='_blank'>standard drink calculator</a> to find out how much you’re drinking.`,
-                        'Commit to having some alcohol-free days each week.',
-                        'Choose low alcohol or non-alcoholic drinks.'
-                    ]
-                },
-                nutrition: {
-                    fruit: [
-                        'Try adding fruit to your favourite breakfast cereal or make fruit a go-to snack when you’re on the go.'
-                    ],
-                    vegetables: [
-                        'Try raw vegie sticks and dip as a quick snack, or reduce the meat and increase the vegetables on your pizza, curry and stir fry.'
-                    ],
-                    redMeat: [
-                        'Choose fish, poultry or legumes instead of red meat for some meals.'
-                    ],
-                    processedMeat: [
-                        'Swap the pepperoni in your sandwich for egg, tuna or chicken for protein boost.'
-                    ],
-                    wholegrain: [
-                        'Choose brown rice instead of white, swap white for wholemeal pasta and bread varieties and avoid processed breakfast cereals.'
-                    ]
-                },
-                weight: {
-                    bmi: [
-                        'Eat a healthy diet full of fruit, vegetables, and wholegrains.',
-                        'Try to be active for at least 30 minutes every day.',
-                        'Limit consumption of junk foods and sugary drinks. ',
-                        'Speak with your GP or visit <a href="https://www.gethealthyqld.com.au/" target="_blank">get healthy</a> for free personal health coaching.'
-                    ],
-                    waist: [
-                        'Eat a healthy diet full of fruit, vegetables, and wholegrains.',
-                        'Try to be active for at least 30 minutes every day.',
-                        'Limit consumption of junk foods and sugary drinks.',
-                        'Speak with your GP or visit <a href="https://www.gethealthyqld.com.au/" target="_blank">get healthy</a> for free personal health coaching.'
-                    ]
-                },
-                "physical activity": {
-                    exercise: [
-                        'Walk or cycle to work or get off public transport one stop early and walk the rest.',
-                        'Do something you enjoy or can do with a friend, such as tennis, swimming or dancing.',
-                        'Set yourself an exercise goal or challenge.'
-                    ]
-                },
-                screening: {
-                    breastScreening: [
-                        'Speak to your health professional about breast cancer screening.', 
-                        'To book a free mammogram, contact 13 20 50.',
-                        `If you have moved interstate or haven’t received an invitation, <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/useful-links-2' target='_blank'>contact your local BreastScreen Australia provider</a>.`
-                    ],
-                    bowelScreening: [
-                        'Speak to your health professional about bowel cancer screening.', 
-                        `If you have moved interstate or haven’t received an invitation, you can <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-cancer-screeningkit-eligibility' target='_blank'>check your eligibility for receiving the national bowel cancer screening kit</a>.`,
-                        `Contact the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/Contact' target='_blank'>National Bowel Cancer Screening Program</a>.`
-                    ],
-                    cervicalScreening: [
-                        'Speak to your health professional about the national cervical cancer screening program.', 
-                        `Visit cancer Council's <a href='https://www.cancer.org.au/cervicalscreening/' target='_blank'>cervical screening website</a> for more information or;`,
-                        `Contact the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/cervical-screening-1' target='_blank'>National Cervical Screening Program</a>.`
-                    ]
-                }
-            },
-            resources: {
-                uv: [
-                    {
-                        url: 'https://cancerqld.blob.core.windows.net/resources/quest/Spot%20the%20difference_FACTSHEET.pdf',
-                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-sunsafety-02.png',
-                        text: `Spot the Difference Factsheet.`,
-                        cta: `Download`,
-                        download: true
-                    },
-                    {
-                        url: 'https://cancerqld.blob.core.windows.net/resources/quest/skin%20cancer%20outdoor%20work.pdf',
-                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-sunsafety-01.png',
-                        text: `Skin Cancer Outdoor Work`,
-                        cta: `Download`,
-                        download: true
-                    }
-                ],
-                nutrition: [
-                    {
-                        url: 'https://cancerqld.blob.core.windows.net/resources/quest/Healthy%20BBQ_FACTSHEET.pdf',
-                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-eat-01.png',
-                        text: `Healthy BBQ Factsheet`,
-                        cta: 'Download',
-                        download: true
-                    },
-                    {
-                        url: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/resources/18029%20A4%20Men%20Comparethepair_FA.PDF',
-                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-eat-02.png',
-                        text: `Compare the Pair`,
-                        cta: 'Download',
-                        download: true
-                    },
-                    {
-                        url: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/resources/Red%20meat%20-%20processed%20meat%20and%20cancer%20-%20your%20questions%20answered.pdf',
-                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-eat-03.png',
-                        text: `Red Meat, Processed Meat and Cancer`,
-                        cta: 'Download',
-                        download: true
-                    },
-                    
-                ],
-                smoking: [
-                    {
-                        url: 'https://cancerqld.blob.core.windows.net/resources/quest/Harms%20of%20smoking_FACTSHEET.pdf',
-                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-smoking-02.png',
-                        text: `Harms of Smoking Factsheet`,
-                        cta: 'Download',
-                        download: true
-                    },
-                    {
-                        url: 'https://cancerqld.blob.core.windows.net/resources/quest/Benefits%20of%20quitting%20smoking_FACTSHEET.pdf',
-                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-smoking-01.png',
-                        text: `Benefits of Quitting Smoking Factsheet`,
-                        cta: 'Download',
-                        download: true
-                    }
-                ],
-                alcohol: [
-                    {
-                        url: 'https://cancerqld.blob.core.windows.net/resources/quest/Alcohol%20and%20cancer_FACTSHEET.pdf',
-                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-alcohol-01.png',
-                        text: `Alcohol and Cancer Factsheet`,
-                        cta: 'Download',
-                        download: true
-                    },
-                    {
-                        url: 'https://cancerqld.blob.core.windows.net/resources/quest/Food%20swaps_FACTSHEET.pdf',
-                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-alcohol-02.png',
-                        text: `Food Swaps Factsheet`,
-                        cta: 'Download',
-                        download: true
-                    }
-                ],
-                'physical activity': [
-                    {
-                        url: 'https://cancerqld.blob.core.windows.net/resources/quest/Take%20time%20to%20be%20active_FACTSHEET.pdf',
-                        img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-active-01.png',
-                        text: `Take Time to be Active Factsheet`,
-                        cta: 'Download',
-                        download: true
-                    }
-                ]
-            },
+            tips: Tips,
+            resources: Resources,
             icons: {
                 uv: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/uv-white.png',
                 smoking: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/smoking-white.png',
@@ -382,8 +203,6 @@ export default {
                 .then(response => {
                     this.results = response.data.scorecards.sort((a,b) => a._ts - b._ts)
 
-                    console.log(response)
-
                     this.results.forEach((card) => {
                         if (card.entry && !vm.latestScorecard) {
                             vm.latestScorecard = card.entry;
@@ -391,7 +210,6 @@ export default {
                         }
                     })
                 })
-
         }
     },
     mounted () {
@@ -429,15 +247,14 @@ body {
     }
 }
 #app {
-	font-family: Roboto, Helvetica, Arial, sans-serif;
+    border-top: 3px solid $yellow;
+	font-family: 'Foco CC', 'Roboto', Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
 	color: $dark-blue;
     height:100vh;
     background: #eee;
-
-
 }
 
 .outer-container {
@@ -489,29 +306,16 @@ body {
                 width: 40px;
                 text-align:center;
                 display:inline-block;
-                // border-radius: 50%;
                 height: 40px;
                 justify-content:center;
                 align-items:center;
-                // background:#fff;
+                margin-right: 5px;
 
                 img {
                     margin-top: 2px;
                     height:36px;
                 }
             }
-
-            // cursor:pointer;
-
-            
-            // div.expand {
-            //     display:inline-block;
-            //     // color:$blue;
-            //     height: 100%;
-            //     width: 40px;
-            //     text-align:right;
-                
-            // }
 
             &>h2 {
                 color:#fff;
@@ -526,6 +330,7 @@ body {
                 &>span:not(.category-icons) {
                     display:flex;
                     align-items:center;
+                    line-height: 20px;
                 }
                 span.category-icons {
                     float:right;
@@ -580,7 +385,7 @@ body {
         .blue, .grey, .resources-container {
             transition: max-height 0.5s ease, opacity 0.5s ease;
             padding: 15px 30px;
-            max-height: 800px;
+            max-height: 3000px;
 
             .fa, .svg-inline--fa {
                 font-size: 20px!important;
@@ -601,6 +406,10 @@ body {
                 padding: 0;
                 opacity: 0;
                 max-height: 0;
+            }
+
+            ul, li {
+                display:none!important;
             }
         }
 
@@ -711,7 +520,7 @@ body {
                     flex-basis: 320px;
                     flex-grow:1;
                     display:flex;
-                    max-width: 400px;
+                    max-width: 350px;
 
                     a.img-link {
                         padding:0;
@@ -765,51 +574,39 @@ body {
 }
 
 @media screen and (max-width: 600px) {
-    #app .outer-container .results-container .category {
-        .category-heading > h2 {
-            font-size: 20px;
-            padding: 10px 15px;
+    #app .outer-container .results-container {
+        padding: 15px;
 
-            span.img-container > img {
-                height: 30px;
-                margin-top: 4px;
-            }
+        .category {
+            margin: 15px;
 
-            span.category-icons {
-                width: 80px;
-            }
-        }
-        .resources-container .resources li {
-            flex-wrap:wrap;
-                a.img-link {
-                    height:150px;
+            .category-heading > h2 {
+                font-size: 20px;
+                padding: 5px 10px;
+
+                span.img-container > img {
+                    height: 30px;
+                    margin-top: 4px;
                 }
+
+                span.category-icons {
+                    min-width: 60px;
+                    width:60px;
+                    font-size: 16px;
+                }
+            }
+            .resources-container .resources li {
+                flex-wrap:wrap;
+                    a.img-link {
+                        height:150px;
+                    }
+            }
         }
     }
 }
 
 @media screen and (max-width: 800px) {
     #app {
-        // header {
-        //     height: 60px;
-        //     .container {
-        //         display:flex;
-        //         align-items:center;
-        //         h1 {
-        //             padding-top: 5px;
-        //             font-size: 24px;
-        //             margin: unset;
-        //             font-weight:bold;
-        //         }
-
-        //         img {
-        //             height: 40px;
-        //             float:unset;
-        //             margin: 0 20px 0 5px;
-        //         }
-                
-        //     }
-        // }
         .progress-bar {
             li {
                 span {
@@ -842,7 +639,6 @@ body {
                     }
                 }
             }
-           
         }
     }
 }
@@ -868,4 +664,5 @@ body {
 .delay-extra-fade-enter-active, .delay-extra-fade-leave-active {
   transition-delay: 1.7s;
 }
+
 </style>
