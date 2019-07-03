@@ -16,5 +16,6 @@
 
 <div id="app"></div> 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.0.0/polyfill.min.js"></script>
 <script src="https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/scorecard.js"></script>
 
