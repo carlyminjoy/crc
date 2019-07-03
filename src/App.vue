@@ -552,10 +552,7 @@ body {
 
         @media screen and (max-width: 600px) {
             .info-text {
-                left: 0;
-            }
-            .fa-question-circle {
-                font-size: 32px;
+                left: -220px!important;
             }
         }
 
@@ -563,6 +560,7 @@ body {
             cursor:pointer;
             transition: 0.3s ease;
             color:$yellow;
+            font-size: 32px;
 
             &:hover {
                 color:$dark-blue;
@@ -785,7 +783,11 @@ body {
 
     .circle {
         margin: 30px auto;
-        padding-left: 10px;
+        padding-left: 30px;
+
+        span.percent-text {
+            margin-left:-20px;
+        }
     }
 
     form {
