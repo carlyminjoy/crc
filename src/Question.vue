@@ -168,6 +168,11 @@ $dark-blue: #2c3e50;
         &.hide {
             height: 0;
             opacity: 0;
+
+            & > div {
+                height:0;
+                opacity:0;
+            }
         }
         
         & > div {

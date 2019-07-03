@@ -486,7 +486,6 @@ export default {
             let url = 'https://prod-16.australiaeast.logic.azure.com:443/workflows/472070d88d9f4f4899e2c2ad200967d0/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=caau2HrVCDbyNa256L0-a38ko8Q3r-rMJnkaPWxTOng'
 
             axios.post(url, postData)
-                .then((res) => console.log(res))
                 .catch((e) => console.log(e))
             
         },
@@ -503,7 +502,6 @@ export default {
         },
         display(step) {
             let vm = this;
-            console.log('display output:', step.display(vm.steps))
             return step.display(vm.steps);
         }
     },
@@ -516,6 +514,7 @@ export default {
         if ( isIE ) {
             this.state.isIe = true;
             document.querySelector('.conversation-container').classList.add('scroll')
+            document.querySelector('.results-container').classLIst.add('ie')
         }
     }
 }
@@ -550,6 +549,15 @@ body {
     .info {
         position:relative;
         display:inline-block;
+
+        @media screen and (max-width: 600px) {
+            .info-text {
+                left: 0;
+            }
+            .fa-question-circle {
+                font-size: 32px;
+            }
+        }
 
         .fa-question-circle {
             cursor:pointer;
@@ -757,6 +765,10 @@ body {
     height: auto;
     @extend %boxshadow;
 
+    &.ie ul {
+        justify-content:flex-start!important;
+    }
+
     .total-score {
         font-size: 24px;
         font-weight:600;
@@ -907,6 +919,7 @@ body {
 
 @media screen and (max-width: 800px) {
     #app {
+
         // header {
         //     height: 60px;
         //     .container {
@@ -928,6 +941,8 @@ body {
         //     }
         // }
         .progress-bar {
+            max-width: 90%;
+            padding: 0;
             li {
                 span {
                     display:none;
@@ -937,8 +952,18 @@ body {
         }
         .outer-container {
             padding-top: 0;
+            padding-bottom: 0;
+
+            h1 {
+                margin: 20px 0 0 0;
+                padding-bottom: 0;
+            }
+
             .results-container {
                 width: unset;
+                border-radius: 0;
+                margin: 30px auto 0;
+                padding-bottom: 30px;
             }
             .conversation-container {
                 &.mask {
@@ -947,8 +972,8 @@ body {
 
                 max-height:calc(100vh - 180px);
 
-                padding: 40px 10px;
-                margin: 20px auto;
+                padding: 10px;
+                margin: 20px auto 0;
 
                 .ai-comment,
                 .user-comment {
