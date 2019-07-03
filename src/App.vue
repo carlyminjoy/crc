@@ -9,13 +9,7 @@
 
         <div class="outer-container">
 
-            <template v-if='!latestScorecard'>
-                <div>
-                    <square-spinner color='#FCD208' ></square-spinner>
-                </div>
-            </template>
-
-            <div class="results-container" v-else>
+            <div class="results-container" v-if='latestScorecard'>
                 <h1>{{latestScorecard.firstName }}, your total score is: </h1>
 
                 <vue-circle
@@ -155,14 +149,12 @@
 import { vmdButton } from '@ccq/ccq-vue-components'
 import VueCircle from 'vue2-circle-progress'
 import axios from 'axios'
-import { SquareSpinner } from 'vue-spinners/src/components/SquareSpinner.vue'
 
 export default {
     name: 'app',
     components: {
         vmdButton,
-        VueCircle,
-        SquareSpinner
+        VueCircle
     },
 	data () {
 		return {
