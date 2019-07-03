@@ -560,7 +560,7 @@ body {
             cursor:pointer;
             transition: 0.3s ease;
             color:$yellow;
-            font-size: 32px;
+            font-size: 24px;
 
             &:hover {
                 color:$dark-blue;
