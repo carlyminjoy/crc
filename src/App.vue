@@ -773,11 +773,26 @@ body {
 }
 
 @media screen and (max-width: 600px) {
-    #app .outer-container .results-container .category .resources-container .resources li {
-        flex-wrap:wrap;
-            a.img-link {
-                height:150px;
+    #app .outer-container .results-container .category {
+        .category-heading > h2 {
+            font-size: 20px;
+            padding: 10px 15px;
+
+            span.img-container > img {
+                height: 30px;
+                margin-top: 4px;
             }
+
+            span.category-icons {
+                width: 80px;
+            }
+        }
+        .resources-container .resources li {
+            flex-wrap:wrap;
+                a.img-link {
+                    height:150px;
+                }
+        }
     }
 }
 
