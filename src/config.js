@@ -2,12 +2,12 @@ export default {
     steps: [
         {
             question: false,
-            display:true,
+            display: () => true,
             text: "Hello! Over the next few minutes, we’ll be asking you some questions to recommend ways you can reduce your cancer risk."
         },
         {
             question: false,
-            display:true,
+            display:() => true,
             text: `<em>The results of this quiz provide generalised recommendations on how you can reduce your cancer risk based on the answers you provide.<br><br> These should not be used as a substitute for advice from a qualified medical professional who can advise you about your own individual medical needs.<br><br>See our <a href='#' target='_blank'>disclaimer</a>.</em>`
         },
         {
@@ -16,7 +16,7 @@ export default {
             category: 'personal',
             text: "First of all, what is your age?",
             score: null,
-            display:true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -64,7 +64,7 @@ export default {
             category: 'personal',
             text: "What is your gender?",
             score: null,
-            display:true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -85,7 +85,7 @@ export default {
         {
             id: "postcode",
             question: true,
-            display:true,
+            display:() => true,
             category: 'personal',
             text: "What is your postcode?",
             userInput: true,
@@ -97,18 +97,18 @@ export default {
         },
         {
             question:false,
-            display:true,
+            display:() => true,
             text: "Okay, thanks for providing your details. Let's begin!",
             delay: true
         },
         {
             question:false,
-            display:true,
+            display:() => true,
             text: "First up, let's talk about ultraviolet radiation (UV) from the sun. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/uv.png' />"
         },
         {
             question: false,
-            display:true,
+            display:() => true,
             text: `<span class='big'>When outside for extended periods of time, how do you protect your skin?</span>`
         },
         {
@@ -117,7 +117,7 @@ export default {
             category: 'uv',
             text: `Do you wear sun protective clothing (e.g. shirt with collar, sleeves and long pants)?</li>`,
             score: null,
-            display:true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -141,7 +141,7 @@ export default {
             category: 'uv',
             text: "Do you wear a sun protective hat (e.g. broad-brimmed or bucket style)?",
             score: null,
-            display: true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -165,7 +165,7 @@ export default {
             category:'uv',
             text: "Do you apply and reapply SPF30+ sunscreen or higher at least every 2 hours?",
             score: null,
-            display:true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -189,7 +189,7 @@ export default {
             category:'uv',
             text: "Do you stay in the shade where possible?",
             score: null,
-            display:true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -213,7 +213,7 @@ export default {
             category: 'uv',
             text: "Do you wear sunglasses?",
             score: null,
-            display:true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -233,7 +233,7 @@ export default {
         },
         {
             question:false,
-            display:true,
+            display:() => true,
             text: "Okay, next question!"
         },
         {
@@ -242,7 +242,7 @@ export default {
             category: 'uv',
             text: `<span class='big'>Do you regularly check your skin for new spots and changes to existing freckles or moles?</span>`,
             score: null,
-            display:true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -266,7 +266,7 @@ export default {
             category: 'uv',
             text: `<span class='big'>Do you have your skin checked by a health professional, or speak to them about your skin cancer risk?</span>`,
             score: null,
-            display:true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -286,13 +286,13 @@ export default {
         },
         {
             question: false,
-            display:true,
+            display:() => true,
             text: "Okay! Thanks for answering those questions. Let's move on!",
             delay: true
         },
         {
             question: false,
-            display:true,
+            display:() => true,
             text: "Next category: smoking habits. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/smoking.png' />"
         },
         {
@@ -301,7 +301,7 @@ export default {
             category: 'smoking',
             text: `<span class='big'>What is your smoking status?</span>`,
             score: null,
-            display:true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -337,7 +337,7 @@ export default {
             category: 'smoking',
             text: `<span class='big'>Is your household smoke-free?</span>`,
             score: null,
-            display:true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -357,7 +357,7 @@ export default {
         },
         {
             question: false,
-            display:true,
+            display:() => true,
             text: "Okay! Let's move on to alcohol consumption. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/alcohol.png' />",
             delay: true
         },
@@ -367,7 +367,7 @@ export default {
             category: 'alcohol',
             text: `<span class='big'>How many standard drinks do you typically consume in a day when you drink?</span><br><br>Examples of 1 standard drink:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/bottle.png'/></span> 1 x 375mL bottle of mid strength beer</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/wine.png'/></span> 100 mL of wine (1 x small glass of wine)</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/glass2.png'/></span> 30 mL of spirits (1 x measure of spirits)</li></ul>`,
             score: null,
-            display:true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -394,13 +394,13 @@ export default {
         },
         {
             question: false,
-            display:true,
+            display:() => true,
             text: "Okay!",
             delay: true
         },
         {
             question: false,
-            display:true,
+            display:() => true,
             text: "Let's discuss nutrition. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/nutrition.png' />"
         },
         {
@@ -409,7 +409,7 @@ export default {
             category: 'nutrition',
             text: `<span class='big'>How many serves of fruit do you eat in a typical day?</span><br><br>Examples of 1 serve of fruit:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/apple.png'/></span>1 x apple</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/apricots.png'/></span> 2 x apricots</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/fruit.png'/></span>1 cup of fruit</li></ul>`,
             score: null,
-            display:true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -440,7 +440,7 @@ export default {
             category: 'nutrition',
             text: `<span class='big'>How many serves of vegetables do you eat in a typical day?</span><br><br>Examples of 1 serve of vegetables:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/vegetables.png'/></span>1/2 cup cooked vegetables</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/potato.png'/></span>1/2 medium potato</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/salad.png'/></span>1 cup of salad</li></ul>`,
             score: null,
-            display:true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -477,7 +477,7 @@ export default {
             category: 'nutrition',
             text: `<span class='big'>How many serves of red meat do you eat in a typical week?</span><br><br>Examples of 1 serve:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/lamb.png'/></span>1 lamb loin chop</li></ul><br>Examples of 2 serves:<ul class='examples'><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/steak.png'/></span>1 porterhouse/scotch fillet steak</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/diced-meat.png'/></span>1 cup diced meat</li></ul>`,
             score: null,
-            display:true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -514,7 +514,7 @@ export default {
             category: 'nutrition',
             text: `<span class='big'>How many serves of processed meat do you eat in a typical week?</span><br><br>Example of 1 serve:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/bacon.png'/></span>2 slices of bacon</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/salami.png'/></span>2 slices of salami or ham</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/sausages.png'/></span>2 thin sausages</li></ul>`,
             score: null,
-            display:true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -551,7 +551,7 @@ export default {
             category: 'nutrition',
             text: `<span class='big'>How often do you choose wholegrain, wholemeal and/or high fibre food varieties? </span><br>(e.g. brown rice, wholemeal bread)`,
             score: null,
-            display:true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -584,13 +584,13 @@ export default {
         },
         {
             question: false,
-            display:true,
+            display:() => true,
             text: "Okay! That's it for nutrition.",
             delay: true
         },
         {
             question: false,
-            display:true,
+            display:() => true,
             text: "Next, let's talk about weight. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/weight.png' />"
         },
         {
@@ -599,7 +599,7 @@ export default {
             category: 'weight',
             text: `<span class='big'>Please share your weight status with us by using the BMI calculator or your waist measurement.</span>`,
             score: null,
-            display: true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -630,7 +630,7 @@ export default {
             text: `<span class='big'>Please enter your height (cm) and weight (kg):</span>`,
             userInput: true,
             score: null,
-            display: `this.steps.find((s) => s.id === 'weight').score === 'bmi'`,
+            display: (steps) => steps.find((s) => s.id === 'weight').score === 'bmi',
             userResponded: false,
             userResponse: '',
             aiResponded: false,
@@ -646,7 +646,7 @@ export default {
             text: "<span class='big'>Please enter your waist measurement:</span>",
             userInput: true,
             score: null,
-            display: `this.steps.find((s) => s.id === 'weight').score === 'waist'`,
+            display:(steps) => steps.find((s) => s.id === 'weight').score === 'waist',
             userResponded: false,
             userResponse: '',
             aiResponded: false,
@@ -655,13 +655,13 @@ export default {
         },
         {
             question: false,
-            display:true,
+            display:(steps) => true,
             text: "Okay! We're almost done!",
             delay: true
         },
         {
             question: false,
-            display:true,
+            display:() => true,
             text: "Let's talk about physical activity. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/physical-activity.png' />"
         },
         {
@@ -670,7 +670,7 @@ export default {
             category: 'physical activity',
             text: `<span class='big'>In a typical week, how many days are you physically active for 30 minutes or more?</span>`,
             score: null,
-            display:true,
+            display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
@@ -703,7 +703,7 @@ export default {
         },
         {
             question: false,
-            display: '([64, "74"].includes(this.steps[2].score) && this.steps[3].score === "f") || (["64", "74"].includes(this.steps[2].score)) || (["39", "49", "64", "74"].includes(this.steps[2].score) && this.steps[3].score === "f")',
+            display: (steps) => ([64, "74"].includes(steps[2].score) && steps[3].score === "f") || (["64", "74"].includes(steps[2].score)) || (["39", "49", "64", "74"].includes(steps[2].score) && steps[3].score === "f"),
             text: "Thanks! We're up to the final category - screening. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/screening.png' />",
             delay: true
         },
@@ -713,7 +713,7 @@ export default {
             category: 'screening',
             text: `<span class='big'>Do you participate in the <div class='info'><i class='fa fa-question-circle'></i><div class='info-text'>Invitation sent to women aged between 50 – 74 to participate in a free mammogram every 2 years.</div></div> <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/breast-screening-1' target='_blank'></i>National Breast Cancer Screening Program</a>?</span>`,
             score: null,
-            display: '["64", "74"].includes(this.steps[2].score) && this.steps[3].score === "f"',
+            display: (steps) => ["64", "74"].includes(steps[2].score) && steps[3].score === "f",
             userResponded: false,
             aiResponded: false,
             options: [
@@ -743,7 +743,7 @@ export default {
             category: 'screening',
             text: `<span class='big'>Do you participate in the <div class='info'><i class='fa fa-question-circle'></i><div class='info-text'>Program test kit sent to men and women aged between 50 – 74 to complete at home every 2 years.</div></div> <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-screening-1' target='_blank'>National Bowel Cancer Screening Program</a>?</span>`,
             score: null,
-            display: '["64", "74"].includes(this.steps[2].score)',
+            display: (steps) => ["64", "74"].includes(steps[2].score),
             userResponded: false,
             aiResponded: false,
             options: [
@@ -773,7 +773,7 @@ export default {
             category: 'screening',
             text: `<span class='big'>Do you participate in the <div class='info'><i class='fa fa-question-circle'></i><div class='info-text'>Cervical Screening Test replaced the two-yearly Pap test and is still performed by your healthcare provider in the same way.</div></div> <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/cervical-screening-1' target='_blank'>National Cervical Screening Program</a> (replaces the previous Pap test)?</span>`,
             score: null,
-            display: '["39", "49", "64", "74"].includes(this.steps[2].score) && this.steps[3].score === "f"',
+            display: (steps) => ["39", "49", "64", "74"].includes(steps[2].score) && steps[3].score === "f",
             userResponded: false,
             aiResponded: false,
             options: [
@@ -793,7 +793,7 @@ export default {
         },
         {
             question:false,
-            display:true,
+            display:() => true,
             text: "Great! You've answered all the questions. Let's calculate your results...",
             final:true
         }

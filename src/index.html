@@ -1,42 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+
         <!-- Google Tag Manager -->
-        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-TGP4QV');</script>
+        <!-- <script>
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-TGP4QV');
+        </script> -->
         <!-- End Google Tag Manager -->
 
-        <script src="https://browser.sentry-cdn.com/5.4.3/bundle.min.js" crossorigin="anonymous">
-        </script>
-
+        <!-- <script src="https://browser.sentry-cdn.com/5.4.3/bundle.min.js" crossorigin="anonymous"></script> -->
+        
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
         <title>QUEST - What's your cancer risk?</title>
-
-    </head>
         
+    </head>
+    
     <body> 
         <!-- Google Tag Manager (noscript) -->
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGP4QV"
-            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- <noscript>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGP4QV" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        </noscript> -->
         <!-- End Google Tag Manager (noscript) -->
-
+        
         <noscript> 
             <strong>We're sorry but this quiz doesn't work properly without JavaScript enabled. Please enable it to continue.</strong> 
         </noscript> 
-        
+            
         <div id="app"></div> 
         
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.0.0/polyfill.min.js"></script>
         <script src="https://www.google.com/recaptcha/api.js?render=6LdVoXkUAAAAAJSPi9AzIFrcumZGtaqoD7vc_nHH"></script>
-        <script>
+
+        <!-- <script>
             Sentry.init({ dsn: 'https://60525e134d5144ca88e23ece09992f2a@sentry.io/1491372' });
-        </script>
+        </script> -->
+
         <script src="./index.js"></script> 
+
     </body>
 
 </html>

@@ -130,7 +130,8 @@
 
                             <question v-if="step.question && !step.userInput" 
                                     :question=step 
-                                    v-on:addstep="addStep()"></question>
+                                    v-on:addstep="addStep()"
+                                    v-on:ready='scrollToBottom()'></question>
 
                             <weight v-else-if="step.userInput && step.category === 'weight'" 
                                     :question=step 
@@ -139,7 +140,8 @@
 
                             <postcode v-else-if="step.userInput && step.id === 'postcode'" 
                                     :question=step 
-                                    v-on:addstep="addStep()"></postcode>
+                                    v-on:addstep="addStep()"
+                                    v-on:scrolltobottom='scrollToBottom()'></postcode>
 
                             <p v-else v-html='step.text'></p>
 
@@ -185,7 +187,7 @@ import VueCircle from 'vue2-circle-progress'
 import axios from 'axios'
 import JQuery from 'jquery'
 let $ = JQuery
-
+import Form from './utils/Form.js'
 
 const timers = {
     shortest: 500,
@@ -207,9 +209,10 @@ export default {
     },
 	data () {
 		return {
-            isIe: false,
+            sourceIdentifier: 'cancerriskquiz-webform-c9dc3b17',
             state: {
-                showResults: true,
+                isIe: false,
+                showResults: false,
                 loading: false,
                 submitted: false,
                 errors: false,
@@ -254,26 +257,23 @@ export default {
         currentStep (next, prev) {
             let vm = this;
 
-            // vm.scrollToBottom();
-
             if (vm.steps[next].final) {
                 vm.state.activeCategory = 'results'
                 vm.calculateResults()
-                setTimeout(() => vm.state.showResults = true, timers.med)
+                setTimeout(() => (vm.state.showResults = true) && vm.scrollToBottom(), timers.med)
                 return
             }
 
             if (!vm.steps[next].question) {
-                setTimeout(() => vm.currentStep++, (vm.steps[next].delay ? timers.long : timers.med))
+                setTimeout(() => vm.currentStep++ && vm.scrollToBottom(), (vm.steps[next].delay ? timers.long : timers.med))
                 return
             }  else {
                 vm.state.activeCategory = vm.steps[next].category
-                // setTimeout(() => vm.scrollToBottom(), 100)
-                // setTimeout(() => vm.scrollToBottom(), 1300)
+                setTimeout(() => vm.scrollToBottom(), 1300)
             }
 
             if (vm.steps[next].question && !vm.display(vm.steps[next])) {
-                setTimeout(() => vm.currentStep++, timers.shortest)
+                setTimeout(() => vm.currentStep++ && vm.scrollToBottom(), timers.shortest)
             }
         }
     },
@@ -318,7 +318,7 @@ export default {
     },
     methods: {
         scrollToBottom() {
-            if (this.isIe) {
+            if (this.state.isIe) {
                 var element = this.$refs.conversationEl;
                 element.scrollTop = element.scrollHeight;
             }
@@ -358,55 +358,44 @@ export default {
 
             return recommendations;
         },
-        async getToken() {
-            let vm = this;
-            return new Promise(async (resolve, reject) => {
-                let token = await grecaptcha.execute('6LdVoXkUAAAAAJSPi9AzIFrcumZGtaqoD7vc_nHH', { "action": "webform" });
-                token && token !== undefined ? resolve(token) : reject(false);
-            })
-        },
-        async getPostData() {
-            let vm = this;
-            let gaToken = await vm.getToken();
+        // async getPostData() {
+        //     let vm = this;
+        //     let gaToken = await vm.getToken();
 
-            let entry = {
+        //     let formData = new Form({
+        //         firstName: vm.form.firstName,
+        //         lastName: vm.form.lastName,
+        //         emailAddress: vm.form.emailAddress,
+        //         postcode: vm.steps[4].score,
+        //         scores: vm.results,
+        //         recommendations: vm.getRecommendations()
+        //     })
+
+        //     return gaToken ? {
+        //         'sourceIdentifier': vm.sourceIdentifier,
+        //         'entry': entry,
+        //         'debug': 'development',
+        //         'gaToken' : gaToken
+        //     } : null;
+        // },
+        async sendResults() {
+            let vm = this;
+
+            vm.state.loading = true;
+
+            let form = new Form({
                 firstName: vm.form.firstName,
                 lastName: vm.form.lastName,
                 emailAddress: vm.form.emailAddress,
                 postcode: vm.steps[4].score,
                 scores: vm.results,
                 recommendations: vm.getRecommendations()
-            }
+            })
 
-            return gaToken ? {
-                'sourceIdentifier': 'cancerriskquiz-webform-c9dc3b17',
-                'entry': entry,
-                'debug': 'development',
-                'gaToken' : gaToken
-            } : null;
-        },
-        async sendResults() {
-            let vm = this;
-            vm.state.loading = true;
-
-            let postData = await vm.getPostData()
-            if (postData) {
-                let response = await axios({
-                    method: 'post',
-                    url: 'https://ccq-form-functions.azurewebsites.net/formsubmit',
-                    timeout: 30000,
-                    data: postData
-                })
-
-                vm.state.loading = false;
-                if (response.data.success) {
-                    vm.state.submitted = true;
-                    return;
-                }
-            }
-
-            vm.state.loading = false;
-            vm.state.errors = true;
+            form.submit(vm.sourceIdentifier, true)
+                .then(response => vm.state.submitted = true)
+                .catch(error => vm.state.errors = error)
+                .finally(() => vm.state.loading = false)
         },
         calculateResults() {
             let vm = this;
@@ -504,21 +493,18 @@ export default {
         addStep() {
             let vm = this;
 
-            vm.scrollToBottom();
+            vm.scrollToBottom()
 
             setTimeout(() => {
                 vm.steps[vm.currentStep].userResponded = true
                 vm.display(vm.steps[vm.currentStep + 1]) ? vm.currentStep++ : vm.currentStep += 2
-                vm.scrollToBottom();
+                vm.scrollToBottom()
             }, timers.short)
-
-            // setTimeout(() => {
-            //     vm.scrollToBottom();       
-            // }, timers.short)
         },
         display(step) {
-            let displayExpression = step.display;
-            return eval(displayExpression);
+            let vm = this;
+            console.log('display output:', step.display(vm.steps))
+            return step.display(vm.steps);
         }
     },
     mounted () {
@@ -528,8 +514,8 @@ export default {
         var isIE = /MSIE|Trident/.test(ua);
 
         if ( isIE ) {
-            this.isIe = true;
-            this.$refs.conversationEl.classList.add('scroll')
+            this.state.isIe = true;
+            document.querySelector('.conversation-container').classList.add('scroll')
         }
     }
 }
@@ -847,6 +833,7 @@ body {
         list-style-type:none;
         padding-inline-start: 0;
         margin-block-start: 0;
+        padding-left: 0;
         display:flex;
         flex-wrap: wrap;
         justify-content:center;
@@ -898,6 +885,7 @@ body {
                     align-items:center;
                     justify-content:center;
                     height:calc(100% - 10px);
+                    max-width:150px;
                 }
             }
 

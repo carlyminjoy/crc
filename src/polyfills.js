@@ -1,0 +1,5 @@
+import 'babel-polyfill'
+import '@babel/polyfill'
+import 'es6-object-assign/auto'
+import 'promise-polyfill'
+import 'classlist-polyfill'

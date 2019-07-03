@@ -68,7 +68,7 @@ export default {
       }
   },
   mounted() {
-      setTimeout(() => this.ready = true, timer)
+      setTimeout(() => (this.ready = true) && this.$emit('scrolltobottom'), timer)
   }
 }
 </script>
@@ -197,6 +197,7 @@ $dark-blue: #2c3e50;
                 justify-content:center;
                 align-items:center;
                 cursor:pointer;
+                max-width: 350px;
             }
 
 

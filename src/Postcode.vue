@@ -11,7 +11,7 @@
             <div class='ask' v-html='question.text'></div>
 
             <div class="responses" :class="{'hide' : selected}">
-                <vmd-text-field id='postcode' v-model.trim="postcode" label="Postcode"> </vmd-text-field>
+                <vmd-text-field id='postcode' @input='scrollToBottom()' v-model.trim="postcode" label="Postcode"> </vmd-text-field>
                 <vmd-button id='postcode-btn' varient="raised" :disabled='disabled' :text='postcode' v-if='this.postcode !== ""' @click="addStep()"></vmd-button>
             </div>
 
@@ -40,6 +40,9 @@ export default {
       }
   },
   methods: {
+      scrollToBottom() {
+          this.$emit('scrolltobottom')
+      },
       getGuid() {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                 var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
