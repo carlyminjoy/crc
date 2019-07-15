@@ -40,24 +40,27 @@
                     <br>
                 </div>
 
-                <div class="category" v-for="(category, index) in scorecards" :key="index">
-                    <div class='category-heading'>
+                <div class="category" v-for="(category, index) in scorecards" :key="index" 
+                    :class="{ 'break' : scorecards[index].bad.length === 0 && scorecards[index + 1].bad.length > 0 }">
+
+                    <div class='category-heading' @click='expandedCategory = expandedCategory === category.name ? null : category.name'>
+                        
                         <h2>
                             <span>
                             <span class='img-container'><img :src='icons[category.name]' /></span>
                             {{ category.name.toUpperCase() }}</span>
 
                             <span class='category-icons'>
-                                <i class='fa fa-check'></i>{{ category.good.length }}&nbsp;
-                                <i class='fa fa-exclamation'></i>{{ category.bad.length }}
+                                <span v-if='category.bad.length  === 0'><i class='fa fa-check-circle'></i></span>
+                                <span v-if='category.bad.length > 0'><i class='fa fa-exclamation-circle'></i></span>
                             </span>
                         </h2>
 
-                        <span class='expand-tag' 
-                            @click='expandedCategory = expandedCategory === category.name ? null : category.name'>
+                        <span class='expand-tag'>
                             <i v-if='expandedCategory !== category.name' class='fa fa-chevron-down'></i>
                             <i v-else class='fa fa-chevron-up'></i>
                         </span>
+
                     </div>
 
                     <div class="blue" :class="{'contracted' : expandedCategory !== category.name}" v-if="category.good.length > 0">
@@ -106,7 +109,6 @@
                         <h2>Resources and links:</h2>
 
                         <ul class="resources">
-
 
                                 <li v-for="(resource, index) in resources[category.name]" :key='index' 
                                     v-if='!resource.display || category.bad.find(q => q.id === resource.display)'>
@@ -198,7 +200,7 @@ export default {
                 }
             })
 
-            return scorecards
+            return scorecards.sort((a, b) => a.bad.length - b.bad.length)
         }
     },
     methods: {
@@ -296,18 +298,39 @@ body {
     .category {
         background: #eee;
         color: #fff;
-        margin: 30px;
+        margin: 15px;
         @extend %boxshadow;
         border-radius: 8px;
         text-align:left;
+        transition: 0.3s;
 
+        &.break {
+            margin-bottom: 50px;
+            &::after {
+                content: "";
+                border-top: 1px solid #eee;
+                position:absolute;
+                margin-top: 25px;
+                display:block;
+                width: calc(100% - 90px);
+            }
+        }
 
         .category-heading {
+            &:hover {
+                background: $blue;
+                cursor:pointer;
+            
+                & > h2 span.category-icons .fa-check-circle {
+                    color:#fff;
+                }
+            }
             background: $dark-blue;
             transition: 0.3s ease;
             border-radius: 8px 8px 0 0;
             display:flex;
             justify-content:stretch;
+
 
             .img-container {
                 width: 40px;
@@ -316,7 +339,7 @@ body {
                 height: 40px;
                 justify-content:center;
                 align-items:center;
-                margin-right: 5px;
+                margin-right: 15px;
 
                 img {
                     margin-top: 2px;
@@ -344,14 +367,47 @@ body {
                     width: 100px;
                     display:flex;
                     pointer-events:none;
-                    justify-content:space-between;
+                    justify-content:flex-end;
 
-                    .fa-check {
+                    .blue-text {
                         color: $blue;
                     }
 
-                    .fa-exclamation {
+                    .yellow-text {
                         color: $yellow;
+                    }
+
+                    &> span {
+                        &.dull {
+                            // & > .fa-check,
+                            // & > .fa-exclamation,
+                            // & {
+                            //     color: #999;
+                            // }
+                            display:none;
+                        }
+                    }
+
+                    .fa-check-circle {
+                        // margin-right: 5px;
+                        color: $blue;
+                        transition: 0.3s ease;
+                    }
+
+                    .fa-exclamation-circle {
+                        // margin: 0 5px 0 15px;
+                        // color: $yellow;
+
+                        // background: $yellow;
+                        // color:#fff;
+                        // width: 30px;
+                        // height: 30px;
+                        // line-height: 30px;
+                        // text-align:center;
+                        // border-radius: 50%;
+                        // font-size: 24px;
+                        color: $yellow;
+                        // @extend %boxshadow;
                     }
                 }
             }
@@ -360,7 +416,8 @@ body {
                 flex-basis: 40px;
                 max-width: 40px;
                 flex-shrink:1;
-                background:$blue;
+                // background:$blue;
+                // background:inherit;
                 padding: 5px 10px;
                 color:#fff;
                 font-size: 24px;
@@ -370,6 +427,10 @@ body {
                 display:flex;
                 align-items:center;
                 justify-content:center;
+
+                &.yellow-expand {
+                    background:$yellow;
+                }
 
                 &:hover {
                     opacity: 0.7;
@@ -584,7 +645,7 @@ body {
         padding: 15px;
 
         .category {
-            margin: 15px;
+            // margin: 15px;
 
             .category-heading > h2 {
                 font-size: 20px;
@@ -630,7 +691,7 @@ body {
                 border-radius:0;
                 
                 .category {
-                    margin: 30px 0;
+                    // margin: 30px 0;
                     .grey, .blue, .resources-container {
                         ul {
                             padding-inline-start:0;
