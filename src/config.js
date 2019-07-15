@@ -79,6 +79,42 @@ export default {
                     score: "f",
                     userResponse: "I am female.",
                     aiResponse: "Okay!"
+                },
+                {
+                    label: "Other",
+                    score: "o",
+                    userResponse: "Other.",
+                    aiResponse: "Okay!"
+                }
+            ]
+        },
+        {
+            id: 'identify',
+            question: true,
+            category: 'personal',
+            text: "Do you identify as Aboriginal or Torres Strait Islander, or speak English as a second language? ",
+            score: null,
+            display:() => true,
+            userResponded: false,
+            aiResponded: false,
+            options: [
+                {
+                    label: "No",
+                    score: "no",
+                    userResponse: "I don't identify as either of these, or speak English as a second language.",
+                    aiResponse: "Okay!"
+                },
+                {
+                    label: "Aboriginal or Torres Strait Islander ",
+                    score: "Aboriginal or Torres Strait Islander ",
+                    userResponse: "I identify as Aboriginal or Torres Strait Islander.",
+                    aiResponse: "Okay!"
+                },
+                {
+                    label: "English as a second language",
+                    score: "English as a second language",
+                    userResponse: "I speak English as a second language.",
+                    aiResponse: "Okay!"
                 }
             ]
         },
@@ -104,7 +140,7 @@ export default {
         {
             question:false,
             display:() => true,
-            text: "First up, let's talk about ultraviolet radiation (UV) from the sun. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/uv.png' />"
+            text: "First up, let's talk about ultraviolet (UV) radiation from the sun. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/uv.png' />"
         },
         {
             question: false,
@@ -115,7 +151,7 @@ export default {
             id: 'clothing',
             question: true,
             category: 'uv',
-            text: `Do you wear sun protective clothing (e.g. shirt with collar, sleeves and long pants)?</li>`,
+            text: `Do you wear sun protective clothing (e.g. shirt with a collar, sleeves and long pants?</li>`,
             score: null,
             display:() => true,
             userResponded: false,
@@ -319,7 +355,7 @@ export default {
                 },
                 {
                     label: "I smoke occasionally",
-                    score: 53,
+                    score: 0,
                     userResponse: "I smoke occasionally.",
                     aiResponse: `It is never too late to quit smoking. Get support by visiting <a href='https://quithq.initiatives.qld.gov.au/' target='_blank'>QUIT HQ</a> or contact Quitline on 13 7848 and speak to a trained counsellor.`
                 },
@@ -365,7 +401,7 @@ export default {
             id: 'standardDrinks',
             question: true,
             category: 'alcohol',
-            text: `<span class='big'>How many standard drinks do you typically consume in a day when you drink?</span><br><br>Examples of 1 standard drink:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/bottle.png'/></span> 1 x 375mL bottle of mid strength beer</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/wine.png'/></span> 100 mL of wine (1 x small glass of wine)</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/glass2.png'/></span> 30 mL of spirits (1 x measure of spirits)</li></ul>`,
+            text: `<span class='big'>How many standard drinks do you typically consume in a day when you drink? </span><br><br>Examples of 1 standard drink:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/bottle.png'/></span> 1 x 375mL bottle of mid strength beer</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/wine.png'/></span> 100 mL of wine (1 x small glass of wine)</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/glass2.png'/></span> 30 mL of spirits (1 x measure of spirits)</li></ul>`,
             score: null,
             display:() => true,
             userResponded: false,
@@ -475,7 +511,7 @@ export default {
             id: 'redMeat',
             question: true,
             category: 'nutrition',
-            text: `<span class='big'>How many serves of red meat do you eat in a typical week?</span><br><br>Examples of 1 serve:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/lamb.png'/></span>1 lamb loin chop</li></ul><br>Examples of 2 serves:<ul class='examples'><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/steak.png'/></span>1 porterhouse/scotch fillet steak</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/diced-meat.png'/></span>1 cup diced meat</li></ul>`,
+            text: `<span class='big'>How many serves of red meat do you eat in a typical week?</span><br><br>1 serve is 65g of cooked lean red meat, such as beef, lamb, veal and pork.<br><br>Examples of 1 serve:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/lamb.png'/></span>1 lamb loin chop</li></ul><br>Examples of 2 serves:<ul class='examples'><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/steak.png'/></span>1 porterhouse/scotch fillet steak</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/diced-meat.png'/></span>1 cup diced meat</li></ul>`,
             score: null,
             display:() => true,
             userResponded: false,
@@ -512,7 +548,7 @@ export default {
             id: 'processedMeat',
             question: true,
             category: 'nutrition',
-            text: `<span class='big'>How many serves of processed meat do you eat in a typical week?</span><br><br>Example of 1 serve:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/bacon.png'/></span>2 slices of bacon</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/salami.png'/></span>2 slices of salami or ham</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/sausages.png'/></span>2 thin sausages</li></ul>`,
+            text: `<span class='big'>How many serves of processed meat do you eat in a typical week?</span><br><br>Example of 1 serve:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/bacon.png'/></span>2 slices of bacon</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/salami.png'/></span>2 slices of salami or ham</li></ul>`,
             score: null,
             display:() => true,
             userResponded: false,
@@ -534,13 +570,13 @@ export default {
                     label: "1 - 2",
                     score: 21,
                     userResponse: "I eat 1 - 2 serves of processed meat in a typical week.",
-                    aiResponse: "A little too much! Try to avoid processed meat consumption or cut down the amount you currently consume."
+                    aiResponse: "A little too much! Try to avoid processed meat or cut down the amount you currently consume."
                 },
                 {
                     label: "3 or more",
                     score: 0,
                     userResponse: "I eat 3 or more serves of processed meat in a typical week.",
-                    aiResponse: "Try to avoid processed meat consumption or cut down the amount you currently consume."
+                    aiResponse: "Try to avoid processed meat or cut down the amount you currently consume."
                 }
                 
             ]
@@ -599,7 +635,7 @@ export default {
             category: 'weight',
             text: `<span class='big'>Please share your weight status with us by using the BMI calculator or your waist measurement.</span>`,
             score: null,
-            display:() => true,
+            display:(steps) => steps.find(s => s.id === 'gender').score !== 'o',
             userResponded: false,
             aiResponded: false,
             options: [
@@ -624,13 +660,42 @@ export default {
             ]
         },
         {
+            id:"weightOther",
+            question: true,
+            category: 'weight',
+            text: `<span class='big'>Please share your weight status with us by using the BMI calculator.</span>`,
+            score: null,
+            display:(steps) => steps.find(s => s.id === 'gender').score === 'o',
+            userResponded: false,
+            aiResponded: false,
+            options: [
+                {
+                    label: "Calculate my BMI",
+                    score: 'bmi',
+                    userResponse: "Let's calculate my BMI.",
+                    aiResponse: "Okay!"
+                },
+                {
+                    label: "Skip question",
+                    score: 'skip',
+                    userResponse: "I would like to skip this question.",
+                    aiResponse: "Okay."
+                },
+            ]
+        },
+        {
             id: "bmi",
             question: true,
             category: 'weight',
             text: `<span class='big'>Please enter your height (cm) and weight (kg):</span>`,
             userInput: true,
             score: null,
-            display: (steps) => steps.find((s) => s.id === 'weight').score === 'bmi',
+            display: (steps) => {
+                let gender = steps.find(s => s.id === 'gender').score;
+                let weightOption = steps.find(s => s.id === ( gender === 'o' ? 'weightOther' : 'weight')).score
+
+                return weightOption === 'bmi'
+            },
             userResponded: false,
             userResponse: '',
             aiResponded: false,
@@ -646,7 +711,7 @@ export default {
             text: "<span class='big'>Please enter your waist measurement:</span>",
             userInput: true,
             score: null,
-            display:(steps) => steps.find((s) => s.id === 'weight').score === 'waist',
+            display:(steps) => steps.find(s => s.id === 'weight').score === 'waist',
             userResponded: false,
             userResponse: '',
             aiResponded: false,
@@ -655,7 +720,7 @@ export default {
         },
         {
             question: false,
-            display:(steps) => true,
+            display:() => true,
             text: "Okay! We're almost done!",
             delay: true
         },
@@ -703,8 +768,16 @@ export default {
         },
         {
             question: false,
-            display: (steps) => ([64, "74"].includes(steps[2].score) && steps[3].score === "f") || (["64", "74"].includes(steps[2].score)) || (["39", "49", "64", "74"].includes(steps[2].score) && steps[3].score === "f"),
-            text: "Thanks! We're up to the final category - screening. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/screening.png' />",
+            display: (steps) => { 
+                let age = steps.find(s => s.id === 'age').score;
+                let gender = steps.find(s => s.id === 'gender').score;
+
+                if (!(age || gender)) { return false }
+
+                (["64", "74"].includes(age)) && gender !== 'o' || 
+                (["39", "49", "64", "74"].includes(age) && gender === "f")
+            },
+            text: "Thanks! We're up to the final category - cancer screening. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/screening.png' />",
             delay: true
         },
         {
@@ -713,7 +786,14 @@ export default {
             category: 'screening',
             text: `<span class='big'>Do you participate in the <div class='info'><i class='fa fa-question-circle'></i><div class='info-text'>Invitation sent to women aged between 50 – 74 to participate in a free mammogram every 2 years.</div></div> <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/breast-screening-1' target='_blank'></i>National Breast Cancer Screening Program</a>?</span>`,
             score: null,
-            display: (steps) => ["64", "74"].includes(steps[2].score) && steps[3].score === "f",
+            display: (steps) => {
+                let age = steps.find(s => s.id === 'age').score
+                let gender = steps.find(s => s.id === 'gender').score
+
+                if (!(age || gender)) { return false }
+
+                ["64", "74"].includes(age) && gender === "f"
+            },
             userResponded: false,
             aiResponded: false,
             options: [
@@ -741,9 +821,16 @@ export default {
             id: 'bowelScreening',
             question: true,
             category: 'screening',
-            text: `<span class='big'>Do you participate in the <div class='info'><i class='fa fa-question-circle'></i><div class='info-text'>Program test kit sent to men and women aged between 50 – 74 to complete at home every 2 years.</div></div> <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-screening-1' target='_blank'>National Bowel Cancer Screening Program</a>?</span>`,
+            text: `<span class='big'>Do you participate in the <div class='info'><i class='fa fa-question-circle'></i><div class='info-text'>FOBT test kit sent to men and women aged between 50 – 74 to complete at home every 2 years.</div></div> <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-screening-1' target='_blank'>National Bowel Cancer Screening Program</a>?</span>`,
             score: null,
-            display: (steps) => ["64", "74"].includes(steps[2].score),
+            display: (steps) => {
+                let age = steps.find(s => s.id === 'age').score
+                let gender = steps.find(s => s.id === 'gender').score
+
+                if (!(age || gender)) { return false }
+
+                ["64", "74"].includes(age) && gender !== 'o'
+            },
             userResponded: false,
             aiResponded: false,
             options: [
@@ -771,9 +858,16 @@ export default {
             id: 'cervicalScreening',
             question: true,
             category: 'screening',
-            text: `<span class='big'>Do you participate in the <div class='info'><i class='fa fa-question-circle'></i><div class='info-text'>Cervical Screening Test replaced the two-yearly Pap test and is still performed by your healthcare provider in the same way.</div></div> <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/cervical-screening-1' target='_blank'>National Cervical Screening Program</a> (replaces the previous Pap test)?</span>`,
+            text: `<span class='big'>Do you participate in the <div class='info'><i class='fa fa-question-circle'></i><div class='info-text'>Cervical Screening Test replaced the two-yearly Pap test and is still performed by your healthcare provider in the same way.</div></div> <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/cervical-screening-1' target='_blank'>National Cervical Screening Program</a> (replaced the previous Pap test)?</span>`,
             score: null,
-            display: (steps) => ["39", "49", "64", "74"].includes(steps[2].score) && steps[3].score === "f",
+            display: (steps) => {
+                let age = steps.find(s => s.id === 'age').score
+                let gender = steps.find(s => s.id === 'gender').score
+
+                if (!(age || gender)) { return false }
+
+                ["39", "49", "64", "74"].includes(age) && gender === "f"
+            },
             userResponded: false,
             aiResponded: false,
             options: [

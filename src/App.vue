@@ -3,7 +3,7 @@
 
         <div class="outer-container">
 
-            <h1 class='heading'>Cancer Risk Quiz</h1>
+            <h1 class='heading'>Cancer Risk Calculator</h1>
 
             <ul class="progress-bar">
                 <li v-for="(route, index) in routes" :key="index"
@@ -66,11 +66,11 @@
 
                     <ul>
                         <template v-for="category in scoredCategories">
-                            <li @click='rotate($event, category)' :key="category.name" v-if="results[category.name] >= 66">
+                            <li @click='rotate($event, category)' :key="category.name" v-if='categoryResults.green.includes(category.name)'>
 
                                 <div class='front'>
                                     <img class='category-icon' :src="category.icon" />
-                                    <h4>{{ category.name }}</h4>
+                                    <h4 :class="{'uv' : category.name === 'uv'}">{{ category.name }}</h4>
                                 </div>
 
                                 <div class='back'>
@@ -83,17 +83,17 @@
 
                 </template>
 
-                <template v-if='categoryResults.amber.length > 0 || categoryResults.red.length > 0'>
+                <template v-if='categoryResults.red.length > 0'>
 
                     <h2>The areas you could improve in are:</h2>
 
                     <ul>
                         <template v-for="category in scoredCategories">
-                            <li @click='rotate($event, category)' :key="category.name" v-if="results[category.name] < 66">
+                            <li @click='rotate($event, category)' :key="category.name" v-if='categoryResults.red.includes(category.name)'>
 
                                 <div class='front'>
                                     <img class='category-icon' :src="category.icon" />
-                                    <h4>{{ category.name }}</h4>
+                                    <h4 :class="{'uv' : category.name === 'uv'}">{{ category.name }}</h4>
                                 </div>
                             
                                 <div class='back'>
@@ -115,7 +115,7 @@
                     <p>By submitting this form, you are agreeing to our <a href='https://cancerqld.org.au/about-us/our-privacy-policy/read-our-privacy-position-statement/' target='_blank'>Privacy Collection Statement</a>.</p>
 
                     <vmd-button v-if='!state.submitted' :disabled="state.loading || $v.$anyError || formDisabled" :loading="state.loading" text='Get My Cancer Risk Scorecard' @click="sendResults()"></vmd-button>
-                    <p v-else class="confirmation-msg">Thank you! Your form has been submitted.<br>You will receive an email shortly with your recommendations.</p>
+                    <p v-else class="confirmation-msg">Thank you! Your answers have been submitted. <br>You will receive your personalised Cancer Risk Scorecard shortly.</p>
                 </form>
 
             </div>
@@ -135,7 +135,7 @@
 
                             <weight v-else-if="step.userInput && step.category === 'weight'" 
                                     :question=step 
-                                    :gender="steps[3].score" 
+                                    :gender="steps.find(s => s.id === 'gender').score" 
                                     v-on:addstep="addStep()"></weight>
 
                             <postcode v-else-if="step.userInput && step.id === 'postcode'" 
@@ -225,8 +225,7 @@ export default {
             },
             categoryResults: {
                 red: [],
-                green: [],
-                amber: []
+                green: []
             },
             currentStep : null,
             results: '',
@@ -436,7 +435,7 @@ export default {
                 }
 
                 results[category] = categoryScore
-                vm.categoryResults[categoryScore > 66 ? 'green' : (categoryScore > 33 ? 'amber' : 'red')].push(category)
+                vm.categoryResults[categoryScore === 100 ? 'green' :  'red'].push(category)
                 total += categoryScore
             })
 
@@ -469,8 +468,9 @@ export default {
             
             let postData = {
                 age: age,
-                gender: vm.steps[3].score,
-                postcode: vm.steps[4].score,
+                gender: vm.steps.find(s => s.id === 'gender').score,
+                postcode: vm.steps.find(s => s.id === 'postcode').score,
+                identify: vm.steps.find(s => s.id === 'identify').score,
                 uv: vm.results.uv,
                 smoking: vm.results.smoking,
                 alcohol: vm.results.alcohol,
@@ -560,7 +560,7 @@ body {
             cursor:pointer;
             transition: 0.3s ease;
             color:$yellow;
-            font-size: 24px;
+            font-size: 20px;
 
             &:hover {
                 color:$dark-blue;
@@ -874,6 +874,10 @@ body {
 
             .front {
                 text-transform:capitalize;
+
+                &.uv {
+                    text-transform:uppercase;
+                }
                 opacity: 1;
                 transition: 1s ease;
                 pointer-events:none;

@@ -17,8 +17,10 @@
                     <label for="height">Height: &nbsp;</label>
                     <input v-model="question.height" type="number" name="height" />&nbsp; cm
                     <br><br>
+
                     <label for="weight">Weight: &nbsp;</label>
                     <input v-model="question.weight" type="number" name="weight" />&nbsp; kg
+                
                 </div>
 
                 <div v-else>

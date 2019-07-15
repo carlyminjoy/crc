@@ -2,7 +2,7 @@ export default [
     {
         name: 'uv',
         icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/uv-white.png',
-        desc: 'Ultraviolet (UV) radiation from the sun causes 95% of all skin cancers.',
+        desc: 'Ultraviolet (UV) radiation from the sun causes more than 95% of all skin cancers.',
         rotated: false
     },
     {
@@ -20,7 +20,7 @@ export default [
     {
         name: 'nutrition',
         icon: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/nutrition-white.png',
-        desc: 'Poor nutrition is the cause of 7000 cancer cases in Australia each year. ',
+        desc: 'Poor nutrition is the cause of 4400 cancer cases in Australia each year. ',
         rotated: false
     },
     {
