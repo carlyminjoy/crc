@@ -387,7 +387,7 @@ export default {
                     label: "No",
                     score: 0,
                     userResponse: "My household is not smoke-free.",
-                    aiResponse: ""
+                    aiResponse: "If you have a friend or family member who smokes, encourage them to make a quit attempt and assist them on their journey."
                 }
             ]
         },
