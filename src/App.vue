@@ -104,15 +104,23 @@
 
                     <div class='resources-container' :class="{'contracted' : expandedCategory !== category.name}" v-if="resources[category.name]">
                         <h2>Resources and links:</h2>
+
                         <ul class="resources">
-                            <li v-for="(resource, index) in resources[category.name]" :key='index'>
-                                <a class='img-link' :class="{ 'download' : resource.download, 'fullwidth' : resource.fullwidth }" :href='resource.url' target='_blank' v-bind:style="{ backgroundImage: 'url(' + resource.img + ')' }"></a>
-                                <div>
-                                    <p>{{ resource.text }}</p>
-                                    <a :href='resource.url' target='_blank'>{{ resource.cta }}</a>
-                                </div>
-                            </li>
+
+
+                                <li v-for="(resource, index) in resources[category.name]" :key='index' 
+                                    v-if='!resource.display || category.bad.find(q => q.id === resource.display)'>
+                                    
+                                    <a class='img-link' :class="{ 'download' : resource.download, 'fullwidth' : resource.fullwidth }" :href='resource.url' target='_blank' v-bind:style="{ backgroundImage: 'url(' + resource.img + ')' }"></a>
+                                    <div>
+                                        <p>{{ resource.text }}</p>
+                                        <a :href='resource.url' target='_blank'>{{ resource.cta }}</a>
+                                    </div>
+                                </li>
+
+
                         </ul>
+
                     </div>
                 </div>
             </div>
@@ -527,10 +535,9 @@ body {
                         height:100%;
                         flex-basis:45%;
                         flex-grow:1;
-                        background-size:cover;
+                        background-size:contain;
 
                         &.download {
-                            background-size: auto;
                             background-repeat:no-repeat;
                             background-color: $blue;
                             background-position: center;
