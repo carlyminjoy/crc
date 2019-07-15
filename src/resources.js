@@ -89,5 +89,14 @@ export default {
             cta: 'Download',
             download: true
         }
+    ],
+    weight: [
+        {
+            url: 'https://cancerqld.blob.core.windows.net/resources/quest/Maintaining%20a%20healthy%20body%20weight_POSTER.pdf',
+            img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/weight-1.JPG',
+            text: `Take Time to be Active Factsheet`,
+            cta: 'Download',
+            download: true
+        }
     ]
 }
