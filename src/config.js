@@ -140,7 +140,7 @@ export default {
         {
             question:false,
             display:() => true,
-            text: "First up, let's talk about ultraviolet (UV) radiation from the sun. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/uv.png' />"
+            text: "First up, let's talk about ultraviolet (UV) radiation from the sun."
         },
         {
             question: false,
@@ -329,7 +329,7 @@ export default {
         {
             question: false,
             display:() => true,
-            text: "Next category: smoking habits. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/smoking.png' />"
+            text: "Next category: smoking habits."
         },
         {
             id: 'smokingStatus',
@@ -394,7 +394,7 @@ export default {
         {
             question: false,
             display:() => true,
-            text: "Okay! Let's move on to alcohol consumption. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/alcohol.png' />",
+            text: "Okay! Let's move on to alcohol consumption.",
             delay: true
         },
         {
@@ -437,7 +437,7 @@ export default {
         {
             question: false,
             display:() => true,
-            text: "Let's discuss nutrition. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/nutrition.png' />"
+            text: "Let's discuss nutrition."
         },
         {
             id: 'fruit',
@@ -627,7 +627,7 @@ export default {
         {
             question: false,
             display:() => true,
-            text: "Next, let's talk about weight. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/weight.png' />"
+            text: "Next, let's talk about weight."
         },
         {
             id:"weight",
@@ -727,7 +727,7 @@ export default {
         {
             question: false,
             display:() => true,
-            text: "Let's talk about physical activity. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/physical-activity.png' />"
+            text: "Let's talk about physical activity."
         },
         {
             id: 'exercise',
@@ -777,7 +777,7 @@ export default {
                 (["64", "74"].includes(age)) && gender !== 'o' || 
                 (["39", "49", "64", "74"].includes(age) && gender === "f")
             },
-            text: "Thanks! We're up to the final category - cancer screening. <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/screening.png' />",
+            text: "Thanks! We're up to the final category - cancer screening.",
             delay: true
         },
         {
