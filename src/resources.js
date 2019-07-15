@@ -1,16 +1,23 @@
 export default {
     uv: [
         {
-            url: 'https://cancerqld.blob.core.windows.net/resources/quest/Spot%20the%20difference_FACTSHEET.pdf',
-            img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-sunsafety-02.png',
-            text: `Spot the Difference Factsheet.`,
+            url: 'https://cancerqld.blob.core.windows.net/resources/quest/Personal%20Protection_FACTSHEET.pdf ',
+            img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/uv-1.JPG',
+            text: `Personal protection factsheet`,
             cta: `Download`,
             download: true
         },
         {
-            url: 'https://cancerqld.blob.core.windows.net/resources/quest/skin%20cancer%20outdoor%20work.pdf',
-            img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-sunsafety-01.png',
-            text: `Skin Cancer Outdoor Work`,
+            url: 'https://cancerqld.blob.core.windows.net/resources/quest/Spot%20the%20difference_FACTSHEET.pdf',
+            img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/uv-2.JPG',
+            text: `Spot the difference factsheet`,
+            cta: `Download`,
+            download: true
+        },
+        {
+            url: 'https://cancerqld.blob.core.windows.net/resources/quest/18073_CCA_10%20myths%20about%20sun%20protection%20brochure_WEB.pdf',
+            img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/uv-3.JPG',
+            text: `10 myths about sun protection`,
             cta: `Download`,
             download: true
         }

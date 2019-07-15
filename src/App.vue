@@ -23,20 +23,19 @@
 
                 <div>
                     <template v-if='latestScorecard.scores.total === 100'>
-                        <h2>Excellent!</h2><br>
-                        <h3>You are making great choices to help reduce your cancer risk.</h3>
+                        <h2>Well done!</h2>
                     </template> 
                     <template v-if='latestScorecard.scores.total >= 75'>
                         <h2>You're doing well</h2>
-                        <h3>You are making good choices to help reduce your cancer risk, but there are still further steps you can take.</h3>
+                        <h3>Well done, a few small changes can further reduce your cancer risk.</h3>
                     </template> 
                     <template v-else-if='latestScorecard.scores.total >= 50'>
                         <h2>On the right track</h2>
-                        <h3>You are making some good choices to help reduce your cancer risk, but there are many more steps you can take.</h3>
+                        <h3>Well done, there are plenty of ways you can reduce your cancer risk.</h3>
                     </template> 
                     <template v-else>
                         <h2>Room for improvement</h2>
-                        <h3>Good news - there are plenty of ways to reduce your cancer risk.</h3>
+                        <h3>Good news - there are plenty of ways you can reduce your cancer risk.</h3>
                     </template> 
                     <br>
                 </div>

@@ -69,9 +69,8 @@ export default {
             `Contact the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/Contact' target='_blank'>National Bowel Cancer Screening Program</a>.`
         ],
         cervicalScreening: [
-            'Speak to your health professional about the national cervical cancer screening program.', 
-            `Visit Cancer Council's <a href='https://www.cancer.org.au/cervicalscreening/' target='_blank'>Cervical Screening Website</a> for more information or;`,
-            `Contact the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/cervical-screening-1' target='_blank'>National Cervical Screening Program</a>.`
+            `Speak to your health professional about the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/cervical-screening-1' target='_blank'>National Cervical Screening Program</a>.`, 
+            `Visit Cancer Council's <a href='https://www.cancer.org.au/cervicalscreening/' target='_blank'>Cervical Screening Website</a> for more information.`,        
         ]
     }
 }
