@@ -415,6 +415,7 @@ body {
                     width: 60px;
                     display:flex;
                     pointer-events:none;
+                    align-items:center;
                     justify-content:flex-end;
 
                     .blue-text {
