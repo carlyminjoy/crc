@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="category" v-for="(category, index) in scorecards" :key="index" 
-                    :class="{ 'break' : scorecards[index].good.length === 0 && scorecards[index + 1].good.length > 0 }">
+                    :class="{ 'break' : scorecards[index].bad.length === 0 && scorecards[index + 1].bad.length > 0 }">
 
                     <div class='category-heading' @click='expandedCategory = expandedCategory === category.name ? null : category.name'>
                         
@@ -198,7 +198,7 @@ export default {
                 }
             })
 
-            return scorecards.sort((a, b) => b.bad.length - a.bad.length)
+            return scorecards.sort((a, b) => a.bad.length - b.bad.length)
         }
     },
     methods: {
@@ -398,7 +398,7 @@ body {
                         border-radius: 50%;
                         color: $dark-blue;
                         text-align:center;
-                        line-height:30px;
+                        line-height:25px;
                         font-size: 18px;
                     }
 
