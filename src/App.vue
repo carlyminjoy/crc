@@ -4,7 +4,7 @@
 
         <div class="outer-container">
 
-            <spinner color="#FCD208" class='spinner' v-if='loading'></spinner>
+            <spinner color='#fcd208' v-if='loading'></spinner>
 
             <h3 v-else-if='!loading && !latestScorecard'>Sorry, your Cancer Risk Scorecard could not be retrieved at this time. <br>Please check the link and try again.</h3>
 
@@ -292,8 +292,14 @@ body {
     padding: 60px 0;
 
     .spinner {
-        color: $yellow;
-        margin-top:40vh!important
+        margin-top:40vh!important;
+
+        & > .cube1 {
+            background-color: $yellow!important;
+        }
+        & > .cube2 {
+            background-color: $blue!important;
+        }
     }
 
 }
