@@ -27,7 +27,7 @@
                     </template> 
                     <template v-if='latestScorecard.scores.total >= 75'>
                         <h2>You're doing well</h2>
-                        <h3>Well done, a few small changes can further reduce your cancer risk.</h3>
+                        <h3>Well done, a <span class=''>few small changes</span> can further reduce your cancer risk.</h3>
                     </template> 
                     <template v-else-if='latestScorecard.scores.total >= 50'>
                         <h2>On the right track</h2>
@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="category" v-for="(category, index) in scorecards" :key="index" 
-                    :class="{ 'break' : scorecards[index].bad.length === 0 && scorecards[index + 1].bad.length > 0 }">
+                    :class="{ 'break' : scorecards[index].good.length === 0 && scorecards[index + 1].good.length > 0 }">
 
                     <div class='category-heading' @click='expandedCategory = expandedCategory === category.name ? null : category.name'>
                         
@@ -52,7 +52,7 @@
 
                             <span class='category-icons'>
                                 <span v-if='category.bad.length  === 0'><i class='fa fa-check-circle'></i></span>
-                                <span v-if='category.bad.length > 0'><i class='fa fa-exclamation-circle'></i></span>
+                                <span v-if='category.bad.length > 0' class='yellow-text'>{{category.bad.length}}</span>
                             </span>
                         </h2>
 
@@ -105,13 +105,12 @@
 
                     </div>
 
-                    <div v-if='showCategoryResources(category)' class='resources-container' :class="{'contracted' : expandedCategory !== category.name}">
+                    <div v-if='filteredResources(category).length > 0' class='resources-container' :class="{'contracted' : expandedCategory !== category.name}">
                         <h2>Resources and links:</h2>
 
                         <ul class="resources">
 
-                            <li v-for="(resource, index) in resources[category.name]" :key='index' 
-                                v-if='showResource(resource, category)'>
+                            <li v-for="(resource, index) in filteredResources(category)" :key='index'>
                                 
                                 <a class='img-link' :class="{ 'download' : resource.download, 'fullwidth' : resource.fullwidth }" :href='resource.url' target='_blank' v-bind:style="{ backgroundImage: 'url(' + resource.img + ')' }"></a>
                                 <div>
@@ -199,16 +198,14 @@ export default {
                 }
             })
 
-            return scorecards.sort((a, b) => a.bad.length - b.bad.length)
+            return scorecards.sort((a, b) => b.bad.length - a.bad.length)
         }
     },
     methods: {
-        showCategoryResources(category) {
+        filteredResources(category) {
             let vm = this;
 
-            return vm.resources[category.name].some(r => vm.showResource(r, category))
-            console.log(display)
-            return display
+            return vm.resources[category.name].filter(r => vm.showResource(r, category))
         },
         showResource(resource, category) {
             let vm = this;
@@ -217,14 +214,7 @@ export default {
             let matchingGender = vm.latestScorecard.gender === resource.gender
             let conditionalDisplay = resource.hasOwnProperty('questionId') || resource.hasOwnProperty('gender')
 
-            console.log('Resource:', resource.text)
-            console.log('Matching QID:', matchingQuestionId)
-            console.log('Matching Gender:', matchingGender)
-            console.log('conditional display:', conditionalDisplay)
-
-            let display = !conditionalDisplay || matchingQuestionId || matchingGender
-            console.log('resource display:', display)
-            return display
+            return !conditionalDisplay || matchingQuestionId || matchingGender
         },
         getScoreCard(user) {
             let vm = this;
@@ -306,6 +296,12 @@ body {
     margin: 30px auto;
     height: auto;
     @extend %boxshadow;
+
+    .yellow {
+        font-weight:bold;
+        text-decoration:$yellow;
+        text-decoration-line: $yellow;
+    }
 
     .circle {
         margin: 30px auto;
@@ -396,7 +392,14 @@ body {
                     }
 
                     .yellow-text {
-                        color: $yellow;
+                        background:$yellow;
+                        width: 25px;
+                        height:25px;
+                        border-radius: 50%;
+                        color: $dark-blue;
+                        text-align:center;
+                        line-height:30px;
+                        font-size: 18px;
                     }
 
                     &> span {
