@@ -386,7 +386,8 @@ export default {
                 firstName: vm.form.firstName,
                 lastName: vm.form.lastName,
                 emailAddress: vm.form.emailAddress,
-                postcode: vm.steps[4].score,
+                gender: vm.steps.find(s => s.id === 'gender').score,
+                postcode: vm.steps.find(s => s.id === 'postcode').score,
                 scores: vm.results,
                 recommendations: vm.getRecommendations()
             })
