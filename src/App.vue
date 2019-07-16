@@ -362,26 +362,6 @@ export default {
 
             return recommendations;
         },
-        // async getPostData() {
-        //     let vm = this;
-        //     let gaToken = await vm.getToken();
-
-        //     let formData = new Form({
-        //         firstName: vm.form.firstName,
-        //         lastName: vm.form.lastName,
-        //         emailAddress: vm.form.emailAddress,
-        //         postcode: vm.steps[4].score,
-        //         scores: vm.results,
-        //         recommendations: vm.getRecommendations()
-        //     })
-
-        //     return gaToken ? {
-        //         'sourceIdentifier': vm.sourceIdentifier,
-        //         'entry': entry,
-        //         'debug': 'development',
-        //         'gaToken' : gaToken
-        //     } : null;
-        // },
         async sendResults() {
             let vm = this;
 
@@ -412,8 +392,10 @@ export default {
                 if (step.question && step.category !== 'personal') {
 
                     if (step.score !== null) {
-                        if (step.category === 'weight') {
-                            if (step.id !== 'weight') { results.weight = step.score }
+                        if (step.category === 'weight' ) {
+                            if (step.id !== 'weight' && step.id !== 'weightOther') { 
+                                results.weight = step.score 
+                            }
 
                         } else if (results[step.category] !== undefined) {
                             results[step.category] += Math.round(step.score);
@@ -441,11 +423,18 @@ export default {
                 }
 
                 results[category] = categoryScore
+
+                console.log('categoryScore', categoryScore)
+
                 vm.categoryResults[categoryScore === 100 ? 'green' :  'red'].push(category)
                 total += categoryScore
             })
 
             results.total = Math.round(total / Object.keys(results).length)
+
+            console.log('results:', results)
+            console.log('total', total)
+            
             vm.results = results;
             vm.storeResults()
         },
