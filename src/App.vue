@@ -1,9 +1,14 @@
 <template>
 	<div id="app">
 
+
         <div class="outer-container">
 
-            <div class="results-container" v-if='latestScorecard'>
+            <spinner color="#FCD208" class='spinner' v-if='loading'></spinner>
+
+            <h3 v-else-if='!loading && !latestScorecard'>Sorry, your Cancer Risk Scorecard could not be retrieved at this time. <br>Please check the link and try again.</h3>
+
+            <div class="results-container" v-else>
                 <h1>{{latestScorecard.firstName }}, your total score is: </h1>
 
                 <vue-circle
@@ -52,7 +57,7 @@
 
                             <span class='category-icons'>
                                 <span v-if='category.bad.length  === 0'><i class='fa fa-check-circle'></i></span>
-                                <span v-if='category.bad.length > 0' class='yellow-text'>{{category.bad.length}}</span>
+                                <span v-if='category.bad.length > 0'><i class='fa fa-exclamation-circle'></i></span>
                             </span>
                         </h2>
 
@@ -131,6 +136,7 @@
 <script>
 
 import { vmdButton } from '@ccq/ccq-vue-components'
+import { default as spinner } from 'vue-spinners/src/components/CubeSpinner'
 import VueCircle from 'vue2-circle-progress'
 import axios from 'axios'
 import { default as Tips } from './tips.js'
@@ -140,10 +146,12 @@ export default {
     name: 'app',
     components: {
         vmdButton,
-        VueCircle
+        VueCircle,
+        spinner
     },
 	data () {
 		return {
+            loading: true,
             results: {},
             expandedCategory: null,
             latestScorecard: null,
@@ -231,6 +239,7 @@ export default {
                         }
                     })
                 })
+                .finally(() => vm.loading = false)
         }
     },
     mounted () {
@@ -283,6 +292,7 @@ body {
     padding: 60px 0;
 
     .spinner {
+        color: $yellow;
         margin-top:40vh!important
     }
 
@@ -681,10 +691,18 @@ body {
                     margin-top: 4px;
                 }
 
-                span.category-icons {
+                span.category-icons
+                 {
                     min-width: 60px;
                     width:60px;
                     font-size: 16px;
+
+                    span.yellow-text {
+                        font-size:14px;
+                        line-height: 16px;
+                        height: 16px;
+                        width: 16px;
+                    }
                 }
             }
             .resources-container .resources li {
@@ -714,6 +732,8 @@ body {
                 width: unset;
                 margin:0;
                 border-radius:0;
+                box-shadow: none;
+                border:none;
                 
                 .category {
                     // margin: 30px 0;
