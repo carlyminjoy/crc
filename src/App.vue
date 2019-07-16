@@ -105,21 +105,20 @@
 
                     </div>
 
-                    <div class='resources-container' :class="{'contracted' : expandedCategory !== category.name}" v-if="resources[category.name]">
+                    <div v-if='showCategoryResources(category)' class='resources-container' :class="{'contracted' : expandedCategory !== category.name}">
                         <h2>Resources and links:</h2>
 
                         <ul class="resources">
 
-                                <li v-for="(resource, index) in resources[category.name]" :key='index' 
-                                    v-if='!resource.display || category.bad.find(q => q.id === resource.display)'>
-                                    
-                                    <a class='img-link' :class="{ 'download' : resource.download, 'fullwidth' : resource.fullwidth }" :href='resource.url' target='_blank' v-bind:style="{ backgroundImage: 'url(' + resource.img + ')' }"></a>
-                                    <div>
-                                        <p>{{ resource.text }}</p>
-                                        <a :href='resource.url' target='_blank'>{{ resource.cta }}</a>
-                                    </div>
-                                </li>
-
+                            <li v-for="(resource, index) in resources[category.name]" :key='index' 
+                                v-if='showResource(resource, category)'>
+                                
+                                <a class='img-link' :class="{ 'download' : resource.download, 'fullwidth' : resource.fullwidth }" :href='resource.url' target='_blank' v-bind:style="{ backgroundImage: 'url(' + resource.img + ')' }"></a>
+                                <div>
+                                    <p>{{ resource.text }}</p>
+                                    <a :href='resource.url' target='_blank'>{{ resource.cta }}</a>
+                                </div>
+                            </li>
 
                         </ul>
 
@@ -204,6 +203,29 @@ export default {
         }
     },
     methods: {
+        showCategoryResources(category) {
+            let vm = this;
+
+            return vm.resources[category.name].some(r => vm.showResource(r, category))
+            console.log(display)
+            return display
+        },
+        showResource(resource, category) {
+            let vm = this;
+
+            let matchingQuestionId = category.bad.map(q => q.id).includes(resource.questionId)
+            let matchingGender = vm.latestScorecard.gender === resource.gender
+            let conditionalDisplay = resource.hasOwnProperty('questionId') || resource.hasOwnProperty('gender')
+
+            console.log('Resource:', resource.text)
+            console.log('Matching QID:', matchingQuestionId)
+            console.log('Matching Gender:', matchingGender)
+            console.log('conditional display:', conditionalDisplay)
+
+            let display = !conditionalDisplay || matchingQuestionId || matchingGender
+            console.log('resource display:', display)
+            return display
+        },
         getScoreCard(user) {
             let vm = this;
 

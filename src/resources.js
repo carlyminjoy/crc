@@ -29,7 +29,7 @@ export default {
             text: `Dietary fibre factsheet`,
             cta: 'Download',
             download: true,
-            display: 'wholegrain'
+            questionId: 'wholegrain'
         },
         {
             url: 'https://cancerqld.blob.core.windows.net/resources/quest/Healthy%20Eating_%20FACTSHEET.pdf',
@@ -44,7 +44,7 @@ export default {
             text: `Red Meat, Processed Meat and Cancer`,
             cta: 'Download',
             download: true,
-            display: 'redMeat'
+            questionId: 'redMeat'
         },
         
     ],
@@ -69,7 +69,7 @@ export default {
             text: `Make your home a smoke free zone factsheet`,
             cta: 'Download',
             download: true,
-            display: 'householdSmoke'
+            questionId: 'householdSmoke'
         }
     ],
     alcohol: [
@@ -83,9 +83,16 @@ export default {
     ],
     'physical activity': [
         {
-            url: 'https://cancerqld.blob.core.windows.net/resources/quest/Take%20time%20to%20be%20active_FACTSHEET.pdf',
-            img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/menshealthweek/img/resource-active-01.png',
-            text: `Take Time to be Active Factsheet`,
+            url: 'https://cancerqld.blob.core.windows.net/resources/quest/Schools_Increasing%20movement%20throughout%20the%20day_FACTSHEET.pdf',
+            img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/physicalActivity-1.JPG',
+            text: `Schools increasing movement throughout the day factsheet`,
+            cta: 'Download',
+            download: true
+        },
+        {
+            url: 'https://cancerqld.blob.core.windows.net/resources/quest/Active%20Transport_TIPSHEET.pdf',
+            img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/physicalActivity-2.JPG',
+            text: `Active transport tip sheet`,
             cta: 'Download',
             download: true
         }
@@ -97,6 +104,24 @@ export default {
             text: `Take Time to be Active Factsheet`,
             cta: 'Download',
             download: true
+        }
+    ],
+    screening: [
+        {
+            url: `https://cancerqld.blob.core.windows.net/resources/quest/18028_Cancer%20Prevention_%20Men's%20DL_FA%20(10).PDF.PDF`,
+            img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/screening-1.JPG',
+            text: `Cancer prevention - men`,
+            cta: 'Download',
+            download: true,
+            gender: 'm'
+        },
+        {
+            url: `https://cancerqld.blob.core.windows.net/resources/quest/18028_Cancer%20Prevention_%20Women's%20DL_02.pdf.pdf`,
+            img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/screening-2.JPG',
+            text: `Cancer prevention - women`,
+            cta: 'Download',
+            download: true,
+            gender: 'f'
         }
     ]
 }
