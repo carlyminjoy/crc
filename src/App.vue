@@ -46,9 +46,10 @@
                 </div>
 
                 <div class="category" v-for="(category, index) in scorecards" :key="index" 
-                    :class="{ 'break' : scorecards[index].bad.length === 0 && scorecards[index + 1].bad.length > 0 }">
+                    :class="{ 'break' : scorecards[index].bad.length === 0 && scorecards[index + 1].bad.length > 0}">
 
-                    <div class='category-heading' @click='expandedCategory = expandedCategory === category.name ? null : category.name'>
+                    <div class='category-heading'
+                        @click='expandedCategory = expandedCategory === category.name ? null : category.name'>
                         
                         <h2>
                             <span>
@@ -111,8 +112,8 @@
                     </div>
 
                     <div v-if='filteredResources(category).length > 0' class='resources-container' :class="{'contracted' : expandedCategory !== category.name}">
-                        <h2>Resources and links:</h2>
 
+                        <h2>Resources and links:</h2>
                         <ul class="resources">
 
                             <li v-for="(resource, index) in filteredResources(category)" :key='index'>
@@ -339,7 +340,7 @@ body {
         transition: 0.3s;
 
         &.break {
-            margin-bottom: 50px;
+            margin-bottom: 50px!important;
             &::after {
                 content: "";
                 border-top: 1px solid #eee;
@@ -685,8 +686,15 @@ body {
     #app .outer-container .results-container {
         padding: 15px;
 
+        div > h2 {
+            margin-top: 0;
+        }
+
         .category {
             // margin: 15px;
+            &.break::after {
+                width: calc(100% - 30px);
+            }
 
             .category-heading > h2 {
                 font-size: 20px;
@@ -695,20 +703,6 @@ body {
                 span.img-container > img {
                     height: 30px;
                     margin-top: 4px;
-                }
-
-                span.category-icons
-                 {
-                    min-width: 60px;
-                    width:60px;
-                    font-size: 16px;
-
-                    span.yellow-text {
-                        font-size:14px;
-                        line-height: 16px;
-                        height: 16px;
-                        width: 16px;
-                    }
                 }
             }
             .resources-container .resources li {
@@ -734,15 +728,40 @@ body {
         .outer-container {
             padding-top: 0;
             padding-bottom: 0;
+
             .results-container {
-                width: unset;
+                // width: calc(100vw - 60px);
                 margin:0;
                 border-radius:0;
                 box-shadow: none;
                 border:none;
+
+                h1 {
+                    font-size: 32px;
+                    margin: 15px 0 0 0;
+                }
                 
                 .category {
-                    // margin: 30px 0;
+                    margin: 15px 0;
+
+                    .category-heading {
+                        font-size: 16px;
+
+                        & > h2 {
+                            font-size: 16px;
+                            padding: 5px 0 5px 10px;
+
+                            span.img-container {
+                                margin-right: 10px;
+                            }
+                        }
+
+                        span.category-icons {
+                            // display:none;
+                            min-width: 30px;
+                            width: 30px;
+                        }
+                    }
                     .grey, .blue, .resources-container {
                         ul {
                             padding-inline-start:0;
