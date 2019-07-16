@@ -8,7 +8,7 @@
 
             <h3 v-else-if='!loading && !latestScorecard'>Sorry, your Cancer Risk Scorecard could not be retrieved at this time. <br>Please check the link and try again.</h3>
 
-            <div class="results-container" v-else>
+            <div class="results-container" v-else-if='latestScorecard'>
                 <h1>{{latestScorecard.firstName }}, your total score is: </h1>
 
                 <vue-circle
@@ -30,7 +30,7 @@
                     <template v-if='latestScorecard.scores.total === 100'>
                         <h2>Well done!</h2>
                     </template> 
-                    <template v-if='latestScorecard.scores.total >= 75'>
+                    <template v-else-if='latestScorecard.scores.total >= 75'>
                         <h2>You're doing well</h2>
                         <h3>Well done, a <span class=''>few small changes</span> can further reduce your cancer risk.</h3>
                     </template> 
@@ -57,10 +57,12 @@
                                 {{ category.name.toUpperCase() }}</span>
 
                                 <span class='category-icons'>
-                                    <span v-if='category.bad.length  === 0'><i class='fa fa-check-circle'></i></span>
+                                    <span v-if='category.bad.length === 0'><i class='fa fa-check-circle'></i></span>
 
                                     <template v-if='category.bad.length > 0'>
-                                        <span v-if='category.bad.length > 0' class='yellow-text'>{{category.bad.length}}</span>
+                                        <!-- <span v-if='category.bad.length > 0' class='yellow-text'> -->
+                                            <span class='numbered-exclamation'>{{category.bad.length}} &nbsp;</span>
+                                        <!-- </span> -->
                                         <i class='fa fa-exclamation-circle'></i>
                                     </template>
                                 </span>
@@ -74,7 +76,9 @@
                         </div>
 
                         <div class="blue" :class="{'contracted' : expandedCategory !== category.name}" v-if="category.good.length > 0">
+
                             <h2>You're doing great in the following areas:</h2>
+
                             <ul>
                                 <li v-for="(section, i) in category.good" :key="i">
                                     <i class='fa fa-check'></i>
@@ -83,9 +87,7 @@
                                         The recommended range is between 18.5 and 25.</strong>
                                         </span>
                                     </p>
-                                    
                                 </li>
-                                
                             </ul>
 
                         </div>
@@ -134,7 +136,7 @@
                         </div>
                     </div>
 
-                    <div class='category-break' v-if='scorecards[index].bad.length === 0 && scorecards[index + 1].bad.length > 0'></div>
+                    <div class='category-break' v-if='(index + 1) < scorecards.length && scorecards[index].bad.length === 0 && scorecards[index + 1].bad.length > 0'></div>
                 </span>
             </div>
         </div>
@@ -190,15 +192,23 @@ export default {
                         name: category
                     };
 
-                    categoryObj.good = vm.latestScorecard.recommendations.filter((rec) => rec.category === category && (rec.recommendation.includes('Well done') || rec.recommendation.includes('Great')))
-                    categoryObj.bad = vm.latestScorecard.recommendations.filter((rec) => rec.category === category && !(rec.recommendation.includes('Well done') || rec.recommendation.includes('Great')))
+                    categoryObj.good = vm.latestScorecard.recommendations.filter((rec) => {
+                        return rec.category === category && 
+                        (rec.recommendation.includes('Well done') || 
+                        rec.recommendation.includes('Great'))
+                    })
+
+                    categoryObj.bad = vm.latestScorecard.recommendations.filter((rec) => {
+                        return rec.category === category && 
+                        !(rec.recommendation.includes('Well done') || 
+                        rec.recommendation.includes('Great'))
+                    })
                     
                     if (vm.tips[category]) {
                         let tips = [];
                         
                         Object.keys(vm.tips[category]).forEach((key) => {
                             let badCategoryObj = categoryObj.bad.find((o) => o.id === key)
-                            // if (categoryObj.bad.some((o) => o.id === key)) {
 
                             if (badCategoryObj && !(badCategoryObj.bmi && parseInt(badCategoryObj.bmi) < 20)) {
                                 vm.tips[category][key].forEach((t) => tips.push(t))
@@ -220,6 +230,7 @@ export default {
     methods: {
         filteredResources(category) {
             let vm = this;
+
 
             return vm.resources[category.name].filter(r => vm.showResource(r, category))
         },
@@ -432,7 +443,7 @@ body {
                     .fa-exclamation-circle {
                         // margin: 0 5px 0 15px;
                         // color: $yellow;
-                        display:none;
+                        // display:none;
 
                         // background: $yellow;
                         // color:#fff;
@@ -763,6 +774,12 @@ body {
                             // display:none;
                             min-width: 30px;
                             width: 30px;
+                            align-items:center;
+
+                            .numbered-exclamation {
+                                height: 16px;
+                                font-size: 16px;
+                            }
                         }
                     }
                     .grey, .blue, .resources-container {
