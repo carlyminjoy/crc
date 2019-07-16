@@ -45,90 +45,97 @@
                     <br>
                 </div>
 
-                <div class="category" v-for="(category, index) in scorecards" :key="index" 
-                    :class="{ 'break' : scorecards[index].bad.length === 0 && scorecards[index + 1].bad.length > 0}">
+                <span v-for="(category, index) in scorecards" :key="index" >
+                    <div class="category" >
 
-                    <div class='category-heading'
-                        @click='expandedCategory = expandedCategory === category.name ? null : category.name'>
-                        
-                        <h2>
-                            <span>
-                            <span class='img-container'><img :src='icons[category.name]' /></span>
-                            {{ category.name.toUpperCase() }}</span>
-
-                            <span class='category-icons'>
-                                <span v-if='category.bad.length  === 0'><i class='fa fa-check-circle'></i></span>
-                                <span v-if='category.bad.length > 0'><i class='fa fa-exclamation-circle'></i></span>
-                            </span>
-                        </h2>
-
-                        <span class='expand-tag'>
-                            <i v-if='expandedCategory !== category.name' class='fa fa-chevron-down'></i>
-                            <i v-else class='fa fa-chevron-up'></i>
-                        </span>
-
-                    </div>
-
-                    <div class="blue" :class="{'contracted' : expandedCategory !== category.name}" v-if="category.good.length > 0">
-                        <h2>You're doing great in the following areas:</h2>
-                        <ul>
-                            <li v-for="(section, i) in category.good" :key="i">
-                                <i class='fa fa-check'></i>
-                                <p>{{ section.answer }}
-                                    <span v-if='section.bmi'><strong><br><br>Your BMI is: {{ section.bmi }}.<br><br>
-                                    The recommended range is between 18.5 and 25.</strong>
-                                    </span>
-                                </p>
-                                
-                            </li>
+                        <div class='category-heading'
+                            @click='expandedCategory = expandedCategory === category.name ? null : category.name'>
                             
-                        </ul>
+                            <h2>
+                                <span>
+                                <span class='img-container'><img :src='icons[category.name]' /></span>
+                                {{ category.name.toUpperCase() }}</span>
 
-                    </div>
+                                <span class='category-icons'>
+                                    <span v-if='category.bad.length  === 0'><i class='fa fa-check-circle'></i></span>
 
-                    <div class="grey" :class="{'contracted' : expandedCategory !== category.name}" v-if="category.bad.length > 0">
-                        <h2>Areas for improvement:</h2>
+                                    <template v-if='category.bad.length > 0'>
+                                        <span v-if='category.bad.length > 0' class='yellow-text'>{{category.bad.length}}</span>
+                                        <i class='fa fa-exclamation-circle'></i>
+                                    </template>
+                                </span>
+                            </h2>
 
-                        <ul class='improvements'>
-                            <li v-for="(section, i) in category.bad" :key="i">
-                                <i class='fa fa-exclamation-circle'></i> &nbsp;
-                                <p> {{ section.answer }} <br>
-                                    <strong>
-                                        <span v-if='section.bmi'><br>Your BMI is: {{ section.bmi }}.<br><br></span>
-                                        <span v-if='section.bmi'>The range for a healthy weight is between 18.5 and 25. </span>
-                                        <span v-html='section.recommendation'>
-                                    </strong>
-                                </p>
-                            </li>
-                        </ul>
+                            <span class='expand-tag'>
+                                <i v-if='expandedCategory !== category.name' class='fa fa-chevron-down'></i>
+                                <i v-else class='fa fa-chevron-up'></i>
+                            </span>
 
-                        <template v-if="category.tips">
-                            <h2 class="m0">Tips:</h2>
-                            <ul class="tips">
-                                <li v-for="(tip,index) in category.tips" :key="index" v-html='tip'></li>
-                            </ul>
-                        </template>
+                        </div>
 
-                    </div>
-
-                    <div v-if='filteredResources(category).length > 0' class='resources-container' :class="{'contracted' : expandedCategory !== category.name}">
-
-                        <h2>Resources and links:</h2>
-                        <ul class="resources">
-
-                            <li v-for="(resource, index) in filteredResources(category)" :key='index'>
+                        <div class="blue" :class="{'contracted' : expandedCategory !== category.name}" v-if="category.good.length > 0">
+                            <h2>You're doing great in the following areas:</h2>
+                            <ul>
+                                <li v-for="(section, i) in category.good" :key="i">
+                                    <i class='fa fa-check'></i>
+                                    <p>{{ section.answer }}
+                                        <span v-if='section.bmi'><strong><br><br>Your BMI is: {{ section.bmi }}.<br><br>
+                                        The recommended range is between 18.5 and 25.</strong>
+                                        </span>
+                                    </p>
+                                    
+                                </li>
                                 
-                                <a class='img-link' :class="{ 'download' : resource.download, 'fullwidth' : resource.fullwidth }" :href='resource.url' target='_blank' v-bind:style="{ backgroundImage: 'url(' + resource.img + ')' }"></a>
-                                <div>
-                                    <p>{{ resource.text }}</p>
-                                    <a :href='resource.url' target='_blank'>{{ resource.cta }}</a>
-                                </div>
-                            </li>
+                            </ul>
 
-                        </ul>
+                        </div>
 
+                        <div class="grey" :class="{'contracted' : expandedCategory !== category.name}" v-if="category.bad.length > 0">
+                            <h2>Areas for improvement:</h2>
+
+                            <ul class='improvements'>
+                                <li v-for="(section, i) in category.bad" :key="i">
+                                    <i class='fa fa-exclamation-circle'></i> &nbsp;
+                                    <p> {{ section.answer }} <br>
+                                        <strong>
+                                            <span v-if='section.bmi'><br>Your BMI is: {{ section.bmi }}.<br><br></span>
+                                            <span v-if='section.bmi'>The range for a healthy weight is between 18.5 and 25. </span>
+                                            <span v-html='section.recommendation'>
+                                        </strong>
+                                    </p>
+                                </li>
+                            </ul>
+
+                            <template v-if="category.tips">
+                                <h2 class="m0">Tips:</h2>
+                                <ul class="tips">
+                                    <li v-for="(tip,index) in category.tips" :key="index" v-html='tip'></li>
+                                </ul>
+                            </template>
+
+                        </div>
+
+                        <div v-if='filteredResources(category).length > 0' class='resources-container' :class="{'contracted' : expandedCategory !== category.name}">
+
+                            <h2>Resources and links:</h2>
+                            <ul class="resources">
+
+                                <li v-for="(resource, index) in filteredResources(category)" :key='index'>
+                                    
+                                    <a class='img-link' :class="{ 'download' : resource.download, 'fullwidth' : resource.fullwidth }" :href='resource.url' target='_blank' v-bind:style="{ backgroundImage: 'url(' + resource.img + ')' }"></a>
+                                    <div>
+                                        <p>{{ resource.text }}</p>
+                                        <a :href='resource.url' target='_blank'>{{ resource.cta }}</a>
+                                    </div>
+                                </li>
+
+                            </ul>
+
+                        </div>
                     </div>
-                </div>
+
+                    <div class='category-break' v-if='scorecards[index].bad.length === 0 && scorecards[index + 1].bad.length > 0'></div>
+                </span>
             </div>
         </div>
 	</div>
@@ -330,6 +337,13 @@ body {
         font-weight: 400;
     }
 
+    div.category-break {
+        height: 1px;
+        border-top: 1px solid #eee;
+        // width: 100%;
+        margin: 25px 15px;
+    }
+
     .category {
         background: #eee;
         color: #fff;
@@ -338,18 +352,6 @@ body {
         border-radius: 8px;
         text-align:left;
         transition: 0.3s;
-
-        &.break {
-            margin-bottom: 50px!important;
-            &::after {
-                content: "";
-                border-top: 1px solid #eee;
-                position:absolute;
-                margin-top: 25px;
-                display:block;
-                width: calc(100% - 90px);
-            }
-        }
 
         .category-heading {
             &:hover {
@@ -399,7 +401,7 @@ body {
                 }
                 span.category-icons {
                     float:right;
-                    width: 100px;
+                    width: 60px;
                     display:flex;
                     pointer-events:none;
                     justify-content:flex-end;
@@ -409,25 +411,16 @@ body {
                     }
 
                     .yellow-text {
+                        // color: $yellow;
+                        color:$dark-blue;
                         background:$yellow;
                         width: 25px;
                         height:25px;
                         border-radius: 50%;
-                        color: $dark-blue;
                         text-align:center;
                         line-height:25px;
                         font-size: 18px;
-                    }
-
-                    &> span {
-                        &.dull {
-                            // & > .fa-check,
-                            // & > .fa-exclamation,
-                            // & {
-                            //     color: #999;
-                            // }
-                            display:none;
-                        }
+                        font-weight: 800;
                     }
 
                     .fa-check-circle {
@@ -439,6 +432,7 @@ body {
                     .fa-exclamation-circle {
                         // margin: 0 5px 0 15px;
                         // color: $yellow;
+                        display:none;
 
                         // background: $yellow;
                         // color:#fff;
@@ -703,6 +697,15 @@ body {
                 span.img-container > img {
                     height: 30px;
                     margin-top: 4px;
+                }
+
+                .category-icons {
+                    span.yellow-text {
+                        display:none;
+                    }
+                    i.fa-exclamation-circle {
+                        display:inline-block;
+                    }
                 }
             }
             .resources-container .resources li {
