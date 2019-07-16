@@ -772,10 +772,9 @@ export default {
                 let age = steps.find(s => s.id === 'age').score;
                 let gender = steps.find(s => s.id === 'gender').score;
 
-                if (!(age || gender)) { return false }
-
-                (["64", "74"].includes(age)) && gender !== 'o' || 
-                (["39", "49", "64", "74"].includes(age) && gender === "f")
+                return (age && gender) &&
+                    ((["64", "74"].includes(age)) && gender !== 'o' || 
+                    (["39", "49", "64", "74"].includes(age) && gender === "f"))
             },
             text: "Thanks! We're up to the final category - cancer screening.",
             delay: true
@@ -790,9 +789,7 @@ export default {
                 let age = steps.find(s => s.id === 'age').score
                 let gender = steps.find(s => s.id === 'gender').score
 
-                if (!(age || gender)) { return false }
-
-                ["64", "74"].includes(age) && gender === "f"
+                return ["64", "74"].includes(age) && gender === "f"
             },
             userResponded: false,
             aiResponded: false,
@@ -827,9 +824,7 @@ export default {
                 let age = steps.find(s => s.id === 'age').score
                 let gender = steps.find(s => s.id === 'gender').score
 
-                if (!(age || gender)) { return false }
-
-                ["64", "74"].includes(age) && gender !== 'o'
+                return ["64", "74"].includes(age) && gender !== 'o'
             },
             userResponded: false,
             aiResponded: false,
@@ -864,9 +859,7 @@ export default {
                 let age = steps.find(s => s.id === 'age').score
                 let gender = steps.find(s => s.id === 'gender').score
 
-                if (!(age || gender)) { return false }
-
-                ["39", "49", "64", "74"].includes(age) && gender === "f"
+                return ["39", "49", "64", "74"].includes(age) && gender === "f"
             },
             userResponded: false,
             aiResponded: false,

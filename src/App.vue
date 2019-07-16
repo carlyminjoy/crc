@@ -283,10 +283,15 @@ export default {
             return vm.form.firstName.length <= 1 || vm.form.lastName.length <= 1 || vm.form.emailAddress.length <= 6
         },
         displayScreening() {
-            return this.steps[2].score && this.steps[3].score && 
-                (["64", "74"].includes(this.steps[2].score) && this.steps[3].score === "f") 
-                || (["64", "74"].includes(this.steps[2].score)) 
-                || (["39", "49", "64", "74"].includes(this.steps[2].score) && this.steps[3].score === "f")
+            let vm = this;
+
+            let age = vm.steps.find(s => s.id === 'age').score;
+            let gender = vm.steps.find(s => s.id === 'gender').score;
+
+            if (!(age || gender)) { return false }
+
+            return (["64", "74"].includes(age)) && gender !== 'o' || 
+                    (["39", "49", "64", "74"].includes(age) && gender === "f")
         },
         routes() {
             let generatedRoutes = [
