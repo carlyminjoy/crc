@@ -45,17 +45,17 @@
 
                 <span v-else-if='parseInt(results.total) >= 75'>
                     <h2>You're doing well</h2>
-                    <h3>Well done - a few small changes can further reduce your cancer risk.</h3>
+                    <h3>Well done, a few small changes can further reduce your cancer risk.</h3>
                 </span>
 
                 <span v-else-if='parseInt(results.total) >= 50'>
                     <h2>You're on the right track</h2>
-                    <h3>Well done - there are plenty of ways you can reduce your cancer risk.</h3>
+                    <h3>Well done, there are plenty of ways you can reduce your cancer risk.</h3>
                 </span>
 
                 <span v-else>
                     <h2>Room for improvement</h2>
-                    <h3>Good news - there are plenty of ways you can reduce your cancer risk.</h3>
+                    <h3>Good news, there are plenty of ways you can reduce your cancer risk.</h3>
                 </span>
 
                 <br><br>
