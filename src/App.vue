@@ -182,7 +182,6 @@ export default {
             let vm = this;
 
             if (!vm.latestScorecard) { return [] }
-
             let scorecards = [];
 
             Object.keys(vm.latestScorecard.scores).forEach((category) => {
@@ -191,28 +190,17 @@ export default {
                         name: category
                     };
 
-                    categoryObj.good = vm.latestScorecard.recommendations.filter((rec) => {
-                        return rec.category === category && 
-                        (rec.recommendation.includes('Well done') || 
-                        rec.recommendation.includes('Great'))
-                    })
-
-                    categoryObj.bad = vm.latestScorecard.recommendations.filter((rec) => {
-                        return rec.category === category && 
-                        !(rec.recommendation.includes('Well done') || 
-                        rec.recommendation.includes('Great'))
-                    })
+                    categoryObj.good = vm.latestScorecard.recommendations.filter(rec => rec.category === category && rec.score == 100)
+                    categoryObj.bad = vm.latestScorecard.recommendations.filter(rec => rec.category === category && rec.score != 100)
                     
                     if (vm.tips[category]) {
                         let tips = [];
                         
                         Object.keys(vm.tips[category]).forEach((key) => {
                             let badCategoryObj = categoryObj.bad.find((o) => o.id === key)
-
                             if (badCategoryObj && !(badCategoryObj.bmi && parseInt(badCategoryObj.bmi) < 20)) {
                                 vm.tips[category][key].forEach((t) => tips.push(t))
                             }
-                            
                         })
 
                         if (tips.length > 0) {
@@ -229,8 +217,6 @@ export default {
     methods: {
         filteredResources(category) {
             let vm = this;
-
-
             return vm.resources[category.name].filter(r => vm.showResource(r, category))
         },
         showResource(resource, category) {
