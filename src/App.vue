@@ -9,12 +9,12 @@
                 <li v-for="(route, index) in routes" :key="index"
                     :class="{ 'active' : currentStep && index <= routes.indexOf(state.activeCategory) }">
 
-                    <span>{{ route == 'uv' ? 'UV' : route 
-                        }}</span>
+                    <span>{{ route == 'uv' ? 'UV' : route }}</span>
+
                 </li>
             </ul>
 
-            <div class="results-container" v-if="state.showResults">
+            <div class="results-container" :class="{ ie: state.isIe }" v-if="state.showResults">
                 <div class='total-score'>
                     Your total score is: 
                 </div>
@@ -66,7 +66,10 @@
 
                     <ul>
                         <template v-for="category in scoredCategories">
-                            <li @click='rotate($event, category)' :key="category.name" v-if='categoryResults.green.includes(category.name)'>
+                            <li @click='category.rotated = !category.rotated' 
+                                :class="{'rotate': category.rotated }" 
+                                :key="category.name" 
+                                v-if='categoryResults.green.includes(category.name)'>
 
                                 <div class='front'>
                                     <img class='category-icon' :src="category.icon" />
@@ -89,7 +92,11 @@
 
                     <ul>
                         <template v-for="category in scoredCategories">
-                            <li @click='rotate($event, category)' :key="category.name" v-if='categoryResults.red.includes(category.name)'>
+
+                            <li @click='category.rotated = !category.rotated' 
+                                :class="{ 'rotate' : category.rotated }" 
+                                :key="category.name" 
+                                v-if='categoryResults.red.includes(category.name)'>
 
                                 <div class='front'>
                                     <img class='category-icon' :src="category.icon" />
@@ -101,6 +108,7 @@
                                 </div>
 
                             </li>
+
                         </template>
                     </ul>
                 </template>
@@ -120,7 +128,7 @@
 
             </div>
 
-            <div class="conversation-container mask" ref="conversationEl" v-if="!state.showResults">
+            <div class="conversation-container mask" ref="conversationEl" :class="{ scroll : state.isIe }" v-if="!state.showResults">
 
                 <template class="step-container" v-for="(step, index) in steps">
 
@@ -131,9 +139,9 @@
                             <question v-if="step.question && !step.userInput" 
                                     :question=step 
                                     v-on:addstep="addStep()"
-                                    v-on:ready='scrollToBottom()'></question>
+                                    v-on:scrolltobottom='scrollToBottom()'></question>
 
-                            <weight v-else-if="step.userInput && step.category === 'weight'" 
+                            <weight v-else-if='["bmi", "waist"].includes(step.id)' 
                                     :question=step 
                                     :gender="steps.find(s => s.id === 'gender').score" 
                                     v-on:addstep="addStep()"></weight>
@@ -189,7 +197,17 @@ import JQuery from 'jquery'
 let $ = JQuery
 import Form from './utils/Form.js'
 
-const timers = {
+
+let params = (new URL(document.location)).searchParams;
+let debug = params.get("debug");
+const timers = debug 
+? {
+    shortest: 1,
+    short: 1,
+    med: 1,
+    long: 1
+} 
+: {
     shortest: 500,
     short: 1000,
     med: 2000,
@@ -256,23 +274,27 @@ export default {
         currentStep (next, prev) {
             let vm = this;
 
-            if (vm.steps[next].final) {
+            let nextStep = vm.steps[next]
+            let nextIsFinalStep = vm.steps[next].id === 'final'
+
+            if (nextIsFinalStep) {
                 vm.state.activeCategory = 'results'
                 vm.calculateResults()
-                setTimeout(() => (vm.state.showResults = true) && vm.scrollToBottom(), timers.med)
-                return
-            }
+                setTimeout(() => (vm.state.showResults = true), timers.med)
+                
+            } else {
+                if (nextStep.question) {
+                    vm.state.activeCategory = nextStep.category
+                    setTimeout(() => vm.scrollToBottom(), 1300)
+    
+                    if (!nextStep.display(vm.steps)) {
+                        setTimeout(() => vm.currentStep++ && vm.scrollToBottom(), timers.shortest)
 
-            if (!vm.steps[next].question) {
-                setTimeout(() => vm.currentStep++ && vm.scrollToBottom(), (vm.steps[next].delay ? timers.long : timers.med))
-                return
-            }  else {
-                vm.state.activeCategory = vm.steps[next].category
-                setTimeout(() => vm.scrollToBottom(), 1300)
-            }
-
-            if (vm.steps[next].question && !vm.display(vm.steps[next])) {
-                setTimeout(() => vm.currentStep++ && vm.scrollToBottom(), timers.shortest)
+                    }
+    
+                }  else {
+                    setTimeout(() => vm.currentStep++ && vm.scrollToBottom(), (nextStep.delay ? timers.long : timers.med))
+                }
             }
         }
     },
@@ -290,7 +312,7 @@ export default {
 
             if (!(age || gender)) { return false }
 
-            return (["64", "74"].includes(age)) && gender !== 'o' || 
+            return  (["64", "74"].includes(age) && gender !== 'o') || 
                     (["39", "49", "64", "74"].includes(age) && gender === "f")
         },
         routes() {
@@ -325,15 +347,6 @@ export default {
             if (this.state.isIe) {
                 var element = this.$refs.conversationEl;
                 element.scrollTop = element.scrollHeight;
-            }
-        },
-        rotate(e, cat) {
-            if (e.target.classList.length === 0) {
-                e.target.classList.add('rotate');
-                cat.rotated = true
-            } else {
-                (e.target.classList.remove('rotate'))
-                cat.rotated = false
             }
         },
         getRecommendations() {
@@ -424,16 +437,11 @@ export default {
 
                 results[category] = categoryScore
 
-                console.log('categoryScore', categoryScore)
-
                 vm.categoryResults[categoryScore === 100 ? 'green' :  'red'].push(category)
                 total += categoryScore
             })
 
             results.total = Math.round(total / Object.keys(results).length)
-
-            console.log('results:', results)
-            console.log('total', total)
             
             vm.results = results;
             vm.storeResults()
@@ -444,9 +452,10 @@ export default {
             let bmi = vm.steps.find(s => s.id === 'bmi').bmi;
             let waist = vm.steps.find(s => s.id === 'waist').waist;
 
+            let ageScore = vm.steps.find(s => s.id === 'age').bmi
             let age;
             
-            switch (vm.steps[2].score) {
+            switch (ageScore) {
                 case '24':
                     age = '18-24'
                 case '39':
@@ -501,16 +510,12 @@ export default {
         }
     },
     mounted () {
-        this.currentStep = 0;
+        let vm = this;
+
+        vm.currentStep = 0;
 
         var ua = window.navigator.userAgent;
-        var isIE = /MSIE|Trident/.test(ua);
-
-        if ( isIE ) {
-            this.state.isIe = true;
-            document.querySelector('.conversation-container').classList.add('scroll')
-            document.querySelector('.results-container').classLIst.add('ie')
-        }
+        vm.state.isIe = /MSIE|Trident/.test(ua);
     }
 }
 </script>

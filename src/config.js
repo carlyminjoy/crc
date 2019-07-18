@@ -693,7 +693,6 @@ export default {
             display: (steps) => {
                 let gender = steps.find(s => s.id === 'gender').score;
                 let weightOption = steps.find(s => s.id === ( gender === 'o' ? 'weightOther' : 'weight')).score
-
                 return weightOption === 'bmi'
             },
             userResponded: false,
@@ -711,7 +710,12 @@ export default {
             text: "<span class='big'>Please enter your waist measurement:</span>",
             userInput: true,
             score: null,
-            display:(steps) => steps.find(s => s.id === 'weight').score === 'waist',
+            display: (steps) => {
+                let gender = steps.find(s => s.id === 'gender').score;
+                let weightOption = steps.find(s => s.id === ( gender === 'o' ? 'weightOther' : 'weight')).score
+
+                return weightOption === 'waist'
+            },
             userResponded: false,
             userResponse: '',
             aiResponded: false,
@@ -879,10 +883,10 @@ export default {
             ]
         },
         {
+            id: 'final',
             question:false,
             display:() => true,
-            text: "Great! You've answered all the questions. Let's calculate your results...",
-            final:true
+            text: "Great! You've answered all the questions. Let's calculate your results..."
         }
     ]
 

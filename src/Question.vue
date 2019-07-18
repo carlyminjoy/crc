@@ -34,7 +34,9 @@
 
 <script>
 import { setTimeout } from 'timers';
-const timer = 1200;
+let params = (new URL(document.location)).searchParams;
+let debug = params.get("debug");
+const timer = debug ? 1 : 1200;
 
 export default {
   name: 'Question',
@@ -68,7 +70,11 @@ export default {
       }
   },
   mounted() {
-      setTimeout(() => (this.ready = true) && this.$emit('scrolltobottom'), timer)
+      let vm = this;
+
+      vm.$emit('scrolltobottom', 'first')
+      setTimeout(() => (vm.ready = true) && vm.$emit('scrolltobottom', 'second'), timer)
+
   }
 }
 </script>

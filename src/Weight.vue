@@ -29,7 +29,9 @@
 
             </div>
 
-            <vmd-button :class="{ 'selected' : selected }" text='Okay' :disabled='disabled' @click="addStep()"></vmd-button>
+            <transition name='fade'>
+                <vmd-button v-if='!selected' :class="{ 'selected' : selected }" text='Okay' :disabled='disabled' @click="addStep()"></vmd-button>
+            </transition>
         </div>
   </div>
 </template>
