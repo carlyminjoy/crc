@@ -35,7 +35,7 @@
                         <h3>Well done, a few small changes can further reduce your cancer risk.</h3>
                     </template> 
                     <template v-else-if='latestScorecard.scores.total >= 50'>
-                        <h2>On the right track</h2>
+                        <h2>You're on the right track</h2>
                         <h3>Well done, there are plenty of ways you can reduce your cancer risk.</h3>
                     </template> 
                     <template v-else>
