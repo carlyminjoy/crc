@@ -32,7 +32,7 @@
                     </template> 
                     <template v-else-if='latestScorecard.scores.total >= 75'>
                         <h2>You're doing well</h2>
-                        <h3>Well done, a <span class=''>few small changes</span> can further reduce your cancer risk.</h3>
+                        <h3>Well done, a few small changes can further reduce your cancer risk.</h3>
                     </template> 
                     <template v-else-if='latestScorecard.scores.total >= 50'>
                         <h2>On the right track</h2>
@@ -101,7 +101,6 @@
                                     <p> {{ section.answer }} <br>
                                         <strong>
                                             <span v-if='section.bmi'><br>Your BMI is: {{ section.bmi }}.<br><br></span>
-                                            <span v-if='section.bmi'>The range for a healthy weight is between 18.5 and 25. </span>
                                             <span v-html='section.recommendation'>
                                         </strong>
                                     </p>
