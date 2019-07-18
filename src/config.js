@@ -153,13 +153,14 @@ export default {
             category: 'uv',
             text: `Do you wear sun protective clothing (e.g. shirt with a collar, sleeves and long pants?</li>`,
             score: null,
+            scoredQuestion: true,
             display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
                 {
                     label: "Yes",
-                    score: 30,
+                    score: 100,
                     userResponse: "I wear sun protective clothing.",
                     aiResponse: "Well done! It's important to slip on sun protective clothing that covers as much skin as possible."
                 },
@@ -177,13 +178,14 @@ export default {
             category: 'uv',
             text: "Do you wear a sun protective hat (e.g. broad-brimmed or bucket style)?",
             score: null,
+            scoredQuestion: true,
             display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
                 {
                     label: "Yes",
-                    score: 30,
+                    score: 100,
                     userResponse: "I wear a sun protective hat outside.",
                     aiResponse: "Well done! Always slap on a broad-brimmed or bucket style hat that shades your face, neck and ears."
                 },
@@ -201,13 +203,14 @@ export default {
             category:'uv',
             text: "Do you apply and reapply SPF30+ sunscreen or higher at least every 2 hours?",
             score: null,
+            scoredQuestion: true,
             display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
                 {
                     label: "Yes",
-                    score: 30,
+                    score: 100,
                     userResponse: "I apply and reapply SPF30+ sunscreen every 2 hours.",
                     aiResponse: "Well done! Slop on SPF 30+ sunscreen to exposed parts of your body 20 minutes before going outdoors and reapply every 2 hours."
                 },
@@ -225,13 +228,14 @@ export default {
             category:'uv',
             text: "Do you stay in the shade where possible?",
             score: null,
+            scoredQuestion: true,
             display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
                 {
                     label: "Yes",
-                    score: 30,
+                    score: 100,
                     userResponse: "I stay in the shade where possible.",
                     aiResponse: "Well done! Always seek shade whenever you can, especially when the UV radiation is highest - between 10am and 3pm."
                 },
@@ -249,13 +253,14 @@ export default {
             category: 'uv',
             text: "Do you wear sunglasses?",
             score: null,
+            scoredQuestion: true,
             display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
                 {
                     label: "Yes",
-                    score: 30,
+                    score: 100,
                     userResponse: "I wear sunglasses.",
                     aiResponse: "Well done! Slide on wrap-around, close-fitting sunglasses that meet Australian standards."
                 },
@@ -278,13 +283,14 @@ export default {
             category: 'uv',
             text: `<span class='big'>Do you regularly check your skin for new spots and changes to existing freckles or moles?</span>`,
             score: null,
+            scoredQuestion: true,
             display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
                 {
                     label: "Yes",
-                    score: 30,
+                    score: 100,
                     userResponse: "I regularly check my skin.",
                     aiResponse: "Well done! It's important to develop a regular habit of checking your skin. If you notice any new spots or changes to an existing spot such as size, shape or colour, see your doctor immediately."
                 },
@@ -302,13 +308,14 @@ export default {
             category: 'uv',
             text: `<span class='big'>Do you have your skin checked by a health professional, or speak to them about your skin cancer risk?</span>`,
             score: null,
+            scoredQuestion: true,
             display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
                 {
                     label: "Yes",
-                    score: 30,
+                    score: 100,
                     userResponse: "I have my skin checked by a health professional.",
                     aiResponse: "Well done!"
                 },
@@ -337,19 +344,20 @@ export default {
             category: 'smoking',
             text: `<span class='big'>What is your smoking status?</span>`,
             score: null,
+            scoredQuestion: true,
             display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
                 {
                     label: "I have never smoked",
-                    score: 105,
+                    score: 100,
                     userResponse: "I have never smoked.",
                     aiResponse: "Well done!"
                 },
                 {
                     label: "I used to smoke, but no longer do.",
-                    score: 104.9,
+                    score: 99.9,
                     userResponse: "I used to smoke, but no longer do.",
                     aiResponse: "Well done!"
                 },
@@ -373,13 +381,14 @@ export default {
             category: 'smoking',
             text: `<span class='big'>Is your household smoke-free?</span>`,
             score: null,
+            scoredQuestion: true,
             display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
                 {
                     label: "Yes",
-                    score: 105,
+                    score: 100,
                     userResponse: "My household is smoke-free.",
                     aiResponse: "Great!"
                 },
@@ -403,19 +412,20 @@ export default {
             category: 'alcohol',
             text: `<span class='big'>How many standard drinks do you typically consume in a day when you drink? </span><br><br>Examples of 1 standard drink:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/bottle.png'/></span> 1 x 375mL bottle of mid strength beer</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/wine.png'/></span> 100 mL of wine (1 x small glass of wine)</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/glass2.png'/></span> 30 mL of spirits (1 x measure of spirits)</li></ul>`,
             score: null,
+            scoredQuestion: true,
             display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
                 {
                     label: "None",
-                    score: 210,
+                    score: 100,
                     userResponse: "I don't drink.",
                     aiResponse: "Well done!"
                 },
                 {
                     label: "1 - 2",
-                    score: 209.9,
+                    score: 99.9,
                     userResponse: "When I drink, I'll typically consume 1 - 2 standard drinks in a day.",
                     aiResponse: "Great - always try to limit your alcohol consumption to no more than 2 standard drinks per day."
                 },
@@ -445,6 +455,7 @@ export default {
             category: 'nutrition',
             text: `<span class='big'>How many serves of fruit do you eat in a typical day?</span><br><br>Examples of 1 serve of fruit:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/apple.png'/></span>1 x apple</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/apricots.png'/></span> 2 x apricots</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/fruit.png'/></span>1 cup of fruit</li></ul>`,
             score: null,
+            scoredQuestion: true,
             display:() => true,
             userResponded: false,
             aiResponded: false,
@@ -457,13 +468,13 @@ export default {
                 },
                 {
                     label: "1 serve",
-                    score: 21,
+                    score: 50,
                     userResponse: "I eat 1 serve of fruit in a typical day.",
                     aiResponse: "Good start! But you should try to eat at least 2 serves of fruit every day."
                 },
                 {
                     label: "2 or more",
-                    score: 42,
+                    score: 100,
                     userResponse: "I eat 2 or more serves of fruit in a typical day.",
                     aiResponse: "Well done! You should try to eat at least 2 serves of fruit every day."
                 }
@@ -476,6 +487,7 @@ export default {
             category: 'nutrition',
             text: `<span class='big'>How many serves of vegetables do you eat in a typical day?</span><br><br>Examples of 1 serve of vegetables:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/vegetables.png'/></span>1/2 cup cooked vegetables</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/potato.png'/></span>1/2 medium potato</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/salad.png'/></span>1 cup of salad</li></ul>`,
             score: null,
+            scoredQuestion: true,
             display:() => true,
             userResponded: false,
             aiResponded: false,
@@ -488,19 +500,19 @@ export default {
                 },
                 {
                     label: "1 - 2",
-                    score: 14,
+                    score: 33,
                     userResponse: "I eat 1 -2 serves of vegetables in a typical day.",
                     aiResponse: "Good start! But you should try to eat at least 5 serves of vegetables every day."
                 },
                 {
                     label: "3 - 4",
-                    score: 28,
+                    score: 66,
                     userResponse: "I eat 3 - 4 serves of vegetables in a typical day.",
                     aiResponse: "Good start! But you should try to eat at least 5 serves of vegetables every day."
                 },
                 {
                     label: "5 or more",
-                    score: 42,
+                    score: 199,
                     userResponse: "I eat 5 or more serves of vegetables in a typical day.",
                     aiResponse: "Well done! You should try to eat at least 5 or more serves of vegetables each day."
                 }
@@ -513,25 +525,26 @@ export default {
             category: 'nutrition',
             text: `<span class='big'>How many serves of red meat do you eat in a typical week?</span><br><br>1 serve is 65g of cooked lean red meat, such as beef, lamb, veal and pork.<br><br>Examples of 1 serve:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/lamb.png'/></span>1 lamb loin chop</li></ul><br>Examples of 2 serves:<ul class='examples'><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/steak.png'/></span>1 porterhouse/scotch fillet steak</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/diced-meat.png'/></span>1 cup diced meat</li></ul>`,
             score: null,
+            scoredQuestion: true,
             display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
                 {
                     label: "None",
-                    score: 42,
+                    score: 100,
                     userResponse: "I don't eat any red meat.",
                     aiResponse: "Well done! Red meat consumption should be limited to no more than 7 serves (455g) per week."
                 },
                 {
                     label: "1 - 4",
-                    score: 41.9,
+                    score: 99.9,
                     userResponse: "I eat 1 - 4 serves of red meat in a typical week.",
                     aiResponse: "Well done! Red meat consumption should be limited to no more than 7 serves (455g) per week."
                 },
                 {
                     label: "5 - 7",
-                    score: 41.8,
+                    score: 99.8,
                     userResponse: "I eat 5 - 7 serves of red meat in a typical week.",
                     aiResponse: "Well done! Red meat consumption should be limited to no more than 7 serves (455g) per week."
                 },
@@ -550,25 +563,26 @@ export default {
             category: 'nutrition',
             text: `<span class='big'>How many serves of processed meat do you eat in a typical week?</span><br><br>Example of 1 serve:<br><ul class='examples'><li><span class="img-container"><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/bacon.png'/></span>2 slices of bacon</li><li><span class='img-container'><img src='https://cancerqld.blob.core.windows.net/content/code/global/img/questquiz/salami.png'/></span>2 slices of salami or ham</li></ul>`,
             score: null,
+            scoredQuestion: true,
             display:() => true,
             userResponded: false,
             aiResponded: false,
             options: [
                 {
                     label: "None",
-                    score: 42,
+                    score: 100,
                     userResponse: "I don't eat any processed meat.",
                     aiResponse: "Well done!"
                 },
                 {
                     label: "Less than 1",
-                    score: 41.9,
+                    score: 99.9,
                     userResponse: "I eat less than 1 serve of processed meat in a typical week.",
                     aiResponse: "Well done!"
                 },
                 {
                     label: "1 - 2",
-                    score: 21,
+                    score: 50,
                     userResponse: "I eat 1 - 2 serves of processed meat in a typical week.",
                     aiResponse: "A little too much! Try to avoid processed meat or cut down the amount you currently consume."
                 },
@@ -599,19 +613,19 @@ export default {
                 },
                 {
                     label: "Some of the time",
-                    score: 21,
+                    score: 50,
                     userResponse: "I sometimes choose wholegrain, wholemeal and/or high fibre food varieties.",
                     aiResponse: "Good start! But you should try to choose wholegrain and wholemeal varieties for at least half your daily serves of breads and cereals."
                 },
                 {
                     label: "Most of the time",
-                    score: 41.9,
+                    score: 99.9,
                     userResponse: "I mostly choose wholegrain, wholemeal and/or high fibre food varieties.",
                     aiResponse: "Well done!"
                 },
                 {
                     label: "Always",
-                    score: 42,
+                    score: 100,
                     userResponse: "I always choose wholegrain, wholemeal and/or high fibre food varieties.",
                     aiResponse: "Well done!"
                 }
@@ -690,6 +704,7 @@ export default {
             text: `<span class='big'>Please enter your height (cm) and weight (kg):</span>`,
             userInput: true,
             score: null,
+            scoredQuestion: true,
             display: (steps) => {
                 let gender = steps.find(s => s.id === 'gender').score;
                 let weightOption = steps.find(s => s.id === ( gender === 'o' ? 'weightOther' : 'weight')).score
@@ -710,6 +725,7 @@ export default {
             text: "<span class='big'>Please enter your waist measurement:</span>",
             userInput: true,
             score: null,
+            scoredQuestion: true,
             display: (steps) => {
                 let gender = steps.find(s => s.id === 'gender').score;
                 let weightOption = steps.find(s => s.id === ( gender === 'o' ? 'weightOther' : 'weight')).score
@@ -739,6 +755,7 @@ export default {
             category: 'physical activity',
             text: `<span class='big'>In a typical week, how many days are you physically active for 30 minutes or more?</span>`,
             score: null,
+            scoredQuestion:true,
             display:() => true,
             userResponded: false,
             aiResponded: false,
@@ -751,19 +768,19 @@ export default {
                 },
                 {
                     label: "1 - 2",
-                    score: 70,
+                    score: 33,
                     userResponse: "I am physically active for 30 minutes or more for 1 - 2 days in a typical week.",
                     aiResponse: "You're on the right track! To reduce your cancer risk, aim for 1 hour of moderate intensity or 30 minutes of vigorous intensity physical activity every day."
                 },
                 {
                     label: "3 - 4",
-                    score: 140,
+                    score: 66,
                     userResponse: "I am physically active for 30 minutes or more for 3 - 4 days in a typical week.",
                     aiResponse: "You're on the right track! To reduce your cancer risk, aim for 1 hour of moderate intensity or 30 minutes of vigorous intensity physical activity every day."
                 },
                 {
                     label: "5 - 7",
-                    score: 210,
+                    score: 100,
                     userResponse: "I am physically active for 30 minutes or more for 5 - 7 days in a typical week.",
                     aiResponse: "Well done! 1 hour of moderate intensity or 30 minutes of vigorous intensity physical activity every day is recommended to reduce your cancer risk."
                 }
@@ -789,6 +806,7 @@ export default {
             category: 'screening',
             text: `<span class='big'>Do you participate in the <div class='info'><i class='fa fa-question-circle'></i><div class='info-text'>Invitation sent to women aged between 50 – 74 to participate in a free mammogram every 2 years.</div></div> <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/breast-screening-1' target='_blank'></i>National Breast Cancer Screening Program</a>?</span>`,
             score: null,
+            scoredQuestion: true,
             display: (steps) => {
                 let age = steps.find(s => s.id === 'age').score
                 let gender = steps.find(s => s.id === 'gender').score
@@ -800,7 +818,7 @@ export default {
             options: [
                 {
                     label: "Yes",
-                    score: 70,
+                    score: 100,
                     userResponse: "I participate in the national breast cancer screening program.",
                     aiResponse: "Well done! Participating in the program greatly increases the likelihood of early detection of breast cancer and successful treatment."
                 },
@@ -812,7 +830,7 @@ export default {
                 },
                 {
                     label: "No - I screen for breast cancer outside of the national breast cancer screening program (e.g. ultrasound or mammogram).",
-                    score: 69.9,
+                    score: 99.9,
                     userResponse: "I screen for breast cancer outside of the national breast cancer screening program.",
                     aiResponse: "Well done!"
                 },
@@ -824,6 +842,7 @@ export default {
             category: 'screening',
             text: `<span class='big'>Do you participate in the <div class='info'><i class='fa fa-question-circle'></i><div class='info-text'>FOBT test kit sent to men and women aged between 50 – 74 to complete at home every 2 years.</div></div> <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-screening-1' target='_blank'>National Bowel Cancer Screening Program</a>?</span>`,
             score: null,
+            scoredQuestion: true,
             display: (steps) => {
                 let age = steps.find(s => s.id === 'age').score
                 let gender = steps.find(s => s.id === 'gender').score
@@ -835,7 +854,7 @@ export default {
             options: [
                 {
                     label: "Yes",
-                    score: 70,
+                    score: 100,
                     userResponse: "I participate in the national bowel cancer screening program.",
                     aiResponse: "Well done! Participating in the program greatly increases the likelihood of early detection of bowel cancer and successful treatment."
                 },
@@ -847,7 +866,7 @@ export default {
                 },
                 {
                     label: "No - I screen for bowel cancer outside of the national bowel cancer screening program (e.g. colonoscopy).",
-                    score: 69.9,
+                    score: 99.9,
                     userResponse: "I screen for bowel cancer outside of the national bowel cancer screening program.",
                     aiResponse: "Well done!"
                 },
@@ -859,6 +878,7 @@ export default {
             category: 'screening',
             text: `<span class='big'>Do you participate in the <div class='info'><i class='fa fa-question-circle'></i><div class='info-text'>Cervical Screening Test replaced the two-yearly Pap test and is still performed by your healthcare provider in the same way.</div></div> <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/cervical-screening-1' target='_blank'>National Cervical Screening Program</a> (replaced the previous Pap test)?</span>`,
             score: null,
+            scoredQuestion: true,
             display: (steps) => {
                 let age = steps.find(s => s.id === 'age').score
                 let gender = steps.find(s => s.id === 'gender').score
@@ -870,7 +890,7 @@ export default {
             options: [
                 {
                     label: "Yes",
-                    score: 70,
+                    score: 100,
                     userResponse: "I participate in cervical screening.",
                     aiResponse: "Well done! Participating in the program offers the best protection against cervical cancer."
                 },

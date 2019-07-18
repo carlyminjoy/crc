@@ -86,13 +86,13 @@ export default {
                 vm.question.bmi = bmi;
     
                 if (bmi < 18.5) {
-                    vm.question.score = 105;
+                    vm.question.score = 50;
                     vm.question.aiResponse = 'You might be underweight, consider talking to your health professional.'
                 } else if (bmi < 24.9) {
-                    vm.question.score = 210;
+                    vm.question.score = 100;
                     vm.question.aiResponse = 'Well done!'
                 } else if (bmi <= 30) {
-                    vm.question.score = 105;
+                    vm.question.score = 50;
                     vm.question.aiResponse = 'You’re almost there! Try to achieve and maintain a healthy body weight within a BMI range of 18.5 to 25 to reduce your cancer risk. ';
                 } else {
                     vm.question.aiResponse = 'Try to achieve and maintain a healthy body weight within a BMI range of 18.5 to 25 to reduce your cancer risk.';
@@ -103,11 +103,11 @@ export default {
 
                 if (vm.gender === 'm') {
                     if (vm.question.waist < 94) {
-                        vm.question.score = 210;
+                        vm.question.score = 100;
                         vm.question.aiResponse = 'Well done!';
                     } else if (vm.question.waist < 101) {
                         vm.question.aiResponse = 'You’re almost there!  Try to achieve and maintain a waist measurement of under 94cm.';
-                        vm.question.score = 105;
+                        vm.question.score = 50;
                     } else {
                         vm.question.aiResponse = 'Try to achieve and maintain a waist measurement of under 94cm. ';                        
                         vm.question.score = 0;
@@ -116,11 +116,11 @@ export default {
                     if (vm.question.waist < 80) {
                         vm.question.aiResponse = 'Well done!';
 
-                        vm.question.score = 210;
+                        vm.question.score = 100;
                     } else if (vm.question.waist < 87) {
                         vm.question.aiResponse = 'You’re almost there!  Try to achieve and maintain a waist measurement of under 94cm.';
 
-                        vm.question.score = 105;
+                        vm.question.score = 50;
                     } else {
                         vm.question.aiResponse = 'Try to achieve and maintain a waist measurement of under 94cm. ';                        
 

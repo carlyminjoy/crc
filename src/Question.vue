@@ -34,8 +34,9 @@
 
 <script>
 import { setTimeout } from 'timers';
-let params = (new URL(document.location)).searchParams;
-let debug = params.get("debug");
+// let params = (new URL(document.location)).searchParams; // THIS CRASHES IE!
+// let debug = params.get("debug");
+let debug = true;
 const timer = debug ? 1 : 1200;
 
 export default {

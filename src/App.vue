@@ -182,8 +182,9 @@ import { default as scoredCategories } from './scoredCategories.js'
 import { default as Question } from './Question.vue'
 import { default as Weight } from './Weight.vue'
 import { default as Postcode } from './Postcode.vue'
-import { setTimeout } from 'timers';
 import { vmdButton, vmdTextField } from '@ccq/ccq-vue-components'
+
+import { setTimeout } from 'timers';
 import { validationMixin } from 'vuelidate';
 import { 
     required, 
@@ -197,9 +198,10 @@ import JQuery from 'jquery'
 let $ = JQuery
 import Form from './utils/Form.js'
 
+// let params = (new URL(document.location)).searchParams; // THIS CRASHES IE!
+// let debug = params.get("debug");
 
-let params = (new URL(document.location)).searchParams;
-let debug = params.get("debug");
+let debug  = true;
 const timers = debug 
 ? {
     shortest: 1,
@@ -313,7 +315,7 @@ export default {
             if (!(age || gender)) { return false }
 
             return  (["64", "74"].includes(age) && gender !== 'o') || 
-                    (["39", "49", "64", "74"].includes(age) && gender === "f")
+                    (["39", "49"].includes(age) && gender === "f")
         },
         routes() {
             let generatedRoutes = [
@@ -352,9 +354,7 @@ export default {
         getRecommendations() {
             let vm = this;
 
-            let answeredQuestions = vm.steps.filter((step) => {
-                return step.question && (step.score !== null) && step.category !== 'personal' && step.id !== 'weight' && step.id !== 'weightOther'
-            })
+            let answeredQuestions = vm.steps.filter((step) => step.scoredQuestion && step.score !== null)
 
             let recommendations = answeredQuestions.map((q) => {
                 let answer = q.options? q.options.find((o) => o.score === q.score) : null;
@@ -364,6 +364,7 @@ export default {
                     question: q.text,
                     category: q.category,
                     answer: answer ? answer.userResponse : q.userResponse,
+                    score: Math.round(q.score),
                     recommendation: answer ? answer.aiResponse : q.aiResponse
                 }
 
@@ -397,52 +398,27 @@ export default {
         },
         calculateResults() {
             let vm = this;
+
             let results = {};
             let total = 0;
-            let screenTotal = 0;
 
-            vm.steps.forEach((step) => {
-                if (step.question && step.category !== 'personal') {
+            let scoredSteps = vm.steps.filter(s => s.scoredQuestion && s.score !== null)
+            let categories = new Set(scoredSteps.map(s => s.category))
 
-                    if (step.score !== null) {
-                        if (step.category === 'weight' ) {
-                            if (step.id !== 'weight' && step.id !== 'weightOther') { 
-                                results.weight = step.score 
-                            }
+            categories.forEach(category => {
+                if (category !== 'personal') {
 
-                        } else if (results[step.category] !== undefined) {
-                            results[step.category] += Math.round(step.score);
-
-                        } else if (results[step.category] === undefined) {
-                            results[step.category] = Math.round(step.score);
-                        }
-
-                        if (step.category === 'screening') {
-                            screenTotal += 70;
-                        }
-                    }
+                    let questions = scoredSteps.filter(s => s.category == category)
+                    let totalScore = questions.reduce((a, b) => ({ score: a.score + b.score })).score
+                    let categoryTotal = Math.round(totalScore  / questions.length)
+                    
+                    results[category] = categoryTotal
+                    vm.categoryResults[categoryTotal === 100 ? 'green' :  'red'].push(category)
+                    total += categoryTotal
                 }
-            })
-
-            Object.keys(results).forEach((category) => {
-                let categoryScore = null;
-
-                if (category === 'screening') {
-                    if (screenTotal > 0) {
-                        categoryScore = Math.round(results[category] / screenTotal * 100)
-                    }
-                } else {
-                    categoryScore = Math.round(results[category] / 210 * 100)
-                }
-
-                results[category] = categoryScore
-
-                vm.categoryResults[categoryScore === 100 ? 'green' :  'red'].push(category)
-                total += categoryScore
             })
 
             results.total = Math.round(total / Object.keys(results).length)
-            
             vm.results = results;
             vm.storeResults()
         },
@@ -451,8 +427,7 @@ export default {
 
             let bmi = vm.steps.find(s => s.id === 'bmi').bmi;
             let waist = vm.steps.find(s => s.id === 'waist').waist;
-
-            let ageScore = vm.steps.find(s => s.id === 'age').bmi
+            let ageScore = vm.steps.find(s => s.id === 'age').score
             let age;
             
             switch (ageScore) {
