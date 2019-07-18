@@ -6,7 +6,11 @@
 
             <spinner color='#fcd208' v-if='loading'></spinner>
 
-            <h3 v-else-if='!loading && !latestScorecard'>Sorry, your Cancer Risk Scorecard could not be retrieved at this time. <br>Please check the link and try again.</h3>
+            <h3 v-else-if='!loading && !latestScorecard'>
+                Sorry, your Cancer Risk Scorecard could not be retrieved at this time.
+                <br>
+                Please check the link and try again.
+            </h3>
 
             <div class="results-container" v-else-if='latestScorecard'>
                 <h1>{{latestScorecard.firstName }}, your total score is: </h1>
@@ -60,9 +64,7 @@
                                     <span v-if='category.bad.length === 0'><i class='fa fa-check-circle'></i></span>
 
                                     <template v-if='category.bad.length > 0'>
-                                        <!-- <span v-if='category.bad.length > 0' class='yellow-text'> -->
-                                            <span class='numbered-exclamation'>{{category.bad.length}} &nbsp;</span>
-                                        <!-- </span> -->
+                                        <span class='numbered-exclamation'>{{category.bad.length}} &nbsp;</span>
                                         <i class='fa fa-exclamation-circle'></i>
                                     </template>
                                 </span>
@@ -94,7 +96,6 @@
 
                         <div class="grey" :class="{'contracted' : expandedCategory !== category.name}" v-if="category.bad.length > 0">
                             <h2>Areas for improvement:</h2>
-
                             <ul class='improvements'>
                                 <li v-for="(section, i) in category.bad" :key="i">
                                     <i class='fa fa-exclamation-circle'></i> &nbsp;
@@ -145,7 +146,7 @@
 <script>
 
 import { vmdButton } from '@ccq/ccq-vue-components'
-import { default as spinner } from 'vue-spinners/src/components/CubeSpinner'
+import { default as spinner } from 'vue-spinners/src/components/CubeSpinner' // BREAKS IE
 import VueCircle from 'vue2-circle-progress'
 import axios from 'axios'
 import { default as Tips } from './tips.js'
@@ -235,7 +236,6 @@ export default {
                 .post('https://prod-05.australiaeast.logic.azure.com:443/workflows/df753e6a563e451ea76a06b71d1a4a9e/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pge8rl1wK4YG2jeyFkb3gl38yu97YZAyBzp6Dd6vAxA', {user: user})
                 .then(response => {
                     this.results = response.data.scorecards.sort((a,b) => a._ts - b._ts)
-
                     this.results.forEach((card) => {
                         if (card.entry && !vm.latestScorecard) {
                             vm.latestScorecard = card.entry;
@@ -421,26 +421,12 @@ body {
                     }
 
                     .fa-check-circle {
-                        // margin-right: 5px;
                         color: $blue;
                         transition: 0.3s ease;
                     }
 
                     .fa-exclamation-circle {
-                        // margin: 0 5px 0 15px;
-                        // color: $yellow;
-                        // display:none;
-
-                        // background: $yellow;
-                        // color:#fff;
-                        // width: 30px;
-                        // height: 30px;
-                        // line-height: 30px;
-                        // text-align:center;
-                        // border-radius: 50%;
-                        // font-size: 24px;
                         color: $yellow;
-                        // @extend %boxshadow;
                     }
                 }
             }
@@ -449,8 +435,6 @@ body {
                 flex-basis: 40px;
                 max-width: 40px;
                 flex-shrink:1;
-                // background:$blue;
-                // background:inherit;
                 padding: 5px 10px;
                 color:#fff;
                 font-size: 24px;
@@ -586,7 +570,6 @@ body {
                     display:flex;
 
                     .fa, .svg-inline--fa {
-                        // color:$yellow;
                         margin-right: 15px;
                         font-size: 24px;
                     }
@@ -682,7 +665,6 @@ body {
         }
 
         .category {
-            // margin: 15px;
             &.break::after {
                 width: calc(100% - 30px);
             }
@@ -730,7 +712,6 @@ body {
             padding-bottom: 0;
 
             .results-container {
-                // width: calc(100vw - 60px);
                 margin:0;
                 border-radius:0;
                 box-shadow: none;
@@ -757,7 +738,6 @@ body {
                         }
 
                         span.category-icons {
-                            // display:none;
                             min-width: 30px;
                             width: 30px;
                             align-items:center;
