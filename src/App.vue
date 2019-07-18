@@ -353,7 +353,7 @@ export default {
             let vm = this;
 
             let answeredQuestions = vm.steps.filter((step) => {
-                return step.question && (step.score !== null) && step.category !== 'personal' && step.id !== 'weight'
+                return step.question && (step.score !== null) && step.category !== 'personal' && step.id !== 'weight' && step.id !== 'weightOther'
             })
 
             let recommendations = answeredQuestions.map((q) => {
