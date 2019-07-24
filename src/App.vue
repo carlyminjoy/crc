@@ -849,7 +849,7 @@ body {
                 text-transform:capitalize;
 
                 &.uv {
-                    text-transform:uppercase;
+                    text-transform:uppercase!important;
                 }
                 opacity: 1;
                 transition: 1s ease;

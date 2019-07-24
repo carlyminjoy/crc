@@ -101,7 +101,7 @@ export default {
                 {
                     label: "No",
                     score: "no",
-                    userResponse: "I don't identify as either of these, or speak English as a second language.",
+                    userResponse: "No.",
                     aiResponse: "Okay!"
                 },
                 {
@@ -512,7 +512,7 @@ export default {
                 },
                 {
                     label: "5 or more",
-                    score: 199,
+                    score: 100,
                     userResponse: "I eat 5 or more serves of vegetables in a typical day.",
                     aiResponse: "Well done! You should try to eat at least 5 or more serves of vegetables each day."
                 }
@@ -794,8 +794,8 @@ export default {
                 let gender = steps.find(s => s.id === 'gender').score;
 
                 return (age && gender) &&
-                    ((["64", "74"].includes(age)) && gender !== 'o' || 
-                    (["39", "49", "64", "74"].includes(age) && gender === "f"))
+                    ((["64", "74"].includes(age)) || 
+                    (["39", "49"].includes(age) && gender === "f"))
             },
             text: "Thanks! We're up to the final category - cancer screening.",
             delay: true
@@ -825,13 +825,13 @@ export default {
                 {
                     label: "No",
                     score: 0,
-                    userResponse: "I don't participate in the national breast cancer screening program.",
+                    userResponse: "I don't participate in the National Breast Cancer Screening Program.",
                     aiResponse: `Participating in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/breast-screening-1' target='_blank'>National Breast Cancer Screening Program</a> greatly increases the likelihood of early detection of breast cancer and successful treatment.`
                 },
                 {
-                    label: "No - I screen for breast cancer outside of the national breast cancer screening program (e.g. ultrasound or mammogram).",
+                    label: "No - I screen for breast cancer outside of the National Breast Cancer Screening Program (e.g. ultrasound or mammogram).",
                     score: 99.9,
-                    userResponse: "I screen for breast cancer outside of the national breast cancer screening program.",
+                    userResponse: "I screen for breast cancer outside of the National Breast Cancer Screening Program.",
                     aiResponse: "Well done!"
                 },
             ]
@@ -845,9 +845,8 @@ export default {
             scoredQuestion: true,
             display: (steps) => {
                 let age = steps.find(s => s.id === 'age').score
-                let gender = steps.find(s => s.id === 'gender').score
 
-                return ["64", "74"].includes(age) && gender !== 'o'
+                return ["64", "74"].includes(age)
             },
             userResponded: false,
             aiResponded: false,
@@ -855,19 +854,19 @@ export default {
                 {
                     label: "Yes",
                     score: 100,
-                    userResponse: "I participate in the national bowel cancer screening program.",
+                    userResponse: "I participate in the National Bowel Cancer Screening Program.",
                     aiResponse: "Well done! Participating in the program greatly increases the likelihood of early detection of bowel cancer and successful treatment."
                 },
                 {
                     label: "No",
                     score: 0,
-                    userResponse: "I don't participate in the national bowel cancer screening program.",
+                    userResponse: "I don't participate in the National Bowel Cancer Screening Program.",
                     aiResponse: `Participating in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-screening-1' target='_blank'>National Bowel Cancer Screening Program</a> greatly increases the likelihood of early detection of bowel cancer and successful treatment.`
                 },
                 {
-                    label: "No - I screen for bowel cancer outside of the national bowel cancer screening program (e.g. colonoscopy).",
+                    label: "No - I screen for bowel cancer outside of the National Bowel Cancer Screening Program (e.g. colonoscopy).",
                     score: 99.9,
-                    userResponse: "I screen for bowel cancer outside of the national bowel cancer screening program.",
+                    userResponse: "I screen for bowel cancer outside of the National Bowel Cancer Screening Program.",
                     aiResponse: "Well done!"
                 },
             ]
