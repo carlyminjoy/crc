@@ -564,7 +564,6 @@ body {
             }
         }
     }
-    // overflow-y:hidden;
 }
 #app {
 	font-family: 'Foco CC', 'Roboto', Helvetica, Arial, sans-serif;
@@ -572,7 +571,6 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
 	color: $dark-blue;
-	// padding: 30px;
     height:100vh;
     background: #eee;
 
@@ -583,32 +581,6 @@ body {
     h1 {
         margin: 0;
     }
-
-    // header {
-    //     height:80px;
-    //     background: #fff;
-    //     // border-bottom: 3px solid #FCD208;
-
-    //     .container {
-    //         height:100%;
-    //         max-width: 660px;
-    //         margin: 0 auto;
-    //         img {
-    //             float:left;
-    //             height: 50px;
-    //             margin-top: 15px;
-    //         }
-    //         h1 {
-    //             color: $dark-blue;
-    //             font-family:'Foco CC', 'Roboto', Arial, sans-serif;
-    //             margin: 0 104px 0 0;
-    //             letter-spacing: 0;
-    //             line-height: 90px;
-    //         }
-    //     }
-
-    // }
-
 }
 
 .progress-bar {
@@ -630,12 +602,10 @@ body {
         font-size: 14px;
         font-family: 'Foco CC', 'Roboto', Arial, sans-serif;
         text-transform:capitalize;
-        // flex-basis: 12.5%;
         flex-grow:1;
         margin-bottom: -4px;
         transition: all 0.3s ease;
         display:inline-block;
-        // text-align:right;
 
         &.active {
             border-bottom: 4px solid $yellow;
@@ -662,7 +632,6 @@ body {
     overflow-y:hidden;
 
     &.scroll {
-        // overflow-y:scroll!important;
         max-height: 550px;
         display:block;
     }
@@ -848,7 +817,7 @@ body {
             .front {
                 text-transform:capitalize;
 
-                &.uv {
+                h4.uv {
                     text-transform:uppercase!important;
                 }
                 opacity: 1;
@@ -877,6 +846,7 @@ body {
                     justify-content:center;
                     height:calc(100% - 10px);
                     max-width:150px;
+                    margin-top: 0;
                 }
             }
 
@@ -899,26 +869,6 @@ body {
 @media screen and (max-width: 800px) {
     #app {
 
-        // header {
-        //     height: 60px;
-        //     .container {
-        //         display:flex;
-        //         align-items:center;
-        //         h1 {
-        //             padding-top: 5px;
-        //             font-size: 24px;
-        //             margin: unset;
-        //             font-weight:bold;
-        //         }
-
-        //         img {
-        //             height: 40px;
-        //             float:unset;
-        //             margin: 0 20px 0 5px;
-        //         }
-                
-        //     }
-        // }
         .progress-bar {
             max-width: 90%;
             padding: 0;

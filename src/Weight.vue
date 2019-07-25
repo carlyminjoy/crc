@@ -14,12 +14,15 @@
 
                 <div v-if="question.id === 'bmi'">
 
-                    <label for="height">Height: &nbsp;</label>
-                    <input v-model="question.height" type="number" name="height" />&nbsp; cm
-                    <br><br>
+                    <div class='bmi-field'>
+                        <label for="height">Height: &nbsp;</label>
+                        <input v-model="question.height" type="number" name="height" />&nbsp; cm &nbsp;
+                    </div>
 
-                    <label for="weight">Weight: &nbsp;</label>
-                    <input v-model="question.weight" type="number" name="weight" />&nbsp; kg
+                    <div class='bmi-field'>
+                        <label for="weight">Weight: &nbsp;</label>
+                        <input v-model="question.weight" type="number" name="weight" />&nbsp; kg
+                    </div>
                 
                 </div>
 
@@ -209,11 +212,22 @@ $dark-blue: #2c3e50;
         display:flex;
         // flex-wrap: wrap;
 
+        .bmi-field {
+            display:flex;
+            align-items:center;
+            margin: 10px 0;
+
+            label {
+                min-width: 70px;
+            }
+        }
+
         input {
             padding: 5px;
             border-radius: 4px;
             border: 1px solid #cdcdcd;
             width: 50px;
+            margin-right: 5px;
         }
     }
 }
