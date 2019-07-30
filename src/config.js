@@ -601,6 +601,7 @@ export default {
             category: 'nutrition',
             text: `<span class='big'>How often do you choose wholegrain, wholemeal and/or high fibre food varieties? </span><br>(e.g. brown rice, wholemeal bread)`,
             score: null,
+            scoredQuestion: true,
             display:() => true,
             userResponded: false,
             aiResponded: false,
