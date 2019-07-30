@@ -151,7 +151,7 @@ export default {
             id: 'clothing',
             question: true,
             category: 'uv',
-            text: `Do you wear sun protective clothing (e.g. shirt with a collar, sleeves and long pants?</li>`,
+            text: `Do you wear sun protective clothing (e.g. shirt with a collar, sleeves and long pants?`,
             score: null,
             scoredQuestion: true,
             display:() => true,
@@ -596,7 +596,7 @@ export default {
             ]
         },
         {
-            id: 'wholegrain',
+            id: 'fibre',
             question: true,
             category: 'nutrition',
             text: `<span class='big'>How often do you choose wholegrain, wholemeal and/or high fibre food varieties? </span><br>(e.g. brown rice, wholemeal bread)`,
@@ -805,7 +805,7 @@ export default {
             id: 'breastScreening',
             question: true,
             category: 'screening',
-            text: `<span class='big'>Do you participate in the <div class='info'><i class='fa fa-question-circle'></i><div class='info-text'>Invitation sent to women aged between 50 – 74 to participate in a free mammogram every 2 years.</div></div> <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/breast-screening-1' target='_blank'></i>National Breast Cancer Screening Program</a>?</span>`,
+            text: `<span class='big'>Do you participate in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/breast-screening-1' target='_blank'></i>National Breast Cancer Screening Program</a>?</span>`,
             score: null,
             scoredQuestion: true,
             display: (steps) => {
@@ -841,7 +841,7 @@ export default {
             id: 'bowelScreening',
             question: true,
             category: 'screening',
-            text: `<span class='big'>Do you participate in the <div class='info'><i class='fa fa-question-circle'></i><div class='info-text'>FOBT test kit sent to men and women aged between 50 – 74 to complete at home every 2 years.</div></div> <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-screening-1' target='_blank'>National Bowel Cancer Screening Program</a>?</span>`,
+            text: `<span class='big'>Do you participate in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/bowel-screening-1' target='_blank'>National Bowel Cancer Screening Program</a>?</span>`,
             score: null,
             scoredQuestion: true,
             display: (steps) => {
@@ -876,7 +876,7 @@ export default {
             id: 'cervicalScreening',
             question: true,
             category: 'screening',
-            text: `<span class='big'>Do you participate in the <div class='info'><i class='fa fa-question-circle'></i><div class='info-text'>Cervical Screening Test replaced the two-yearly Pap test and is still performed by your healthcare provider in the same way.</div></div> <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/cervical-screening-1' target='_blank'>National Cervical Screening Program</a> (replaced the previous Pap test)?</span>`,
+            text: `<span class='big'>Do you participate in the <a href='http://www.cancerscreening.gov.au/internet/screening/publishing.nsf/Content/cervical-screening-1' target='_blank'>National Cervical Screening Program</a> (replaced the previous Pap test)?</span>`,
             score: null,
             scoredQuestion: true,
             display: (steps) => {

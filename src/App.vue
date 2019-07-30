@@ -15,56 +15,57 @@
             </ul>
 
             <div class="results-container" :class="{ ie: state.isIe }" v-if="state.showResults">
-                <div class='total-score'>
-                    Your total score is: 
+                
+                <h1 class='total-score'>Your total score is: </h1>
+
+                <div class='score-container'>
+
+                    <vue-circle
+                        :progress="results.total"
+                        :size="150"
+                        :reverse="false"
+                        line-cap="butt"
+                        :fill='{ gradient: ["#43A047", "#FCD208"], gradientDirection:[30,140,140,60] }'
+                        empty-fill="#eee"
+                        :animation-start-value="0.0"
+                        :start-angle="-(Math.PI / 2)"
+                        insert-mode="append"
+                        :thickness="10"
+                        :show-percent="true">
+
+                    </vue-circle>
+
+                    <div class='info'>
+                        <i class='fa fa-info-circle'></i>
+                        <div class='info-text'>This score is out of 100 and calculates how much you are reducing your cancer risk through healthy lifestyle behaviours. The higher your score, the more way you are currently reducing your cancer risk. So, aim for 100 and improve your health!</div>
+                    </div>
+
                 </div>
 
-                <vue-circle
-                    :progress="results.total"
-                    :size="150"
-                    :reverse="false"
-                    line-cap="butt"
-                    :fill='{ gradient: ["#43A047", "#FCD208"], gradientDirection:[30,140,140,60] }'
-                    empty-fill="#eee"
-                    :animation-start-value="0.0"
-                    :start-angle="-(Math.PI / 2)"
-                    insert-mode="append"
-                    :thickness="10"
-                    :show-percent="true">
-
-                </vue-circle>
-
-                <div class='info'>
-                    <i class='fa fa-question-circle'></i>
-                    <div class='info-text'>This score is out of 100, the lower your score is, the more ways you can reduce your cancer risk by making simple lifestyle changes. </div>
-                </div>
-
-                <span v-if='parseInt(results.total) === 100'>
+                <div class='score-msg' v-if='parseInt(results.total) === 100'>
                     <h2>Well done!</h2>
-                </span>
+                </div>
 
-                <span v-else-if='parseInt(results.total) >= 75'>
+                <div class='score-msg' v-else-if='parseInt(results.total) >= 75'>
                     <h2>You're doing well</h2>
                     <h3>Well done, a few small changes can further reduce your cancer risk.</h3>
-                </span>
+                </div>
 
-                <span v-else-if='parseInt(results.total) >= 50'>
+                <div class='score-msg' v-else-if='parseInt(results.total) >= 50'>
                     <h2>You're on the right track</h2>
                     <h3>Well done, there are plenty of ways you can reduce your cancer risk.</h3>
-                </span>
+                </div>
 
-                <span v-else>
+                <div class='score-msg' v-else>
                     <h2>Room for improvement</h2>
                     <h3>Good news, there are plenty of ways you can reduce your cancer risk.</h3>
-                </span>
+                </div>
 
-                <br><br>
-
-                <template v-if='categoryResults.green.length > 0'>
+                <div class='category-wrapper' v-if='categoryResults.green.length > 0'>
 
                     <h2>You're doing great in the following areas:</h2>
 
-                    <ul>
+                    <ul class='good'>
                         <template v-for="category in scoredCategories">
                             <li @click='category.rotated = !category.rotated' 
                                 :class="{'rotate': category.rotated }" 
@@ -84,13 +85,13 @@
                         </template>
                     </ul>
 
-                </template>
+                </div>
 
-                <template v-if='categoryResults.red.length > 0'>
+                <div class='category-wrapper' v-if='categoryResults.red.length > 0'>
 
                     <h2>The areas you could improve in are:</h2>
 
-                    <ul>
+                    <ul class='bad'>
                         <template v-for="category in scoredCategories">
 
                             <li @click='category.rotated = !category.rotated' 
@@ -111,20 +112,25 @@
 
                         </template>
                     </ul>
-                </template>
+                </div>
 
-                <h3>To receive your Cancer Risk Scorecard with your detailed results and tips to reduce your cancer risk, please enter your details below:</h3>
+                <div class='form-container'>
+                    <h1>Get your Cancer Risk Scorecard!</h1>
 
-                <form>
-                    <vmd-text-field class='half-width' label='First Name' v-model="$v.form.firstName.$model" :invalid='$v.form.firstName.$error'></vmd-text-field>
-                    <vmd-text-field class='half-width' label='Last Name' v-model="$v.form.lastName.$model" :invalid='$v.form.lastName.$error'></vmd-text-field>
-                    <vmd-text-field label='Email Address' type='email' v-model="$v.form.emailAddress.$model" :invalid='$v.form.emailAddress.$error'></vmd-text-field>
+                    <h3>To receive your Cancer Risk Scorecard with your detailed results and tips to reduce your cancer risk, please enter your details below:</h3>
 
-                    <p>By submitting this form, you are agreeing to our <a href='https://cancerqld.org.au/about-us/our-privacy-policy/read-our-privacy-position-statement/' target='_blank'>Privacy Collection Statement</a>.</p>
+                    <form>
+                        <vmd-text-field class='half-width' label='First Name' v-model="$v.form.firstName.$model" :invalid='$v.form.firstName.$error'></vmd-text-field>
+                        <vmd-text-field class='half-width' label='Last Name' v-model="$v.form.lastName.$model" :invalid='$v.form.lastName.$error'></vmd-text-field>
+                        <vmd-text-field label='Email Address' type='email' v-model="$v.form.emailAddress.$model" :invalid='$v.form.emailAddress.$error'></vmd-text-field>
 
-                    <vmd-button v-if='!state.submitted' :disabled="state.loading || $v.$anyError || formDisabled" :loading="state.loading" text='Get My Cancer Risk Scorecard' @click="sendResults()"></vmd-button>
-                    <p v-else class="confirmation-msg">Thank you! Your details have been submitted. <br>You will receive your personalised Cancer Risk Scorecard shortly.</p>
-                </form>
+                        <p>By submitting this form, you are agreeing to our <a href='https://cancerqld.org.au/about-us/our-privacy-policy/read-our-privacy-position-statement/' target='_blank'>Privacy Collection Statement</a>.</p>
+
+                        <vmd-button v-if='!state.submitted' :disabled="state.loading || $v.$anyError || formDisabled" :loading="state.loading" text='Get My Cancer Risk Scorecard' @click="sendResults()"></vmd-button>
+                        <p v-else class="confirmation-msg">Thank you! Your details have been submitted. <br>You will receive your personalised Cancer Risk Scorecard shortly.</p>
+                    </form>
+
+                </div>
 
             </div>
 
@@ -518,52 +524,6 @@ body {
         font-size: 18px;
         font-weight:bold;
     }
-
-    .info {
-        position:relative;
-        display:inline-block;
-
-        @media screen and (max-width: 600px) {
-            .info-text {
-                left: -220px!important;
-            }
-        }
-
-        .fa-question-circle {
-            cursor:pointer;
-            transition: 0.3s ease;
-            color:$yellow;
-            font-size: 20px;
-
-            &:hover {
-                color:$dark-blue;
-            }
-        }
-
-        .info-text {
-            @extend %boxshadow;
-            visibility:hidden;
-            position:absolute;
-            z-index:1;
-            width: 220px;
-            text-align:center;
-            background:$dark-blue;
-            color:#fff;
-            font-size: 14px;
-            font-weight: 400;
-            border-radius: 4px;
-            padding: 8px 10px;
-            opacity:0;
-            transition: 0.3s ease;
-        }
-
-        &:hover {
-            .info-text {
-                visibility:visible;
-                opacity:1;
-            }
-        }
-    }
 }
 #app {
 	font-family: 'Foco CC', 'Roboto', Helvetica, Arial, sans-serif;
@@ -709,81 +669,135 @@ body {
         justify-content:flex-start!important;
     }
 
-    .total-score {
-        font-size: 24px;
-        font-weight:600;
-        margin-top: 10px;
-
-        i {
-            font-size: 16px;
-        }
+    h1.total-score {
+        margin-top: 15px!important;
     }
 
     h3 {
         font-weight: 400;
     }
 
-    .circle {
-        margin: 30px auto;
-        padding-left: 30px;
-
-        span.percent-text {
-            margin-left:-20px;
-        }
-    }
-
-    form {
+    .score-container {
         display:flex;
+        max-width: 600px;
+        justify-content:center;
+        align-items:center;
+        margin: 30px auto;
         flex-wrap: wrap;
-        justify-content:space-between;
 
-        span.mdc-button__label {
-            font-size:14px!important;
-            line-height:14px!important;
-        }
-
-        div.mdc-text-field {
+        .circle {
+            margin: 15px 0;
+            padding: 0 30px;
+            flex-basis: 150px;
             flex-grow: 1;
-            margin: 5px;
-            flex-basis: 100%;
+            max-width: 150px;
 
-            label.mdc-floating-label {
-                font-size: 14px!important;
-                line-height: 14px!important;
-            }
-
-            &.half-width {
-                min-width: 200px;
-                flex-basis: 250px;
+            span {
+                margin-left: -25%;
             }
         }
 
-        p {
-            margin: 20px auto;
-            
-            &.confirmation-msg {
-                padding: 20px;
-                background:#eee;
-                width: 100%;
+        .info {
+            background:#eee;
+            border-left: 3px solid $dark-blue;
+            display:flex;
+            padding: 10px;
+            flex-basis: 300px;
+            flex-grow: 2;
+            max-width: 350px;
+
+            .fa-info-circle {
+                margin: 0 10px;
             }
 
-            a {
-                text-decoration:none;
-                font-weight:bold;
-                color:$blue;
-            }
-        }
-
-        button {
-            width: 100%;
-            margin-bottom: 10px;
-
-            &:disabled {
-                background:#eee;
+            .info-text {
+                font-size: 14px;
+                text-align:left;
             }
         }
     }
 
+    div.score-msg {
+        margin-bottom: 40px;
+    }
+
+    .form-container {
+        padding: 15px 30px;
+        background: $dark-blue;
+        color:#fff;
+        border-radius: 4px;
+        margin-bottom: 15px;
+
+        h1 {
+            margin-top: 15px!important;
+            text-transform:uppercase;
+        }
+
+        form {
+            display:flex;
+            flex-wrap: wrap;
+            justify-content:space-between;
+
+            span.mdc-button__label {
+                font-size:14px!important;
+                line-height:14px!important;
+            }
+
+            div.mdc-text-field {
+                background:white;
+                border-radius: 4px;
+                flex-grow: 1;
+                margin: 5px;
+                flex-basis: 100%;
+
+                label.mdc-floating-label {
+                    font-size: 14px!important;
+                    line-height: 14px!important;
+                }
+
+                &.half-width {
+                    min-width: 200px;
+                    flex-basis: 250px;
+                }
+            }
+
+            p {
+                margin: 20px auto;
+                
+                &.confirmation-msg {
+                    padding: 20px;
+                    background:#eee;
+                    width: 100%;
+                    color: $dark-blue;
+                    font-weight: bold;
+                    border-radius: 4px;
+                }
+
+                a {
+                    text-decoration:none;
+                    font-weight:bold;
+                    color:$blue;
+                }
+            }
+
+            button {
+                width: 100%;
+                margin-bottom: 10px;
+
+                &:disabled {
+                    background:$blue;
+                    // color:#fff;
+                }
+            }
+        }
+    }
+
+    .category-wrapper {
+        background:#eee;
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 30px;
+    }
 
     ul {
         list-style-type:none;
@@ -793,7 +807,11 @@ body {
         display:flex;
         flex-wrap: wrap;
         justify-content:center;
-        margin-bottom: 30px;
+        margin-bottom: 15px;
+
+        &.bad > li {
+            background:$yellow;
+        }
 
         li {
             flex-basis: 25%;
@@ -803,8 +821,8 @@ body {
             color: #fff;
             text-align:center;
             background: $blue;
-            padding: 20px 5px 10px 5px;
-            min-width: 100px;
+            padding: 10px 5px;
+            min-width: 130px;
             max-width: 165px;
             transition: 1s ease;
             @extend %boxshadow;
@@ -817,16 +835,20 @@ body {
             .front {
                 text-transform:capitalize;
 
-                h4.uv {
-                    text-transform:uppercase!important;
+                h4 {
+                    margin: 5px 0;
+                    &.uv {
+                        text-transform:uppercase!important;
+                    }
                 }
+
                 opacity: 1;
                 transition: 1s ease;
                 pointer-events:none;
             
                 img {
                     height:50px;
-                    margin-bottom: 10px;
+                    margin: 5px;
                 }
             }
 
@@ -841,12 +863,14 @@ body {
                 height: 100%;
 
                 p {
+                    font-size: 14px;
                     display:flex;
                     align-items:center;
                     justify-content:center;
-                    height:calc(100% - 10px);
+                    height:calc(100% - 20px);
                     max-width:150px;
                     margin-top: 0;
+                    font-weight:bold;
                 }
             }
 
@@ -893,6 +917,7 @@ body {
                 border-radius: 0;
                 margin: 30px auto 0;
                 padding-bottom: 30px;
+                padding:15px;
             }
             .conversation-container {
                 &.mask {
