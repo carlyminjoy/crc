@@ -3,7 +3,7 @@
 
         <div class="outer-container">
 
-            <h1 class='heading'>Cancer Risk Calculator</h1>
+        <h1 class='heading'>Cancer Risk Calculator</h1>
 
             <ul class="progress-bar">
                 <li v-for="(route, index) in routes" :key="index"
@@ -234,6 +234,7 @@ export default {
 	data () {
 		return {
             sourceIdentifier: 'cancerriskquiz-webform-c9dc3b17',
+            resultID: null,
             state: {
                 isIe: false,
                 showResults: false,
@@ -365,7 +366,7 @@ export default {
 
                 let obj = {
                     id: q.id,
-                    question: q.text,
+                    question: q.text.replace(/(<([^>]+)>)/ig,""),
                     category: q.category,
                     answer: answer ? answer.userResponse : q.userResponse,
                     score: Math.round(q.score),
@@ -389,10 +390,12 @@ export default {
                 firstName: vm.form.firstName,
                 lastName: vm.form.lastName,
                 emailAddress: vm.form.emailAddress,
+                identify: vm.steps.find(s => s.id === 'identify').score,
                 gender: vm.steps.find(s => s.id === 'gender').score,
                 postcode: vm.steps.find(s => s.id === 'postcode').score,
                 scores: vm.results,
-                recommendations: vm.getRecommendations()
+                recommendations: vm.getRecommendations(),
+                RowKey: vm.resultID
             })
 
             form.submit(vm.sourceIdentifier, true)
@@ -437,16 +440,22 @@ export default {
             switch (ageScore) {
                 case '24':
                     age = '18-24'
+                    break;
                 case '39':
                     age = '25-39'
+                    break;
                 case '49':
                     age = '40-49'
+                    break;
                 case '64':
                     age = '50-64'
+                    break;
                 case '74':
                     age = '65-74'
+                    break;
                 case '75':
                     age = '75+'
+                    break;
             }
             
             let postData = {
@@ -469,6 +478,7 @@ export default {
             let url = 'https://prod-16.australiaeast.logic.azure.com:443/workflows/472070d88d9f4f4899e2c2ad200967d0/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=caau2HrVCDbyNa256L0-a38ko8Q3r-rMJnkaPWxTOng'
 
             axios.post(url, postData)
+                .then(r => vm.resultID = r.data.RowKey)
                 .catch((e) => console.log(e))
             
         },
