@@ -464,6 +464,8 @@ export default {
                 postcode: vm.steps.find(s => s.id === 'postcode').score,
                 identify: vm.steps.find(s => s.id === 'identify').score,
                 uv: vm.results.uv,
+                smokingStatus: vm.steps.find(s => s.id === 'smokingStatus').score,
+                householdSmoke: Math.round(vm.steps.find(s => s.id === 'householdSmoke').score),
                 smoking: vm.results.smoking,
                 alcohol: vm.results.alcohol,
                 nutrition: vm.results.nutrition,
