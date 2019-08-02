@@ -255,7 +255,8 @@ export default {
             currentStep : null,
             results: '',
             scoredCategories: scoredCategories,
-            steps: conversation.steps
+            steps: conversation.steps,
+            debug: !!debug
 		}
     },
     validations: {
@@ -459,22 +460,56 @@ export default {
             }
             
             let postData = {
-                age: age,
-                gender: vm.steps.find(s => s.id === 'gender').score,
-                postcode: vm.steps.find(s => s.id === 'postcode').score,
-                identify: vm.steps.find(s => s.id === 'identify').score,
-                uv: vm.results.uv,
-                smokingStatus: vm.steps.find(s => s.id === 'smokingStatus').score,
-                householdSmoke: Math.round(vm.steps.find(s => s.id === 'householdSmoke').score),
-                smoking: vm.results.smoking,
-                alcohol: vm.results.alcohol,
-                nutrition: vm.results.nutrition,
-                weight: vm.results.weight,
-                bmi: bmi,
-                waist: waist,
-                physicalActivity: vm.results['physical activity'],
-                screening: vm.results.screening,
-                total: vm.results.total
+                demographics: {
+                    age: age,
+                    gender: vm.steps.find(s => s.id === 'gender').score,
+                    postcode: vm.steps.find(s => s.id === 'postcode').score,
+                    identify: vm.steps.find(s => s.id === 'identify').score
+                },
+                uv: {
+                    clothing: Math.round(vm.steps.find(s => s.id === 'clothing').score),
+                    hat: Math.round(vm.steps.find(s => s.id === 'hat').score),
+                    sunscreen: Math.round(vm.steps.find(s => s.id === 'sunscreen').score),
+                    shade: Math.round(vm.steps.find(s => s.id === 'shade').score),
+                    checkSkin: Math.round(vm.steps.find(s => s.id === 'checkSkin').score),
+                    professionalCheckSkin: Math.round(vm.steps.find(s => s.id === 'professionalCheckSkin').score),
+                    sunglasses: Math.round(vm.steps.find(s => s.id === 'sunglasses').score),
+                    total: vm.results.uv
+                },
+                smoking: {
+                    smokingStatus: Math.round(vm.steps.find(s => s.id === 'smokingStatus').score),
+                    householdSmoke: Math.round(vm.steps.find(s => s.id === 'householdSmoke').score),
+                    total: vm.results.smoking
+                },
+                alcohol: {
+                    standardDrinks: Math.round(vm.steps.find(s => s.id === 'standardDrinks').score),
+                    total: vm.results.alcohol
+                },
+                nutrition: {
+                    fruit: Math.round(vm.steps.find(s => s.id === 'fruit').score),
+                    vegetables: Math.round(vm.steps.find(s => s.id === 'vegetables').score),
+                    fibre: Math.round(vm.steps.find(s => s.id === 'fibre').score),
+                    redMeat: Math.round(vm.steps.find(s => s.id === 'redMeat').score),
+                    processedMeat: Math.round(vm.steps.find(s => s.id === 'processedMeat').score),
+                    total: vm.results.nutrition
+                },
+                weight: {
+                    bmi: bmi,
+                    waist: waist,
+                    total: vm.results.weight
+                },
+                physicalActivity: {
+                    exercise: Math.round(vm.steps.find(s => s.id === 'exercise').score),
+                    total: vm.results.physicalActivity
+                },
+                screening: {
+                    breastScreening: Math.round(vm.steps.find(s => s.id === 'breastScreening').score),
+                    bowelScreening: Math.round(vm.steps.find(s => s.id === 'bowelScreening').score),
+                    cervicalScreening: Math.round(vm.steps.find(s => s.id === 'cervicalScreening').score),
+                    total: vm.results.screening
+                },
+                total: vm.results.total,
+                debug: vm.debug
             }
 
             let url = 'https://prod-16.australiaeast.logic.azure.com:443/workflows/472070d88d9f4f4899e2c2ad200967d0/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=caau2HrVCDbyNa256L0-a38ko8Q3r-rMJnkaPWxTOng'
