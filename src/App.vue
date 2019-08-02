@@ -35,10 +35,10 @@
 
                     </vue-circle>
 
-                    <div class='info'>
+                    <!-- <div class='info'>
                         <i class='fa fa-info-circle'></i>
                         <div class='info-text'>This score is out of 100 and calculates how much you are reducing your cancer risk through healthy lifestyle behaviours. The higher your score, the more way you are currently reducing your cancer risk. So, aim for 100 and improve your health!</div>
-                    </div>
+                    </div> -->
 
                 </div>
 
@@ -500,12 +500,12 @@ export default {
                 },
                 physicalActivity: {
                     exercise: Math.round(vm.steps.find(s => s.id === 'exercise').score),
-                    total: vm.results.physicalActivity
+                    total: vm.results['physical activity']
                 },
                 screening: {
-                    breastScreening: Math.round(vm.steps.find(s => s.id === 'breastScreening').score),
-                    bowelScreening: Math.round(vm.steps.find(s => s.id === 'bowelScreening').score),
-                    cervicalScreening: Math.round(vm.steps.find(s => s.id === 'cervicalScreening').score),
+                    breastScreening: vm.steps.find(s => s.id === 'breastScreening').score ? Math.round(vm.steps.find(s => s.id === 'breastScreening').score) : null,
+                    bowelScreening: vm.steps.find(s => s.id === 'bowelScreening').score ? Math.round(vm.steps.find(s => s.id === 'bowelScreening').score) : null,
+                    cervicalScreening: vm.steps.find(s => s.id === 'cervicalScreening').score ? Math.round(vm.steps.find(s => s.id === 'cervicalScreening').score) : null,
                     total: vm.results.screening
                 },
                 total: vm.results.total,
@@ -517,7 +517,6 @@ export default {
             axios.post(url, postData)
                 .then(r => vm.resultID = r.data.RowKey)
                 .catch((e) => console.log(e))
-            
         },
         addStep() {
             let vm = this;
@@ -734,13 +733,13 @@ body {
 
         .circle {
             margin: 15px 0;
-            padding: 0 30px;
+            // padding: 0 30px;
             flex-basis: 150px;
             flex-grow: 1;
             max-width: 150px;
 
             span {
-                margin-left: -25%;
+                // margin-left: -25%;
             }
         }
 
