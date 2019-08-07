@@ -14,18 +14,6 @@
   "alias": {
     "vue": "./node_modules/vue/dist/vue.common.js"
   },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "esmodules": true
-          }
-        }
-      ]
-    ]
-  },
   "dependencies": {
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
