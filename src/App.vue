@@ -1,9 +1,14 @@
 <template>
 	<div id="app">
-
+        <BackgroundBlob></BackgroundBlob>
         <div class="outer-container">
-
-        <h1 class='heading'>Cancer Risk Calculator</h1>
+        <div class="heading-container">
+            <div class="cancer-council-logo">
+                <img src="https://www.cancer.org.au/images/cancer_council.png" />
+            </div>
+            <HeaderBlob></HeaderBlob>
+            <h1 class='heading'>Cancer Risk Calculator<span class="yellow-fullstop">.</span></h1>
+        </div>
 
             <ul class="progress-bar">
                 <li v-for="(route, index) in routes" :key="index"
@@ -186,6 +191,8 @@ import { default as scoredCategories } from './scoredCategories.js'
 import { default as Question } from './Question.vue'
 import { default as Weight } from './Weight.vue'
 import { default as Postcode } from './Postcode.vue'
+import { default as HeaderBlob } from './Blob/HeaderBlob.vue'
+import { default as BackgroundBlob } from './Blob/BackgroundBlob.vue'
 import { vmdButton, vmdTextField } from '@ccq/ccq-vue-components'
 
 import { setTimeout } from 'timers';
@@ -225,6 +232,8 @@ export default {
         Question,
         Weight,
         Postcode,
+        HeaderBlob,
+        BackgroundBlob,
         vmdButton,
         vmdTextField,
         VueCircle
@@ -557,6 +566,12 @@ $dark-blue: #2c3e50;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
 }
 
+
+@keyframes fade-in {
+    0% { opacity: 0 }
+    100% { opacity: 1 }
+}
+
 html {
     margin-top:unset!important;
 }
@@ -598,6 +613,7 @@ body {
     padding-inline-start:0px;
     font-family: 'Roboto';
     border-bottom: 4px solid #999;
+    position: relative;
 
 
     li {
@@ -624,9 +640,50 @@ body {
     padding-bottom: 60px;
     background:#eee;
 
-    h1.heading {
-        padding: 30px 0;
-        font-weight: 800;
+    .heading-container {
+        display: flex;
+        flex-direction: row;
+        width: 660px;
+        max-width: 100%;
+        margin: 0 auto;
+        position: relative;
+
+        // * { animation: fade-in 1s forwards; }
+
+        .cancer-council-logo {
+            background: white;
+            border-radius: 5px; 
+            box-shadow: 0px 0px 2px #00000016;
+            margin-top: 12px;
+            margin-right: 10px;
+            height: 100%;
+            padding-top: 3px;
+            padding-left: 15px; padding-right: 20px;
+            image-rendering: -moz-crisp-edges; /* Firefox */
+            image-rendering: -o-crisp-edges; /* Opera */
+            image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming) */
+            image-rendering: crisp-edges;
+            -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
+            // display: none;
+
+            img {
+                height: 60px;
+                width: auto
+            }
+        }
+
+        h1.heading {
+            padding: 23px 0;
+            font-weight: 800;
+            max-width: 200px;
+            text-align: left;
+            line-height: 1.8rem;
+
+            .yellow-fullstop {
+                font-size: 40px;
+                color: $yellow;
+            }
+        }
     }
 }
 .conversation-container {
