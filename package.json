@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx parcel ./src/index.html --out-dir dist --no-cache",
+    "start": "npx parcel ./src/index.html --out-dir dist --no-cache --log-level 1",
     "build": "npx parcel build ./src/index.html --out-dir build --no-source-maps --no-cache --public-url ./",
     "i-vsts-npm": "npm install -g vsts-npm-auth",
     "refreshToken": "vsts-npm-auth -config .npmrc"
@@ -15,14 +15,14 @@
     "vue": "./node_modules/vue/dist/vue.common.js"
   },
   "dependencies": {
-    "axios": "^0.18.1",
     "@ccq/ccq-vue-components": "^1.2.6",
+    "axios": "^0.18.1",
     "jquery": "^3.4.1",
+    "object.assign": "^4.1.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
     "vue2-circle-progress": "^1.2.3",
     "vuelidate": "^0.7.4",
-    "object.assign": "^4.1.0",
     "vuex": "^3.1.1"
   },
   "devDependencies": {
