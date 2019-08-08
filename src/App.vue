@@ -145,8 +145,7 @@
 
 <script>
 
-import { vmdButton } from '@ccq/ccq-vue-components'
-import { default as spinner } from 'vue-spinners/src/components/CubeSpinner' // BREAKS IE
+import { default as spinner } from './Spinner' // BREAKS IE
 import VueCircle from 'vue2-circle-progress'
 import axios from 'axios'
 import { default as Tips } from './tips.js'
@@ -155,7 +154,6 @@ import { default as Resources } from './resources.js'
 export default {
     name: 'app',
     components: {
-        vmdButton,
         VueCircle,
         spinner
     },
