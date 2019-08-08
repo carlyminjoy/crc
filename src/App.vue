@@ -1,9 +1,14 @@
 <template>
 	<div id="app">
-
+        <BackgroundBlob :finished="state.showResults"></BackgroundBlob>
         <div class="outer-container">
-
-        <h1 class='heading'>Cancer Risk Calculator</h1>
+        <div class="heading-container">
+            <div class="cancer-council-logo">
+                <img src="https://www.cancer.org.au/images/cancer_council.png" />
+            </div>
+            <HeaderBlob></HeaderBlob>
+            <h1 class='heading'>Cancer Risk Calculator<span class="yellow-fullstop">.</span></h1>
+        </div>
 
             <ul class="progress-bar">
                 <li v-for="(route, index) in routes" :key="index"
@@ -18,18 +23,18 @@
 
                 <div class='overview'>
                 
-                    <h1 class='total-score'>
+                    <h1 class='total-score'><strong>
                         
-                        <span v-if='parseInt(results.total) === 100'>Well done, </span>
+                        <span v-if='parseInt(results.total) === 100'>Well done. </span>
 
                         <span v-else-if='parseInt(results.total) >= 75'>
-                        You're doing well, </span>
+                        Well done, you're doing well. </span>
                         
                         <span v-else-if='parseInt(results.total) >= 50'>
-                        You're on the right track, </span>
+                        Well done, you're on the right track.</span>
 
-                        <span v-else>There is some room for improvement, </span>
-                    your total score is: </h1>
+                        <span v-else>Room for improvement. </span></strong>
+                    <br>Your total prevention score is: </h1>
 
                     <div class='score-container'>
 
@@ -54,8 +59,22 @@
 
                     </div>
 
-                    <h3><em>This score is out of 100 and calculates how much you are reducing your cancer risk through healthy lifestyle behaviours.<br><br>The higher your score, the more ways you are currently reducing your cancer risk. So, aim for 100 and improve your health!</em></h3>
+                    <h3>This score is out of 100 and calculates how much you are reducing your cancer risk through healthy lifestyle behaviours. The higher your score, the more ways you are currently reducing your cancer risk.<br><br><strong>Aim for 100 and improve your health!</strong></h3>
 
+                </div>
+
+                <div class='cta'>
+                    <h3>Receive your Cancer Risk Scorecard with detailed results and tips to reduce your cancer risk.</h3>
+
+                    <div class='cta-items'>
+                        <div>Access to helpful resources</div>
+                        <div class='blue-dot'>.</div>
+                        <div>Keep track of your progress</div>
+                        <div class='blue-dot'>.</div>
+                        <div>A breakdown of your score</div>
+                    </div>
+
+                    <vmd-button class='scorecard' text='Get Scorecard' @click="scrollToScorecard()"></vmd-button>
 
                 </div>
 
@@ -113,18 +132,18 @@
                 </div>
 
                 <div class='form-container'>
-                    <h1>Get your Cancer Risk Scorecard!</h1>
+                    <h1>Get your Cancer Risk Scorecard</h1><br>
 
-                    <h3>To receive your Cancer Risk Scorecard with your detailed results and tips to reduce your cancer risk, please enter your details below:</h3>
+                    <h3>You'll get access to your scorecard that breaks down each category and provides you with the resources to help further decrease your caner risk.</h3><br>
+                    <h3>We'll follow up in a few months where you can compare your progress over time.</h3> <br><br>
 
                     <form>
-                        <vmd-text-field class='half-width' label='First Name' v-model="$v.form.firstName.$model" :invalid='$v.form.firstName.$error'></vmd-text-field>
-                        <vmd-text-field class='half-width' label='Last Name' v-model="$v.form.lastName.$model" :invalid='$v.form.lastName.$error'></vmd-text-field>
-                        <vmd-text-field label='Email Address' type='email' v-model="$v.form.emailAddress.$model" :invalid='$v.form.emailAddress.$error'></vmd-text-field>
+                        <vmd-text-field class='narrow' label='First Name' v-model="$v.form.firstName.$model" :invalid='$v.form.firstName.$error'></vmd-text-field>
+                        <vmd-text-field class='wide' label='Email Address' type='email' v-model="$v.form.emailAddress.$model" :invalid='$v.form.emailAddress.$error'></vmd-text-field>
 
                         <p>By submitting this form, you are agreeing to our <a href='https://cancerqld.org.au/about-us/our-privacy-policy/read-our-privacy-position-statement/' target='_blank'>Privacy Collection Statement</a>.</p>
 
-                        <vmd-button v-if='!state.submitted' :disabled="state.loading || $v.$anyError || formDisabled" :loading="state.loading" text='Get My Cancer Risk Scorecard' @click="sendResults()"></vmd-button>
+                        <vmd-button class='scorecard' v-if='!state.submitted' :disabled="state.loading || $v.$anyError || formDisabled" :loading="state.loading" text='Get Scorecard' @click="sendResults()"></vmd-button>
                         <p v-else class="confirmation-msg">Thank you! Your details have been submitted. <br>You will receive your personalised Cancer Risk Scorecard shortly.</p>
                     </form>
 
@@ -186,6 +205,8 @@ import { default as scoredCategories } from './scoredCategories.js'
 import { default as Question } from './Question.vue'
 import { default as Weight } from './Weight.vue'
 import { default as Postcode } from './Postcode.vue'
+import { default as HeaderBlob } from './Blob/HeaderBlob.vue'
+import { default as BackgroundBlob } from './Blob/BackgroundBlob.vue'
 import { vmdButton, vmdTextField } from '@ccq/ccq-vue-components'
 
 import { setTimeout } from 'timers';
@@ -225,6 +246,8 @@ export default {
         Question,
         Weight,
         Postcode,
+        HeaderBlob,
+        BackgroundBlob,
         vmdButton,
         vmdTextField,
         VueCircle
@@ -235,7 +258,7 @@ export default {
             resultID: null,
             state: {
                 isIe: false,
-                showResults: false,
+                showResults: true,
                 loading: false,
                 submitted: false,
                 errors: false,
@@ -557,6 +580,12 @@ $dark-blue: #2c3e50;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
 }
 
+
+@keyframes fade-in {
+    0% { opacity: 0 }
+    100% { opacity: 1 }
+}
+
 html {
     margin-top:unset!important;
 }
@@ -598,6 +627,7 @@ body {
     padding-inline-start:0px;
     font-family: 'Roboto';
     border-bottom: 4px solid #999;
+    position: relative;
 
 
     li {
@@ -624,9 +654,50 @@ body {
     padding-bottom: 60px;
     background:#eee;
 
-    h1.heading {
-        padding: 30px 0;
-        font-weight: 800;
+    .heading-container {
+        display: flex;
+        flex-direction: row;
+        width: 660px;
+        max-width: 100%;
+        margin: 0 auto;
+        position: relative;
+
+        // * { animation: fade-in 1s forwards; }
+
+        .cancer-council-logo {
+            background: white;
+            border-radius: 5px; 
+            box-shadow: 0px 0px 2px #00000016;
+            margin-top: 12px;
+            margin-right: 10px;
+            height: 100%;
+            padding-top: 3px;
+            padding-left: 15px; padding-right: 20px;
+            image-rendering: -moz-crisp-edges; /* Firefox */
+            image-rendering: -o-crisp-edges; /* Opera */
+            image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming) */
+            image-rendering: crisp-edges;
+            -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
+            // display: none;
+
+            img {
+                height: 60px;
+                width: auto
+            }
+        }
+
+        h1.heading {
+            padding: 23px 0;
+            font-weight: 800;
+            max-width: 200px;
+            text-align: left;
+            line-height: 1.8rem;
+
+            .yellow-fullstop {
+                font-size: 40px;
+                color: $yellow;
+            }
+        }
     }
 }
 .conversation-container {
@@ -707,6 +778,7 @@ body {
     max-width: 600px;
     margin: 50px auto;
     height: auto;
+    position: relative;
     @extend %boxshadow;
 
     .overview {
@@ -719,10 +791,14 @@ body {
 
     h1.total-score {
         margin-top: 15px!important;
+        font-weight: 400;
     }
 
     h3 {
         font-weight: 400;
+
+        max-width: 450px;
+        margin: 0 auto;
     }
 
     .score-container {
@@ -735,7 +811,7 @@ body {
 
         .line {
             height: 1px;
-            border-top: 2px solid $yellow;
+            border-top: 2px solid $blue;
             width: 150px;
         }
 
@@ -745,15 +821,51 @@ body {
             flex-basis: 150px;
             flex-grow: 1;
             max-width: 150px;
-
-            span {
-                // margin-left: -25%;
-            }
         }
     }
 
     div.score-msg {
         margin-bottom: 40px;
+    }
+
+    .cta {
+        padding: 45px 30px;
+        background: $dark-blue;
+        color:#fff;
+
+
+        .cta-items {
+            padding: 0;
+            display:flex;
+            align-items:center;
+
+            div {
+                padding: 0 10px;
+                font-weight: 600;
+                
+                &.blue-dot {
+                    color:$blue;
+                    font-size: 60px;
+                    margin-bottom: 30px;
+                }
+            }
+
+
+        }
+    }
+
+    button.scorecard {
+        padding-left: 30px;
+        padding-right: 30px;
+        margin-bottom: 10px;
+        background:$yellow!important;
+        text-transform:unset;
+        border-radius: 50px;
+        margin: 0 auto;
+        letter-spacing: 0;
+        font-weight:600;
+        letter-spacing: 0;
+        color:$dark-blue!important;
     }
 
     .form-container {
@@ -765,7 +877,6 @@ body {
 
         h1 {
             margin-top: 15px!important;
-            text-transform:uppercase;
         }
 
         form {
@@ -790,14 +901,20 @@ body {
                     line-height: 14px!important;
                 }
 
-                &.half-width {
+                &.narrow {
                     min-width: 200px;
-                    flex-basis: 250px;
+                    flex-basis: 200px;
+                }
+
+                &.wide {
+                    min-width: 300px;
+                    flex-basis: 300px;
                 }
             }
 
             p {
                 margin: 20px auto;
+                font-size: 14px;
                 
                 &.confirmation-msg {
                     padding: 20px;
@@ -812,16 +929,6 @@ body {
                     text-decoration:none;
                     font-weight:bold;
                     color:$blue;
-                }
-            }
-
-            button {
-                width: 100%;
-                margin-bottom: 10px;
-
-                &:disabled {
-                    background:$blue;
-                    // color:#fff;
                 }
             }
         }
