@@ -3,9 +3,11 @@
         <BackgroundBlob :finished="state.showResults"></BackgroundBlob>
         <div class="outer-container">
         <div class="heading-container">
-            <div class="cancer-council-logo">
-                <img src="https://www.cancer.org.au/images/cancer_council.png" />
-            </div>
+            <a href='https://cancerqld.org.au' target='_blank'>
+                <div class="cancer-council-logo">
+                    <img src="https://www.cancer.org.au/images/cancer_council.png" />
+                </div>
+            </a>
             <HeaderBlob></HeaderBlob>
             <h1 class='heading'>Cancer Risk Calculator<span class="yellow-fullstop">.</span></h1>
         </div>
@@ -74,7 +76,7 @@
                         <div>A breakdown of your score</div>
                     </div>
 
-                    <vmd-button class='scorecard' text='Get Scorecard' @click="scrollToScorecard()"></vmd-button>
+                    <vmd-button class='scorecard' text='Get your free Scorecard' @click="scrollToScorecard()"></vmd-button>
 
                 </div>
 
@@ -90,7 +92,7 @@
                                 v-if='categoryResults.green.includes(category.name)'>
 
                                 <div class='front'>
-                                    <img class='category-icon' :src="category.icon" />
+                                    <img class='category-icon' :src="category.goodIcon" />
                                     <h4 :class="{'uv' : category.name === 'uv'}">{{ category.name }}</h4>
                                 </div>
 
@@ -117,7 +119,7 @@
                                 v-if='categoryResults.red.includes(category.name)'>
 
                                 <div class='front'>
-                                    <img class='category-icon' :src="category.icon" />
+                                    <img class='category-icon' :src="category.badIcon" />
                                     <h4 :class="{'uv' : category.name === 'uv'}">{{ category.name }}</h4>
                                 </div>
                             
@@ -131,7 +133,7 @@
                     </ul>
                 </div>
 
-                <div class='form-container'>
+                <div class='form-container' ref="scorecardForm">
                     <h1>Get your Cancer Risk Scorecard</h1><br>
 
                     <h3>You'll get access to your scorecard that breaks down each category and provides you with the resources to help further decrease your caner risk.</h3><br>
@@ -258,7 +260,7 @@ export default {
             resultID: null,
             state: {
                 isIe: false,
-                showResults: true,
+                showResults: false,
                 loading: false,
                 submitted: false,
                 errors: false,
@@ -377,6 +379,10 @@ export default {
                 var element = this.$refs.conversationEl;
                 element.scrollTop = element.scrollHeight;
             }
+        },
+        scrollToScorecard() {
+            var element = this.$refs.scorecardForm;
+            element.scrollIntoView({behavior: "smooth"});
         },
         getRecommendations() {
             let vm = this;
@@ -664,6 +670,10 @@ body {
 
         // * { animation: fade-in 1s forwards; }
 
+        a {
+            display: contents;
+        }
+
         .cancer-council-logo {
             background: white;
             border-radius: 5px; 
@@ -829,7 +839,7 @@ body {
     }
 
     .cta {
-        padding: 45px 30px;
+        padding: 45px 30px 30px 30px;
         background: $dark-blue;
         color:#fff;
 
@@ -936,7 +946,7 @@ body {
 
     .category-wrapper {
         background:#eee;
-        padding: 30px;
+        padding: 15px;
         /* border-radius: 4px; */
         /* margin-bottom: 30px; */
         margin: 10px;
@@ -955,6 +965,7 @@ body {
 
         &.bad > li {
             background:$yellow;
+            color: $dark-blue;
         }
 
         li {
@@ -977,18 +988,19 @@ body {
             }
 
             .front {
+                opacity: 1;
+                transition: 1s ease;
+                pointer-events:none;
                 text-transform:capitalize;
+                padding: 15px;
 
                 h4 {
                     margin: 5px 0;
+
                     &.uv {
                         text-transform:uppercase!important;
                     }
                 }
-
-                opacity: 1;
-                transition: 1s ease;
-                pointer-events:none;
             
                 img {
                     height:50px;
