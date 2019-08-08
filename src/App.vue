@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-        <BackgroundBlob></BackgroundBlob>
+        <BackgroundBlob :finished="state.showResults"></BackgroundBlob>
         <div class="outer-container">
         <div class="heading-container">
             <div class="cancer-council-logo">
@@ -764,6 +764,7 @@ body {
     max-width: 600px;
     margin: 50px auto;
     height: auto;
+    position: relative;
     @extend %boxshadow;
 
     .overview {
