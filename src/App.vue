@@ -15,50 +15,48 @@
             </ul>
 
             <div class="results-container" :class="{ ie: state.isIe }" v-if="state.showResults">
+
+                <div class='overview'>
                 
-                <h1 class='total-score'>Your total score is: </h1>
+                    <h1 class='total-score'>
+                        
+                        <span v-if='parseInt(results.total) === 100'>Well done, </span>
 
-                <div class='score-container'>
+                        <span v-else-if='parseInt(results.total) >= 75'>
+                        You're doing well, </span>
+                        
+                        <span v-else-if='parseInt(results.total) >= 50'>
+                        You're on the right track, </span>
 
-                    <vue-circle
-                        :progress="results.total"
-                        :size="150"
-                        :reverse="false"
-                        line-cap="butt"
-                        :fill='{ gradient: ["#43A047", "#FCD208"], gradientDirection:[30,140,140,60] }'
-                        empty-fill="#eee"
-                        :animation-start-value="0.0"
-                        :start-angle="-(Math.PI / 2)"
-                        insert-mode="append"
-                        :thickness="10"
-                        :show-percent="true">
+                        <span v-else>There is some room for improvement, </span>
+                    your total score is: </h1>
 
-                    </vue-circle>
+                    <div class='score-container'>
 
-                    <!-- <div class='info'>
-                        <i class='fa fa-info-circle'></i>
-                        <div class='info-text'>This score is out of 100 and calculates how much you are reducing your cancer risk through healthy lifestyle behaviours. The higher your score, the more way you are currently reducing your cancer risk. So, aim for 100 and improve your health!</div>
-                    </div> -->
+                        <div class='line'></div>
 
-                </div>
+                        <vue-circle
+                            :progress="results.total"
+                            :size="150"
+                            :reverse="false"
+                            line-cap="butt"
+                            :fill='{ gradient: ["#43A047", "#FCD208"], gradientDirection:[30,140,140,60] }'
+                            empty-fill="#eee"
+                            :animation-start-value="0.0"
+                            :start-angle="-(Math.PI / 2)"
+                            insert-mode="append"
+                            :thickness="10"
+                            :show-percent="true">
 
-                <div class='score-msg' v-if='parseInt(results.total) === 100'>
-                    <h2>Well done!</h2>
-                </div>
+                        </vue-circle>
 
-                <div class='score-msg' v-else-if='parseInt(results.total) >= 75'>
-                    <h2>You're doing well</h2>
-                    <h3>Well done, a few small changes can further reduce your cancer risk.</h3>
-                </div>
+                        <div class='line'></div>
 
-                <div class='score-msg' v-else-if='parseInt(results.total) >= 50'>
-                    <h2>You're on the right track</h2>
-                    <h3>Well done, there are plenty of ways you can reduce your cancer risk.</h3>
-                </div>
+                    </div>
 
-                <div class='score-msg' v-else>
-                    <h2>Room for improvement</h2>
-                    <h3>Good news, there are plenty of ways you can reduce your cancer risk.</h3>
+                    <h3><em>This score is out of 100 and calculates how much you are reducing your cancer risk through healthy lifestyle behaviours.<br><br>The higher your score, the more ways you are currently reducing your cancer risk. So, aim for 100 and improve your health!</em></h3>
+
+
                 </div>
 
                 <div class='category-wrapper' v-if='categoryResults.green.length > 0'>
@@ -704,12 +702,16 @@ body {
 
 .results-container {
     background:#fff;
-    padding: 15px 30px;
-    border-radius: 8px 8px 8px 0;
+    /* padding: 15px 30px; */
+    border-radius: 8px;
     max-width: 600px;
     margin: 50px auto;
     height: auto;
     @extend %boxshadow;
+
+    .overview {
+        padding: 30px;
+    }
 
     &.ie ul {
         justify-content:flex-start!important;
@@ -725,11 +727,17 @@ body {
 
     .score-container {
         display:flex;
-        max-width: 600px;
-        justify-content:center;
+        max-width: 500px;
+        justify-content:space-between;
         align-items:center;
         margin: 30px auto;
         flex-wrap: wrap;
+
+        .line {
+            height: 1px;
+            border-top: 2px solid $yellow;
+            width: 150px;
+        }
 
         .circle {
             margin: 15px 0;
@@ -742,25 +750,6 @@ body {
                 // margin-left: -25%;
             }
         }
-
-        .info {
-            background:#eee;
-            border-left: 3px solid $dark-blue;
-            display:flex;
-            padding: 10px;
-            flex-basis: 300px;
-            flex-grow: 2;
-            max-width: 350px;
-
-            .fa-info-circle {
-                margin: 0 10px;
-            }
-
-            .info-text {
-                font-size: 14px;
-                text-align:left;
-            }
-        }
     }
 
     div.score-msg {
@@ -768,11 +757,11 @@ body {
     }
 
     .form-container {
-        padding: 15px 30px;
+        padding: 30px;
         background: $dark-blue;
         color:#fff;
-        border-radius: 4px;
-        margin-bottom: 15px;
+        border-radius: 0 0 8px 8px;
+        /* margin-bottom: 15px; */
 
         h1 {
             margin-top: 15px!important;
@@ -840,9 +829,11 @@ body {
 
     .category-wrapper {
         background:#eee;
-        padding: 15px;
-        border-radius: 4px;
-        margin-bottom: 30px;
+        padding: 30px;
+        /* border-radius: 4px; */
+        /* margin-bottom: 30px; */
+        margin: 10px;
+        background:#eee;
     }
 
     ul {
@@ -962,7 +953,7 @@ body {
                 width: unset;
                 border-radius: 0;
                 margin: 30px auto 0;
-                padding-bottom: 30px;
+                /* padding-bottom: 30px; */
                 padding:15px;
             }
             .conversation-container {
