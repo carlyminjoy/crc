@@ -116,7 +116,7 @@ export default {
 
   svg.top-blob {
     top: -570px;
-    left: -400px;
+    left: -700px;
     right: 0;
     margin: 0 auto;
     animation: 2s 1s fade-in-top forwards;
@@ -127,7 +127,7 @@ export default {
   div.bottom-blobs-container {
     position: fixed;
     bottom: 0;
-    height: 50vh;
+    height: 60vh;
     width: 100%;
     overflow: hidden;
 
@@ -146,24 +146,25 @@ export default {
     }
 
     svg.blob-middle {
-      margin-top: 10vh;
-      animation-delay: 1s;
+      margin-top: 15vh;
+      animation-delay: .3s;
       path {
         opacity: 0.35;
       }
     }
 
     svg.blob-darkest {
-      margin-top: 22vh;
+      margin-top: 25vh;
       margin-left: -100px;
-      animation-delay: 2s;
+      animation-delay: 1s;
     }
   }
 }
 
 @media screen and (max-width: 800px) {
   svg.top-blob {
-    top: -700px!important;
+    // top: -700px!important;
+    left: -400px!important;
   } 
 }
 </style>

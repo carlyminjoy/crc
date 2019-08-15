@@ -307,14 +307,14 @@ body {
 
 .outer-container {
     background:#eee;
-    padding: 40px 0;
+    padding: 10px 0;
 
     
 .heading-container {
         display: flex;
         flex-direction: row;
-        width: 660px;
-        max-width: 100%;
+        width: 100%;
+        max-width: 1020px;
         margin: 0 auto;
         position: relative;
 
@@ -374,6 +374,7 @@ body {
     border-radius: 8px;
     max-width: 960px;
     margin: 30px auto;
+    margin-top: 0px;
     height: auto;
     position: relative;
     @extend %boxshadow;
@@ -830,7 +831,7 @@ body {
 @media screen and (max-width: 700px) {
     .outer-container {
         .heading-container {
-            max-width: 90%;
+            max-width: 95%;
             margin:0 auto;
             .cancer-council-logo {
                 padding-left: 5px;
@@ -850,6 +851,10 @@ body {
             }
         }
     }
+}
+
+@media screen and (max-width: 1100px) {
+    .outer-container .heading-container .cancer-council-logo { margin-left: 3% }
 }
 
 .fade-enter-active, .fade-leave-active,
