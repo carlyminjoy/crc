@@ -13,40 +13,59 @@
             </h3>
 
             <div class="results-container" v-else-if='latestScorecard'>
-                <h1>{{latestScorecard.firstName }}, your total score is: </h1>
+                <div class='overview'>
+                
+                    <h1 class='total-score'><strong>
+                        Hi {{ latestScorecard.firstName }}, 
+                        
+                        <span v-if='parseInt(latestScorecard.scores.total) === 100'>well done! </span>
 
-                <vue-circle
-                    :progress="latestScorecard.scores.total"
-                    :size="150"
-                    :reverse="false"
-                    line-cap="butt"
-                    :fill='{ gradient: ["#0099DA", "#FCD208"], gradientDirection:[30,140,140,60] }'
-                    empty-fill="#eee"
-                    :animation-start-value="0.0"
-                    :start-angle="-(Math.PI / 2)"
-                    insert-mode="append"
-                    :thickness="10"
-                    :show-percent="true">
+                        <span v-else-if='parseInt(latestScorecard.scores.total) >= 75'>
+                        you're doing well. </span>
+                        
+                        <span v-else-if='parseInt(latestScorecard.scores.total) >= 50'>
+                        you're on the right track.</span>
 
-                </vue-circle>
+                        <span v-else>there's room for improvement. </span></strong>
+                    <br>Your total prevention score is: </h1>
 
-                <div>
-                    <template v-if='latestScorecard.scores.total === 100'>
-                        <h2>Well done!</h2>
-                    </template> 
-                    <template v-else-if='latestScorecard.scores.total >= 75'>
-                        <h2>You're doing well</h2>
-                        <h3>Well done, a few small changes can further reduce your cancer risk.</h3>
-                    </template> 
-                    <template v-else-if='latestScorecard.scores.total >= 50'>
-                        <h2>You're on the right track</h2>
-                        <h3>Well done, there are plenty of ways you can reduce your cancer risk.</h3>
-                    </template> 
-                    <template v-else>
-                        <h2>Room for improvement</h2>
-                        <h3>Good news - there are plenty of ways you can reduce your cancer risk.</h3>
-                    </template> 
-                    <br>
+                    <div class='score-container'>
+
+                        <div class='line'></div>
+
+                        <vue-circle
+                            :progress="latestScorecard.scores.total"
+                            :size="150"
+                            :reverse="false"
+                            line-cap="butt"
+                            :fill='{ gradient: ["#43A047", "#FCD208"], gradientDirection:[30,140,140,60] }'
+                            empty-fill="#eee"
+                            :animation-start-value="0.0"
+                            :start-angle="-(Math.PI / 2)"
+                            insert-mode="append"
+                            :thickness="10"
+                            :show-percent="true">
+
+                        </vue-circle>
+
+                        <div class='line'></div>
+
+                    </div>
+
+                    <p class='score-date'>Based on your answers from {{ date }}</p>
+
+                    <h3>This score is out of 100 and calculates how much you are reducing your cancer risk through healthy lifestyle behaviours. The higher your score, the more ways you are currently reducing your cancer risk.<br><br><strong>Aim for 100 and improve your health!</strong></h3>
+
+                </div>
+
+                <div class='guide-download'>
+                    <div class='img-container'>
+                        <img src='https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/guide-resource-cropped.png' />
+                    </div>
+                    <div class='content'>
+                        <p>Our cut your cancer risk guide contains a broad overview on how you can reduce your cancer risk.</p>
+                        <a href='https://cancerqld.blob.core.windows.net/resources/quest/Cut%20your%20cancer%20risk_DL_v09%20(002).pdf' target='_blank' download>Download</a>
+                    </div>
                 </div>
 
                 <span v-for="(category, index) in scorecards" :key="index" >
@@ -150,6 +169,7 @@ import VueCircle from 'vue2-circle-progress'
 import axios from 'axios'
 import { default as Tips } from './tips.js'
 import { default as Resources } from './resources.js'
+const moment = require('moment');
 
 export default {
     name: 'app',
@@ -177,6 +197,11 @@ export default {
 		}
     },
     computed: {
+        date()  {
+            return this.latestScorecard
+                ? moment(this.latestScorecard._ts).format('MMMM Do YYYY')
+                : null
+        },
         scorecards() {
             let vm = this;
 
@@ -218,6 +243,20 @@ export default {
             let vm = this;
             return vm.resources[category.name].filter(r => vm.showResource(r, category))
         },
+        showResults() {
+            let vm = this;
+
+            let checkExists = setInterval(function() {
+                if (vm.latestScorecard) {
+                    let percentText = document.querySelector('span.percent-text');
+                    if (percentText && percentText.innerHTML == vm.latestScorecard.scores.total + '%') {
+                        percentText.innerHTML = vm.latestScorecard.scores.total;
+                        percentText.classList.add('show');
+                        clearInterval(checkExists);
+                    }
+                }
+            }, 50);
+        },
         showResource(resource, category) {
             let vm = this;
 
@@ -249,6 +288,7 @@ export default {
 
         let user = vm.$route.query.user;
         vm.getScoreCard(user);
+        vm.showResults()
     }
 }
 </script>
@@ -314,6 +354,119 @@ body {
     margin: 30px auto;
     height: auto;
     @extend %boxshadow;
+
+    .guide-download {
+        display:flex;
+        background: #E2EAEE;
+        color:$dark-blue;
+        margin: 30px auto 60px;
+        max-width: 600px;
+        position:relative;
+
+        .img-container {
+            flex-basis: 40%;
+            img {
+                position:absolute;
+                left: -40px;
+                bottom: 0;
+                max-height: 200px;
+            }
+        }
+
+        .content {
+            flex-basis: 60%;
+            padding:30px;
+            text-align:left;
+
+            p {
+                margin: 0 0 20px 0;
+                padding: 0;
+            }
+        
+            a {
+                font-size: 14px;
+                text-decoration:none;
+                background: $yellow;
+                padding: 10px 30px;
+                border:none;
+                border-radius: 30px;
+                color:$dark-blue;
+                font-weight: 600;
+                transition: 0.3s ease-in-out;
+                cursor:pointer;
+                @extend %boxshadow;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+
+    }
+
+    .overview {
+        padding: 30px;
+    }
+
+    &.ie ul {
+        justify-content:flex-start!important;
+    }
+
+    h1.total-score {
+        margin-top: 15px!important;
+        font-weight: 400;
+    }
+
+    h3 {
+        font-weight: 400;
+
+        max-width: 450px;
+        margin: 0 auto;
+    }
+
+    .score-date {
+        font-size: 12px;
+        margin-top: 15px;
+        padding-top: 0;
+    }
+
+    .score-container {
+        display:flex;
+        max-width: 500px;
+        justify-content:space-between;
+        align-items:center;
+        margin: 30px auto 0;
+        flex-wrap: wrap;
+
+
+        .line {
+            height: 1px;
+            border-top: 2px solid $blue;
+            width: 150px;
+        }
+
+        .circle {
+            margin: 15px 0 0 0;
+            // padding: 0 30px;
+            flex-basis: 150px;
+            flex-grow: 1;
+            max-width: 150px;
+
+            span.percent-text {
+                opacity: 0;
+                transition: 0.2s;
+
+                &.show {
+                    font-size: 48px!important;
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    div.score-msg {
+        margin-bottom: 40px;
+    }
 
     .yellow {
         font-weight:bold;
@@ -398,7 +551,7 @@ body {
                     width: 60px;
                     display:flex;
                     pointer-events:none;
-                    align-items:center;
+                    // align-items:center;
                     justify-content:flex-end;
 
                     .blue-text {
@@ -658,6 +811,37 @@ body {
     #app .outer-container .results-container {
         padding: 15px;
 
+        .score-container {
+            .line {
+                display:none;
+            }
+        }
+
+        .guide-download {
+            flex-wrap:wrap;
+            margin: 200px auto 30px;
+            max-width: 300px;
+
+            .content, .img-container {
+                flex-basis: 100%;
+            }
+
+            .content {
+                text-align:center;
+
+                a {
+                    margin: 0 auto;
+                }
+            }
+
+            .img-container img {
+                left: 0;
+                bottom: unset;
+                top: -200px;
+                height: 200px;
+            }
+        }
+
         div > h2 {
             margin-top: 0;
         }
@@ -714,6 +898,14 @@ body {
                 border-radius:0;
                 box-shadow: none;
                 border:none;
+
+                .score-container {
+                    justify-content:center;
+                    .line {
+                        width: 80px;
+                        margin: 0 30px;
+                    }
+                }
 
                 h1 {
                     font-size: 32px;
