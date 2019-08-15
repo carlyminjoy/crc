@@ -939,9 +939,6 @@ body {
                             padding-inline-start:0;
 
                             li {
-                                i {
-                                    display:none;
-                                }
                                 min-width:unset;
                             }
                         } 
