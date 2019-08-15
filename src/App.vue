@@ -136,18 +136,25 @@
                 <div class='form-container' ref="scorecardForm">
                     <h1>Get your Cancer Risk Scorecard</h1><br>
 
-                    <h3>You'll get access to your scorecard that breaks down each category and provides you with the resources to help further decrease your caner risk.</h3><br>
+                    <h3>You'll get access to your scorecard that breaks down each category and provides you with the resources to help further decrease your cancer risk.</h3><br>
                     <h3>We'll follow up in a few months where you can compare your progress over time.</h3> <br><br>
 
-                    <form>
+                    <form v-if='!state.submitted'>
                         <vmd-text-field class='narrow' label='First Name' v-model="$v.form.firstName.$model" :invalid='$v.form.firstName.$error'></vmd-text-field>
                         <vmd-text-field class='wide' label='Email Address' type='email' v-model="$v.form.emailAddress.$model" :invalid='$v.form.emailAddress.$error'></vmd-text-field>
 
                         <p>By submitting this form, you are agreeing to our <a href='https://cancerqld.org.au/about-us/our-privacy-policy/read-our-privacy-position-statement/' target='_blank'>Privacy Collection Statement</a>.</p>
 
-                        <vmd-button class='scorecard' v-if='!state.submitted' :disabled="state.loading || $v.$anyError || formDisabled" :loading="state.loading" text='Get Scorecard' @click="sendResults()"></vmd-button>
-                        <p v-else class="confirmation-msg">Thank you! Your details have been submitted. <br>You will receive your personalised Cancer Risk Scorecard shortly.</p>
+                        <div class='submit-container'>
+                            <vmd-button class='scorecard' :disabled="state.loading || $v.$anyError || formDisabled" :loading="state.loading" text='Get Scorecard' @click="sendResults()"></vmd-button>
+                        </div>
                     </form>
+
+                    <div v-else class='confirmation-msg'>
+                        <i class='fa fa-check-circle'></i>
+                        <h3>Thank you!</h3>
+                        <p>Your details have been submitted. <br>You will receive your personalised Cancer Risk Scorecard shortly.</p>
+                    </div>
 
                 </div>
 
@@ -268,7 +275,6 @@ export default {
             },
             form: {
                 firstName: '',
-                lastName: '',
                 emailAddress: ''
             },
             categoryResults: {
@@ -285,11 +291,6 @@ export default {
     validations: {
         form: {
             firstName: {
-                required,
-                minLength: minLength(3),
-                maxLength: maxLength(50)
-            },
-            lastName: {
                 required,
                 minLength: minLength(3),
                 maxLength: maxLength(50)
@@ -311,7 +312,7 @@ export default {
             if (nextIsFinalStep) {
                 vm.state.activeCategory = 'results'
                 vm.calculateResults()
-                setTimeout(() => (vm.state.showResults = true), timers.med)
+                vm.showResults();
                 
             } else {
                 if (nextStep.question) {
@@ -333,7 +334,7 @@ export default {
         formDisabled() {
             let vm = this;
 
-            return vm.form.firstName.length <= 1 || vm.form.lastName.length <= 1 || vm.form.emailAddress.length <= 6
+            return vm.form.firstName.length <= 1 || vm.form.emailAddress.length <= 6
         },
         displayScreening() {
             let vm = this;
@@ -369,7 +370,6 @@ export default {
             let vm = this;
 
             return vm.form.firstName === '' 
-                || vm.form.lastName === '' 
                 || vm.form.emailAddress === ''
         }
     },
@@ -379,6 +379,21 @@ export default {
                 var element = this.$refs.conversationEl;
                 element.scrollTop = element.scrollHeight;
             }
+        },
+        showResults() {
+            let vm = this;
+
+            setTimeout(() => (vm.state.showResults = true), timers.med)
+
+            let checkExists = setInterval(function() {
+                let percentText = document.querySelector('span.percent-text');
+                if (percentText.innerHTML == vm.results.total + '%') {
+                    console.log(percentText)
+                    percentText.innerHTML = vm.results.total;
+                    percentText.classList.add('show');
+                    clearInterval(checkExists);
+                }
+            }, 50);
         },
         scrollToScorecard() {
             var element = this.$refs.scorecardForm;
@@ -416,7 +431,6 @@ export default {
 
             let form = new Form({
                 firstName: vm.form.firstName,
-                lastName: vm.form.lastName,
                 emailAddress: vm.form.emailAddress,
                 identify: vm.steps.find(s => s.id === 'identify').score,
                 gender: vm.steps.find(s => s.id === 'gender').score,
@@ -831,6 +845,16 @@ body {
             flex-basis: 150px;
             flex-grow: 1;
             max-width: 150px;
+
+            span.percent-text {
+                opacity: 0;
+                transition: 0.2s;
+
+                &.show {
+                    font-size: 48px!important;
+                    opacity: 1;
+                }
+            }
         }
     }
 
@@ -864,19 +888,24 @@ body {
         }
     }
 
-    button.scorecard {
-        padding-left: 30px;
-        padding-right: 30px;
-        margin-bottom: 10px;
-        background:$yellow!important;
-        text-transform:unset;
-        border-radius: 50px;
-        margin: 0 auto;
-        letter-spacing: 0;
-        font-weight:600;
-        letter-spacing: 0;
-        color:$dark-blue!important;
+    .submit-container {
+        width: 100%;
+
+        button.scorecard {
+            padding-left: 30px;
+            padding-right: 30px;
+            margin-bottom: 10px;
+            background:$yellow!important;
+            text-transform:unset;
+            border-radius: 50px;
+            margin: 0 auto;
+            letter-spacing: 0;
+            font-weight:600;
+            letter-spacing: 0;
+            color:$dark-blue!important;
+        }
     }
+
 
     .form-container {
         padding: 30px;
@@ -926,21 +955,29 @@ body {
                 margin: 20px auto;
                 font-size: 14px;
                 
-                &.confirmation-msg {
-                    padding: 20px;
-                    background:#eee;
-                    width: 100%;
-                    color: $dark-blue;
-                    font-weight: bold;
-                    border-radius: 4px;
-                }
-
                 a {
                     text-decoration:none;
                     font-weight:bold;
                     color:$blue;
                 }
             }
+        }
+    }
+
+    .confirmation-msg {
+        .fa-check-circle {
+            color: green;
+            font-size:32px;
+            margin-bottom: 10px;
+        }
+        margin: 0 0 20px 0;
+        padding: 20px 20px 10px 20px;
+        background:#fff;
+        color: $dark-blue;
+        border-radius: 4px;
+
+        p {
+            margin: 10px;
         }
     }
 

@@ -25,7 +25,7 @@
         height="1195.158"
         viewBox="0 0 2275.444 1195.158"
         class="blob-lightest"
-        v-bind:style="{top: `${this.scrollOffset.lightest}px`}"
+        :style="{top: `${this.scrollOffset.lightest}px`}"
       >
         <path
           d="M-12.7,902.611C399.487,1004.5,541.7,887.682,901.05,862.285s722.5,67.3,942.176,63.488,357.3,47.945,357.3,47.945V2053.031H-74.923V908.961Z"
@@ -40,7 +40,7 @@
         viewBox="0 0 2275.444 1157.326"
         class="blob-middle"
         v-if="finished"
-        v-bind:style="{top: `${this.scrollOffset.middle}px`}"        
+        :style="{top: `${this.scrollOffset.middle}px`}"        
       >
         <path
           d="M16.014,895.705c373.315,58.41,521.879,229.832,881.227,204.436s672.982-162.533,947.254-35.555,356.026-90.867,356.026-90.867V2053.031H-74.923V895.705Z"
