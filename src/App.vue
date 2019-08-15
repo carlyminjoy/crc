@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-        <BackgroundBlob :finished="state.showResults"></BackgroundBlob>
+        <background-blob :finished="state.showResults"></background-blob>
         <div class="outer-container">
         <div class="heading-container">
             <a href='https://cancerqld.org.au' target='_blank'>
@@ -8,7 +8,7 @@
                     <img src="https://www.cancer.org.au/images/cancer_council.png" />
                 </div>
             </a>
-            <HeaderBlob></HeaderBlob>
+            <header-blob></header-blob>
             <h1 class='heading'>Cancer Risk Calculator<span class="yellow-fullstop">.</span></h1>
         </div>
 
@@ -209,28 +209,20 @@
 
 <script>
 
-import { default as conversation } from './config.js'
-import { default as scoredCategories } from './scoredCategories.js'
-import { default as Question } from './Question.vue'
-import { default as Weight } from './Weight.vue'
-import { default as Postcode } from './Postcode.vue'
-import { default as HeaderBlob } from './Blob/HeaderBlob.vue'
-import { default as BackgroundBlob } from './Blob/BackgroundBlob.vue'
+import { default as conversation } from './config/config.js'
+import { default as scoredCategories } from './config/scoredCategories.js'
+import { Question, Weight, Postcode, HeaderBlob, BackgroundBlob } from  './components/index.js'
 import { vmdButton, vmdTextField } from '@ccq/ccq-vue-components'
+import Form from './utils/Form.js'
 
 import { setTimeout } from 'timers';
 import { validationMixin } from 'vuelidate';
-import { 
-    required, 
-    email,
-    minLength,
-    maxLength
-} from 'vuelidate/lib/validators'; 
+import { required, email, minLength, maxLength } from 'vuelidate/lib/validators'; 
+
 import VueCircle from 'vue2-circle-progress'
 import axios from 'axios'
 import JQuery from 'jquery'
 let $ = JQuery
-import Form from './utils/Form.js'
 
 let url = window.location.href;
 let debug = url.match(/debug/g);
@@ -388,7 +380,6 @@ export default {
             let checkExists = setInterval(function() {
                 let percentText = document.querySelector('span.percent-text');
                 if (percentText.innerHTML == vm.results.total + '%') {
-                    console.log(percentText)
                     percentText.innerHTML = vm.results.total;
                     percentText.classList.add('show');
                     clearInterval(checkExists);
