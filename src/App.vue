@@ -2,6 +2,7 @@
 	<div id="app">
 
         <BackgroundBlob></BackgroundBlob>
+
         <div class="outer-container">
 
              <div class="heading-container">
@@ -25,6 +26,7 @@
                 <div class='overview'>
                 
                     <h1 class='total-score'><strong>
+
                         Hi {{ latestScorecard.firstName }}, 
                         
                         <span v-if='parseInt(latestScorecard.scores.total) === 100'>well done! </span>
@@ -36,6 +38,7 @@
                         you're on the right track.</span>
 
                         <span v-else>there's room for improvement. </span></strong>
+
                     <br>Your total prevention score is: </h1>
 
                     <div class='score-container'>
@@ -73,7 +76,7 @@
                     </div>
                     <div class='content'>
                         <p>Our cut your cancer risk guide contains a broad overview on how you can reduce your cancer risk.</p>
-                        <a href='https://cancerqld.blob.core.windows.net/resources/quest/Cut%20your%20cancer%20risk_DL_v09%20(002).pdf' target='_blank' download>Download</a>
+                        <download link='https://cancerqld.blob.core.windows.net/resources/quest/Cut%20your%20cancer%20risk_DL_v09%20(002).pdf'>Download</download>
                     </div>
                 </div>
 
@@ -89,33 +92,26 @@
 
 <script>
 
-import { default as Spinner } from './Spinner' // BREAKS IE
-import { default as Category } from './Category'
-import { default as Tips } from './tips'
+import { Spinner, Category, HeaderBlob, BackgroundBlob, Download } from './components'
 import VueCircle from 'vue2-circle-progress'
 import axios from 'axios'
 const moment = require('moment');
-import { default as Tips } from './tips.js'
-import { default as Resources } from './resources.js'
-import { default as HeaderBlob } from './Blob/HeaderBlob.vue'
-import { default as BackgroundBlob } from './Blob/BackgroundBlob.vue'
-
 
 export default {
     name: 'app',
     components: {
         VueCircle,
         Spinner,
-        Category
+        Category,
         HeaderBlob,
-        BackgroundBlob
+        BackgroundBlob,
+        Download
     },
 	data () {
 		return {
             loading: true,
             results: {},
-            latestScorecard: null,
-            tips: Tips
+            latestScorecard: null
 		}
     },
     computed: {
@@ -132,28 +128,7 @@ export default {
 
             Object.keys(vm.latestScorecard.scores).forEach((category) => {
                 if (category !== 'total') {
-                    let categoryObj = {
-                        name: category
-                    };
-
-                    categoryObj.good = vm.latestScorecard.recommendations.filter(rec => rec.category === category && rec.score == 100)
-                    categoryObj.bad = vm.latestScorecard.recommendations.filter(rec => rec.category === category && rec.score != 100)
-                    
-                    if (vm.tips[category]) {
-                        let tips = [];
-                        
-                        Object.keys(vm.tips[category]).forEach((key) => {
-                            let badCategoryObj = categoryObj.bad.find((o) => o.id === key)
-                            if (badCategoryObj && !(badCategoryObj.bmi && parseInt(badCategoryObj.bmi) < 20)) {
-                                vm.tips[category][key].forEach((t) => tips.push(t))
-                            }
-                        })
-
-                        if (tips.length > 0) {
-                            categoryObj.tips = tips;
-                        } 
-                    }
-                    scorecards.push(categoryObj)
+                    scorecards.push(vm.getCategoryObj(category))
                 }
             })
 
@@ -161,6 +136,18 @@ export default {
         }
     },
     methods: {
+        getCategoryObj(category) {
+            let vm = this;
+
+            let categoryObj = {
+                name: category
+            };
+
+            categoryObj.good = vm.latestScorecard.recommendations.filter(rec => rec.category === category && rec.score == 100)
+            categoryObj.bad = vm.latestScorecard.recommendations.filter(rec => rec.category === category && rec.score != 100)
+
+            return categoryObj;
+        },
         showResults() {
             let vm = this;
 
@@ -204,29 +191,10 @@ export default {
 
 <style lang='scss'>
 
-$blue: #0099DA;
-$yellow: #FCD208;
-$dark-blue: #2c3e50;
+@import './styles/main.scss';
+@import './styles/variables.scss';
+@import './styles/responsive.scss';
 
-%boxshadow {
-    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
-    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
-    -ms-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
-    -o-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
-}
-
-html {
-    margin-top: unset!important;
-}
-body {
-    margin: 0;
-    padding: 0;
-    .m0 {
-        margin: 0;
-        padding: 0;
-    }
-}
 #app {
     border-top: 3px solid $yellow;
 	font-family: 'Foco CC', 'Roboto', Helvetica, Arial, sans-serif;
@@ -236,14 +204,12 @@ body {
 	color: $dark-blue;
     height:100vh;
     background: #eee;
-}
 
-.outer-container {
-    background:#eee;
-    padding: 10px 0;
+    .outer-container {
+        background:#eee;
+        padding: 10px 0;
 
-    
-.heading-container {
+        .heading-container {
         display: flex;
         flex-direction: row;
         width: 100%;
@@ -251,27 +217,25 @@ body {
         margin: 0 auto;
         position: relative;
 
-        // * { animation: fade-in 1s forwards; }
+            .cancer-council-logo {
+                background: white;
+                border-radius: 5px; 
+                box-shadow: 0px 0px 2px #00000016;
+                margin-top: 12px;
+                margin-right: 10px;
+                height: 100%;
+                padding-top: 3px;
+                padding-left: 15px; padding-right: 20px;
+                image-rendering: -moz-crisp-edges; /* Firefox */
+                image-rendering: -o-crisp-edges; /* Opera */
+                image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming) */
+                image-rendering: crisp-edges;
+                -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
 
-        .cancer-council-logo {
-            background: white;
-            border-radius: 5px; 
-            box-shadow: 0px 0px 2px #00000016;
-            margin-top: 12px;
-            margin-right: 10px;
-            height: 100%;
-            padding-top: 3px;
-            padding-left: 15px; padding-right: 20px;
-            image-rendering: -moz-crisp-edges; /* Firefox */
-            image-rendering: -o-crisp-edges; /* Opera */
-            image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming) */
-            image-rendering: crisp-edges;
-            -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
-            // display: none;
-
-            img {
-                height: 60px;
-                width: auto
+                img {
+                    height: 60px;
+                    width: auto
+                }
             }
         }
 
@@ -286,274 +250,140 @@ body {
                 color: $yellow;
             }
         }
-    }
 
-    .spinner {
-        margin-top:40vh!important;
+        .spinner {
+            margin-top:40vh!important;
 
-        & > .cube1 {
-            background-color: $yellow!important;
-        }
-        & > .cube2 {
-            background-color: $blue!important;
+            & > .cube1 {  background-color: $yellow!important; }
+            & > .cube2 {  background-color: $blue!important; }
         }
     }
 
-}
-
-.results-container {
-    background:#fff;
-    padding: 30px;
-    border-radius: 8px;
-    max-width: 960px;
-    margin: 30px auto;
-    margin-top: 0px;
-    height: auto;
-    position: relative;
-    @extend %boxshadow;
-
-    .guide-download {
-        display:flex;
-        background: #E2EAEE;
-        color:$dark-blue;
-        margin: 30px auto 60px;
-        max-width: 600px;
-        position:relative;
-
-        .img-container {
-            flex-basis: 40%;
-            img {
-                position:absolute;
-                left: -40px;
-                bottom: 0;
-                max-height: 200px;
-            }
-        }
-
-        .content {
-            flex-basis: 60%;
-            padding:30px;
-            text-align:left;
-
-            p {
-                margin: 0 0 20px 0;
-                padding: 0;
-            }
-        
-            a {
-                font-size: 14px;
-                text-decoration:none;
-                background: $yellow;
-                padding: 10px 30px;
-                border:none;
-                border-radius: 30px;
-                color:$dark-blue;
-                font-weight: 600;
-                transition: 0.3s ease-in-out;
-                cursor:pointer;
-                @extend %boxshadow;
-
-                &:hover {
-                    opacity: 0.8;
-                }
-            }
-        }
-
-    }
-
-    .overview {
+    .results-container {
+        background:#fff;
         padding: 30px;
-    }
-
-    &.ie ul {
-        justify-content:flex-start!important;
-    }
-
-    h1.total-score {
-        margin-top: 15px!important;
-        font-weight: 400;
-    }
-
-    h3 {
-        font-weight: 400;
-
-        max-width: 450px;
-        margin: 0 auto;
-    }
-
-    .score-date {
-        font-size: 12px;
-        margin-top: 15px;
-        padding-top: 0;
-    }
-
-    .score-container {
-        display:flex;
-        max-width: 500px;
-        justify-content:space-between;
-        align-items:center;
-        margin: 30px auto 0;
-        flex-wrap: wrap;
-
-
-        .line {
-            height: 1px;
-            border-top: 2px solid $blue;
-            width: 150px;
-        }
-
-        .circle {
-            margin: 15px 0 0 0;
-            // padding: 0 30px;
-            flex-basis: 150px;
-            flex-grow: 1;
-            max-width: 150px;
-
-            span.percent-text {
-                opacity: 0;
-                transition: 0.2s;
-                font-size: 48px!important;
-            }
-        }
-    }
-
-    div.score-msg {
-        margin-bottom: 40px;
-    }
-
-    .yellow {
-        font-weight:bold;
-        text-decoration:$yellow;
-        text-decoration-line: $yellow;
-    }
-
-    .circle {
+        border-radius: 8px;
+        max-width: 960px;
         margin: 30px auto;
-    }
-
-    &>div>h3 {
-        max-width: 600px;
-        margin: 20px auto 0 auto;
-        font-weight: 400;
-    }
-
-    div.category-break {
-        height: 1px;
-        border-top: 1px solid #eee;
-        // width: 100%;
-        margin: 25px 15px;
-    }
-}
-
-@media screen and (max-width: 600px) {
-    #app .outer-container .results-container {
-        padding: 15px;
-
-        .score-container {
-            .line {
-                display:none;
-            }
-        }
+        margin-top: 0px;
+        height: auto;
+        position: relative;
+        @extend %boxshadow;
 
         .guide-download {
-            flex-wrap:wrap;
-            margin: 200px auto 30px;
-            max-width: 300px;
+            display:flex;
+            background: #E2EAEE;
+            color:$dark-blue;
+            margin: 30px auto 60px;
+            max-width: 600px;
+            position:relative;
 
-            .content, .img-container {
-                flex-basis: 100%;
+            .img-container {
+                flex-basis: 40%;
+                img {
+                    position:absolute;
+                    left: -40px;
+                    bottom: 0;
+                    max-height: 200px;
+                }
             }
 
             .content {
-                text-align:center;
+                flex-basis: 60%;
+                padding:30px;
+                text-align:left;
 
-                a {
-                    margin: 0 auto;
+                p {
+                    margin: 0 0 20px 0;
+                    padding: 0;
                 }
             }
 
-            .img-container img {
-                left: 0;
-                bottom: unset;
-                top: -200px;
-                height: 200px;
-            }
         }
 
-        div > h2 {
-            margin-top: 0;
+        .overview {
+            padding: 30px;
         }
 
-        
-    }
-}
-
-@media screen and (max-width: 800px) {
-    #app {
-        .progress-bar {
-            li {
-                span {
-                    display:none;
-                }
-                flex-basis: 12%;
-            }
+        &.ie ul {
+            justify-content:flex-start!important;
         }
-        .outer-container {
+
+        h1.total-score {
+            margin-top: 15px!important;
+            font-weight: 400;
+        }
+
+        h3 {
+            font-weight: 400;
+
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .score-date {
+            font-size: 12px;
+            margin-top: 15px;
             padding-top: 0;
-            padding-bottom: 0;
+        }
 
-            .results-container {
-                margin:0;
-                border-radius:0;
-                box-shadow: none;
-                border:none;
+        .score-container {
+            display:flex;
+            max-width: 500px;
+            justify-content:space-between;
+            align-items:center;
+            margin: 30px auto 0;
+            flex-wrap: wrap;
 
-                .score-container {
-                    justify-content:center;
-                    .line {
-                        width: 80px;
-                        margin: 0 30px;
-                    }
+
+            .line {
+                height: 1px;
+                border-top: 2px solid $blue;
+                width: 150px;
+            }
+
+            .circle {
+                margin: 15px 0 0 0;
+                // padding: 0 30px;
+                flex-basis: 150px;
+                flex-grow: 1;
+                max-width: 150px;
+
+                span.percent-text {
+                    opacity: 0;
+                    transition: 0.2s;
+                    font-size: 48px!important;
                 }
-
-                h1 {
-                    font-size: 32px;
-                    margin: 15px 0 0 0;
-                }
-                
-                
             }
         }
-    }
-}
 
-@media screen and (max-width: 700px) {
-    .outer-container {
-        .heading-container {
-            max-width: 95%;
-            margin:0 auto;
-            .cancer-council-logo {
-                padding-left: 5px;
-                padding-right: 8px;
-                padding-top: 5px;
-                
-                img {
-                    height: 50px;
-                }
-            }
-                        
-            h1.heading {
-                margin-top: 28px;
-                padding-bottom: 0;
-                font-size: 25px;
-                line-height: 1.2rem;
-            }
+        div.score-msg {
+            margin-bottom: 40px;
+        }
+
+        .yellow {
+            font-weight:bold;
+            text-decoration:$yellow;
+            text-decoration-line: $yellow;
+        }
+
+        .circle {
+            margin: 30px auto;
+        }
+
+        &>div>h3 {
+            max-width: 600px;
+            margin: 20px auto 0 auto;
+            font-weight: 400;
+        }
+
+        div.category-break {
+            height: 1px;
+            border-top: 1px solid #eee;
+            // width: 100%;
+            margin: 25px 15px;
         }
     }
-}
-
-@media screen and (max-width: 1100px) {
-    .outer-container .heading-container .cancer-council-logo { margin-left: 3% }
 }
 
 .fade-enter-active, .fade-leave-active,

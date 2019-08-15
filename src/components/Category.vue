@@ -7,8 +7,12 @@
             
             <div class='heading-container'>
                 <span>
-                <span class='img-container'><img :src='icons[category.name]' /></span>
-                {{ category.name.toUpperCase() }}</span>
+                    <span class='img-container'>
+                        <img :src='icons[category.name]' />
+                    </span>
+
+                    {{ category.name.toUpperCase() }}
+                </span>
 
                 <span class='category-icons'>
                     <span v-if='category.bad.length === 0'><i class='fa fa-check-circle'></i></span>
@@ -32,14 +36,7 @@
             <h2>You're doing great in the following areas:</h2>
 
             <ul>
-                <li v-for="(section, i) in category.good" :key="i">
-                    <i class='fa fa-check'></i>
-                    <p>{{ section.answer }}
-                        <span v-if='section.bmi'><strong><br><br>Your BMI is: {{ section.bmi }}.<br><br>
-                        The recommended range is between 18.5 and 25.</strong>
-                        </span>
-                    </p>
-                </li>
+                <feedback v-for='(section, i) in category.good' :section='section' :good='true' :key='i'></feedback>
             </ul>
 
         </div>
@@ -47,15 +44,7 @@
         <div class="grey" :class="{'contracted' : !expanded}" v-if="category.bad.length > 0">
             <h2>Areas for improvement:</h2>
             <ul class='improvements'>
-                <li v-for="(section, i) in category.bad" :key="i">
-                    <i class='fa fa-exclamation-circle'></i> &nbsp;
-                    <p> {{ section.answer }} <br>
-                        <strong>
-                            <span v-if='section.bmi'><br>Your BMI is: {{ section.bmi }}.<br><br></span>
-                            <span v-html='section.recommendation'>
-                        </strong>
-                    </p>
-                </li>
+                <feedback v-for='(section, i) in category.bad' :section='section' :good='false' :key='i'></feedback>
             </ul>
 
             <template v-if="category.tips">
@@ -67,35 +56,33 @@
 
         </div>
 
-        <div v-if='filteredResources(category).length > 0' class='resources-container' :class="{'contracted' : !expanded}">
+        <div v-if='filteredResources.length > 0' class='resources-container' :class="{'contracted' : !expanded}">
 
             <h2>Resources and links:</h2>
             <ul class="resources">
-
-                <li v-for="(resource, index) in filteredResources(category)" :key='index'>
-                    
-                    <a class='img-link' :class="{ 'download' : resource.download, 'fullwidth' : resource.fullwidth }" :href='resource.url' target='_blank' v-bind:style="{ backgroundImage: 'url(' + resource.img + ')' }"></a>
-                    <div>
-                        <p>{{ resource.text }}</p>
-                        <a :href='resource.url' target='_blank'>{{ resource.cta }}</a>
-                    </div>
-                </li>
-
+                <resource v-for='resource in filteredResources' :resource='resource'></resource>
             </ul>
 
         </div>
+
     </div>
 </template>
 
 <script>
 
-import { default as Tips } from './tips.js'
-import { default as Icons } from './icons.js'
-import { default as Resources } from './resources.js'
+import { default as Tips } from './../config/tips.js'
+import { default as Icons } from './../config/icons.js'
+import { default as Resources } from './../config/resources.js'
+import { default as Resource } from './Resource.vue'
+import { default as Feedback } from './Feedback.vue'
 
 export default {
     name: 'category',
     props: ['category', 'index', 'gender'],
+    components: {
+        Feedback,
+        Resource
+    },
 	data () {
 		return {
             tips: Tips,
@@ -104,13 +91,33 @@ export default {
             icons: Icons
 		}
     },
-    methods: {
-        filteredResources(category) {
+    computed: {
+        filteredResources() {
             let vm = this;
-            return vm.resources[category.name].filter(r => vm.showResource(r, category))
+            return vm.resources[vm.category.name].filter(r => vm.showResource(r))
         },
-        showResource(resource, category) {
+    },
+    methods: {
+        getTips() {
             let vm = this;
+            let tips = [];
+
+            let tipQuestions = vm.tips[vm.category.name];
+
+            if (tipQuestions) {
+                Object.keys(tipQuestions).forEach(q => {
+                    let badCategoryObj = vm.category.bad.find((o) => o.id === q)
+                    if (badCategoryObj && !(badCategoryObj.bmi && parseInt(badCategoryObj.bmi) < 20)) {
+                        tipQuestions[q].forEach(t => tips.push(t))
+                    }
+                })
+            }
+
+            return tips;
+        },
+        showResource(resource) {
+            let vm = this;
+            let category = vm.category;
 
             let matchingQuestionId = category.bad.map(q => q.id).includes(resource.questionId)
             let matchingGender = vm.gender === resource.gender
@@ -118,24 +125,19 @@ export default {
 
             return !conditionalDisplay || matchingQuestionId || matchingGender
         }
+    },
+    mounted() {
+        let vm = this;
+
+        vm.category.tips = vm.getTips();
     }
 }
 </script>
 
 
-<style lang='scss'>
+<style lang='scss' >
 
-$blue: #0099DA;
-$yellow: #FCD208;
-$dark-blue: #2c3e50;
-
-%boxshadow {
-    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
-    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
-    -ms-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
-    -o-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
-}
+@import './../styles/variables.scss';
 
 .category {
     background: #eee;
@@ -393,63 +395,6 @@ $dark-blue: #2c3e50;
             padding-inline-start:0;
             margin-block-start:0;
             flex-wrap:wrap;
-
-            li {
-                background:white;
-                @extend %boxshadow;
-                margin:10px;
-                padding:0;
-                min-width:320px;
-                flex-basis: 320px;
-                flex-grow:1;
-                display:flex;
-                max-width: 350px;
-
-                a.img-link {
-                    padding:0;
-                    margin:0;
-                    height:100%;
-                    flex-basis:45%;
-                    flex-grow:1;
-                    background-size:contain;
-
-                    &.download {
-                        background-repeat:no-repeat;
-                        background-color: $blue;
-                        background-position: center;
-                    }
-
-                    &.fullwidth {
-                        flex-basis: 100%;
-                        width: 100%;
-                    }
-                }
-                div {
-                    padding: 30px;
-                    flex-basis:45%;
-                    flex-grow:1;
-                    display:flex;
-                    flex-direction:column;
-
-                    a {
-                        text-align:center;
-                        background:$blue;
-                        color:#fff;
-                        text-decoration:none;
-                        transition:0.3s ease;
-                        padding: 8px 20px;
-                        border-radius: 4px;
-                        margin-top: 10px;
-                        @extend %boxshadow;
-
-                        &:hover {
-                            filter: brightness(0.8);
-                        }
-                    }
-                }
-                display:flex;
-                align-items:center;
-            }
         }
     }
 }
@@ -477,12 +422,6 @@ $dark-blue: #2c3e50;
                     display:inline-block;
                 }
             }
-        }
-        .resources-container .resources li {
-            flex-wrap:wrap;
-                a.img-link {
-                    height:150px;
-                }
         }
     }
 
@@ -516,10 +455,6 @@ $dark-blue: #2c3e50;
             .grey, .blue, .resources-container {
                 ul {
                     padding-inline-start:0;
-
-                    li {
-                        min-width:unset;
-                    }
                 } 
             }
         }
