@@ -249,9 +249,9 @@ export default {
             let checkExists = setInterval(function() {
                 if (vm.latestScorecard) {
                     let percentText = document.querySelector('span.percent-text');
-                    if (percentText && percentText.innerHTML == vm.latestScorecard.scores.total + '%') {
+                    if (percentText && (percentText.innerHTML == (vm.latestScorecard.scores.total + '%'))) {
                         percentText.innerHTML = vm.latestScorecard.scores.total;
-                        percentText.classList.add('show');
+                        percentText.style.opacity = 1;
                         clearInterval(checkExists);
                     }
                 }
