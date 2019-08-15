@@ -455,11 +455,7 @@ body {
             span.percent-text {
                 opacity: 0;
                 transition: 0.2s;
-
-                &.show {
-                    font-size: 48px!important;
-                    opacity: 1;
-                }
+                font-size: 48px!important;
             }
         }
     }
