@@ -1,8 +1,17 @@
 <template>
 	<div id="app">
 
-
+        <BackgroundBlob></BackgroundBlob>
         <div class="outer-container">
+
+             <div class="heading-container">
+                <div class="cancer-council-logo">
+                    <img src="https://www.cancer.org.au/images/cancer_council.png" />
+                </div>
+                <HeaderBlob></HeaderBlob>
+                <h1 class='heading'>Cancer Risk Calculator<span class="yellow-fullstop">.</span></h1>
+            </div>
+
 
             <spinner color='#fcd208' v-if='loading'></spinner>
 
@@ -151,13 +160,18 @@ import VueCircle from 'vue2-circle-progress'
 import axios from 'axios'
 import { default as Tips } from './tips.js'
 import { default as Resources } from './resources.js'
+import { default as HeaderBlob } from './Blob/HeaderBlob.vue'
+import { default as BackgroundBlob } from './Blob/BackgroundBlob.vue'
+
 
 export default {
     name: 'app',
     components: {
         vmdButton,
         VueCircle,
-        spinner
+        spinner,
+        HeaderBlob,
+        BackgroundBlob
     },
 	data () {
 		return {
@@ -293,7 +307,53 @@ body {
 
 .outer-container {
     background:#eee;
-    padding: 60px 0;
+    padding: 40px 0;
+
+    
+.heading-container {
+        display: flex;
+        flex-direction: row;
+        width: 660px;
+        max-width: 100%;
+        margin: 0 auto;
+        position: relative;
+
+        // * { animation: fade-in 1s forwards; }
+
+        .cancer-council-logo {
+            background: white;
+            border-radius: 5px; 
+            box-shadow: 0px 0px 2px #00000016;
+            margin-top: 12px;
+            margin-right: 10px;
+            height: 100%;
+            padding-top: 3px;
+            padding-left: 15px; padding-right: 20px;
+            image-rendering: -moz-crisp-edges; /* Firefox */
+            image-rendering: -o-crisp-edges; /* Opera */
+            image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming) */
+            image-rendering: crisp-edges;
+            -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
+            // display: none;
+
+            img {
+                height: 60px;
+                width: auto
+            }
+        }
+
+        h1.heading {
+            font-weight: 800;
+            max-width: 200px;
+            text-align: left;
+            line-height: 1.8rem;
+
+            .yellow-fullstop {
+                font-size: 40px;
+                color: $yellow;
+            }
+        }
+    }
 
     .spinner {
         margin-top:40vh!important;
@@ -315,6 +375,7 @@ body {
     max-width: 960px;
     margin: 30px auto;
     height: auto;
+    position: relative;
     @extend %boxshadow;
 
     .yellow {
@@ -761,6 +822,31 @@ body {
                         } 
                     }
                 }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .outer-container {
+        .heading-container {
+            max-width: 90%;
+            margin:0 auto;
+            .cancer-council-logo {
+                padding-left: 5px;
+                padding-right: 8px;
+                padding-top: 5px;
+                
+                img {
+                    height: 50px;
+                }
+            }
+                        
+            h1.heading {
+                margin-top: 28px;
+                padding-bottom: 0;
+                font-size: 25px;
+                line-height: 1.2rem;
             }
         }
     }
