@@ -6,9 +6,11 @@
         <div class="outer-container">
 
              <div class="heading-container">
-                <div class="cancer-council-logo">
-                    <img src="https://www.cancer.org.au/images/cancer_council.png" />
-                </div>
+                <a href='https://cancerqld.org.au' target='_blank'>
+                    <div class="cancer-council-logo">
+                        <img src="https://www.cancer.org.au/images/cancer_council.png" />
+                    </div>
+                </a>
                 <HeaderBlob></HeaderBlob>
                 <h1 class='heading'>Cancer Risk Calculator<span class="yellow-fullstop">.</span></h1>
             </div>
@@ -210,12 +212,16 @@ export default {
         padding: 10px 0;
 
         .heading-container {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        max-width: 1020px;
-        margin: 0 auto;
-        position: relative;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            max-width: 1020px;
+            margin: 0 auto;
+            position: relative;
+
+            a {
+                display: contents;
+            }
 
             .cancer-council-logo {
                 background: white;
@@ -238,25 +244,25 @@ export default {
                 }
             }
         }
+    }
 
-        h1.heading {
-            font-weight: 800;
-            max-width: 200px;
-            text-align: left;
-            line-height: 1.8rem;
+    h1.heading {
+        font-weight: 800;
+        max-width: 200px;
+        text-align: left;
+        line-height: 1.8rem;
 
-            .yellow-fullstop {
-                font-size: 40px;
-                color: $yellow;
-            }
+        .yellow-fullstop {
+            font-size: 40px;
+            color: $yellow;
         }
+    }
 
-        .spinner {
-            margin-top:40vh!important;
+    .spinner {
+        margin-top:40vh!important;
 
-            & > .cube1 {  background-color: $yellow!important; }
-            & > .cube2 {  background-color: $blue!important; }
-        }
+        & > .cube1 {  background-color: $yellow!important; }
+        & > .cube2 {  background-color: $blue!important; }
     }
 
     .results-container {
