@@ -8,7 +8,7 @@
              <div class="heading-container">
                 <a href='https://cancerqld.org.au' target='_blank'>
                     <div class="cancer-council-logo">
-                        <img src="https://www.cancer.org.au/images/cancer_council.png" />
+                        <img src="https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/cancer_council.png" />
                     </div>
                 </a>
                 <HeaderBlob></HeaderBlob>
@@ -359,6 +359,7 @@ export default {
                     opacity: 0;
                     transition: 0.2s;
                     font-size: 48px!important;
+                    height: 48px!important;
                 }
             }
         }

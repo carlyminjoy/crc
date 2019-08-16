@@ -3,7 +3,6 @@
 ?>
 
 <!-- Gets website header -->
-<?php get_header();?>
 
 <meta http-equiv="X-UA-Compatible" content="IE=11" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
