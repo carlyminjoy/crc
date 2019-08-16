@@ -878,9 +878,10 @@ body {
             display:flex;
             align-items:center;
 
-            div {
+            & > div {
                 padding: 0 10px;
                 font-weight: 600;
+                max-width: 200px;
                 
                 &.blue-dot {
                     color:$blue;
@@ -1116,7 +1117,20 @@ body {
                 border-radius: 0;
                 margin: 30px auto 0;
                 /* padding-bottom: 30px; */
-                padding:15px;
+                padding:30px 0 20px;
+
+                .cta-items {
+                    padding: 20px;
+                    flex-direction: column;
+                    & > div {
+
+                        &.blue-dot {
+                            margin-bottom: 20px!important;
+                            line-height: 32px;
+                            padding: 0!important;
+                        }
+                    }
+                }
             }
             .conversation-container {
                 &.mask {
