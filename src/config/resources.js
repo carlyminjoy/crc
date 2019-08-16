@@ -82,13 +82,13 @@ export default {
         }
     ],
     'physical activity': [
-        {
-            url: 'https://cancerqld.blob.core.windows.net/resources/quest/Schools_Increasing%20movement%20throughout%20the%20day_FACTSHEET.pdf',
-            img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/physicalActivity-1.JPG',
-            text: `Schools increasing movement throughout the day factsheet`,
-            cta: 'Download',
-            download: true
-        },
+        // {
+        //     url: 'https://cancerqld.blob.core.windows.net/resources/quest/Schools_Increasing%20movement%20throughout%20the%20day_FACTSHEET.pdf',
+        //     img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/physicalActivity-1.JPG',
+        //     text: `Schools increasing movement throughout the day factsheet`,
+        //     cta: 'Download',
+        //     download: true
+        // },
         {
             url: 'https://cancerqld.blob.core.windows.net/resources/quest/Active%20Transport_TIPSHEET.pdf',
             img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/physicalActivity-2.JPG',

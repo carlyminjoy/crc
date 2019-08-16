@@ -41,7 +41,7 @@
 
                         <span v-else>there's room for improvement. </span></strong>
 
-                    <br>Your total prevention score is: </h1>
+                    <br>Your total score is: </h1>
 
                     <div class='score-container'>
 
@@ -68,7 +68,7 @@
 
                     <p class='score-date'>Based on your answers from {{ date }}</p>
 
-                    <h3>This score is out of 100 and calculates how much you are reducing your cancer risk through healthy lifestyle behaviours. The higher your score, the more ways you are currently reducing your cancer risk.<br><br><strong>Aim for 100 and improve your health!</strong></h3>
+                    <h3>This score is out of 100 and calculates how much you are reducing your cancer risk through healthy lifestyle behaviours. The higher your score, the more ways you are currently reducing your cancer risk. <br><br><strong>Aim for 100 to improve your health!</strong></h3>
 
                 </div>
 
