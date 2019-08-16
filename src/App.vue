@@ -860,6 +860,7 @@ body {
         margin-bottom: 30px;
 
         button.scorecard {
+            font-size:14px!important;
             padding-left: 30px;
             padding-right: 30px;
             margin-bottom: 10px;
