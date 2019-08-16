@@ -36,7 +36,7 @@
                         Well done, you're on the right track.</span>
 
                         <span v-else>Room for improvement. </span></strong>
-                    <br>Your total prevention score is: </h1>
+                    <br>Your total score is: </h1>
 
                     <div class='score-container'>
 
@@ -61,19 +61,19 @@
 
                     </div>
 
-                    <h3>This score is out of 100 and calculates how much you are reducing your cancer risk through healthy lifestyle behaviours. The higher your score, the more ways you are currently reducing your cancer risk.<br><br><strong>Aim for 100 and improve your health!</strong></h3>
+                    <h3>This score is out of 100 and calculates how much you are reducing your cancer risk through healthy lifestyle behaviours. The higher your score, the more ways you are currently reducing your cancer risk. <br><br><strong>Aim for 100 to improve your health!</strong></h3>
 
                 </div>
 
                 <div class='cta'>
-                    <h3>Receive your Cancer Risk Scorecard with detailed results and tips to reduce your cancer risk.</h3>
+                    <h3>Receive your Cancer Risk Scorecard with your detailed results, recommendations and tips to reduce your cancer risk.</h3>
 
                     <div class='cta-items'>
-                        <div>Access to helpful resources</div>
+                        <div>Identify your areas for improvement</div>
+                        <div class='blue-dot'>.</div>
+                        <div>Access helpful resources</div>
                         <div class='blue-dot'>.</div>
                         <div>Keep track of your progress</div>
-                        <div class='blue-dot'>.</div>
-                        <div>A breakdown of your score</div>
                     </div>
 
                     <vmd-button class='scorecard' text='Get your free Scorecard' @click="scrollToScorecard()"></vmd-button>
@@ -136,8 +136,8 @@
                 <div class='form-container' ref="scorecardForm">
                     <h1>Get your Cancer Risk Scorecard</h1><br>
 
-                    <h3>You'll get access to your scorecard that breaks down each category and provides you with the resources to help further decrease your cancer risk.</h3><br>
-                    <h3>We'll follow up in a few months where you can compare your progress over time.</h3> <br><br>
+                    <h3>You'll get access to your personalised scorecard that breaks down your results and provides you with tips and resources to help you reduce your cancer risk.</h3><br>
+                    <h3>We'll follow up in a few months so you can retake your Cancer Risk Calculator and compare your results.</h3> <br><br>
 
                     <form v-if='!state.submitted'>
                         <vmd-text-field class='narrow' label='First Name' v-model="$v.form.firstName.$model" :invalid='$v.form.firstName.$error'></vmd-text-field>
@@ -857,7 +857,21 @@ body {
         padding: 45px 30px 30px 30px;
         background: $dark-blue;
         color:#fff;
+        margin-bottom: 30px;
 
+        button.scorecard {
+            padding-left: 30px;
+            padding-right: 30px;
+            margin-bottom: 10px;
+            background:$yellow!important;
+            text-transform:unset;
+            border-radius: 50px;
+            margin: 0 auto;
+            letter-spacing: 0;
+            font-weight:600;
+            letter-spacing: 0;
+            color:$dark-blue!important;
+        }
 
         .cta-items {
             padding: 0;
@@ -899,6 +913,7 @@ body {
 
 
     .form-container {
+        margin-top: 30px;
         padding: 30px;
         background: $dark-blue;
         color:#fff;
