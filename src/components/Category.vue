@@ -457,6 +457,7 @@ export default {
         .blue > ul > li,
         .grey > ul > li {
             min-width: unset!important;
+            margin: 5px 0!important;
         }
 
         .grey, .blue, .resources-container {
