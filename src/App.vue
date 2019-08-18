@@ -5,8 +5,8 @@
         <div class="heading-container">
             <a href='https://cancerqld.org.au' target='_blank'>
                 <div class="cancer-council-logo">
-                    <img src="https://www.cancer.org.au/images/cancer_council.png" />
-                </div>
+                    <img src="https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/cancer_council.png" />
+                </div>                
             </a>
             <header-blob></header-blob>
             <h1 class='heading'>Cancer Risk Calculator<span class="yellow-fullstop">.</span></h1>
