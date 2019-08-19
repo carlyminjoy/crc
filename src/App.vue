@@ -224,6 +224,7 @@ export default {
             a {
                 display: contents;
                 height: 60px;
+                max-height: 60px;
             }
 
             .cancer-council-logo {
@@ -243,7 +244,7 @@ export default {
 
                 img {
                     height: 60px;
-                    width: auto
+                    width: auto;
                 }
             }
         }
@@ -254,6 +255,10 @@ export default {
         max-width: 200px;
         text-align: left;
         line-height: 1.8rem;
+
+        @media screen and (max-width: 600px) {
+            margin: 0;
+        }
 
         .yellow-fullstop {
             font-size: 40px;
