@@ -679,6 +679,7 @@ body {
         a {
             display: contents;
             height: 60px;
+            max-height: 60px;
         }
 
         .cancer-council-logo {
@@ -1103,6 +1104,7 @@ body {
     #app {
 
         .progress-bar {
+            margin-top: -15px;
             max-width: 90%;
             padding: 0;
             li {
@@ -1121,12 +1123,35 @@ body {
                 padding-bottom: 0;
             }
 
+            .heading-container {
+                margin-left: 10px;
+                margin-right: -10px;
+                overflow-x:hidden;
+                max-height:90px;
+
+                h1.heading {
+                    margin: 0;
+                    font-size: 24px;
+                    line-height: 24px;
+                    font-weight:800;
+                }
+                a, a>div, a>div>img {
+                    height: 55px;
+                    max-height:55px;
+                    width: auto;
+                }
+            }
+
             .results-container {
                 width: unset;
                 border-radius: 0;
                 margin: 30px auto 0;
                 /* padding-bottom: 30px; */
                 padding:30px 0 20px;
+
+                .line {
+                    display:none!important;
+                }
 
                 .cta-items {
                     padding: 20px;

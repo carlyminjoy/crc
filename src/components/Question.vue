@@ -120,6 +120,7 @@ $yellow: #FCD208;
 $dark-blue: #2c3e50;
 
 .question {
+
     max-height: 20px;
     max-width: 30px;
     transition: 0.3s ease;
@@ -166,6 +167,7 @@ $dark-blue: #2c3e50;
     .responses {
         display:flex;
         flex-wrap: wrap;
+        flex-direction:row;
         max-height: 500px;
         opacity: 1;
         height:auto;
@@ -214,6 +216,12 @@ $dark-blue: #2c3e50;
 
             input {
                 display:none;
+            }
+
+            @media screen and (max-width: 750px) {
+                label,input {
+                    max-height: 30px;
+                }
             }
 
             &.selected {
