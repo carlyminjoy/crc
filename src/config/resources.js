@@ -85,7 +85,7 @@ export default {
         {
             url: 'https://cancerqld.blob.core.windows.net/resources/quest/Take%20time%20to%20be%20active_FACTSHEET.pdf',
             img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/physicalActivity-3.JPG',
-            text: `Healthy body weight factsheet`,
+            text: `Take time to be active factsheet`,
             cta: 'Download',
             download: true
         },
@@ -101,7 +101,7 @@ export default {
         {
             url: 'https://cancerqld.blob.core.windows.net/resources/quest/Maintaining%20a%20healthy%20body%20weight_POSTER.pdf',
             img: 'https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/weight-1.JPG',
-            text: `Take Time to be Active Factsheet`,
+            text: `Maintain healthy body weight`,
             cta: 'Download',
             download: true
         }
