@@ -109,6 +109,7 @@ export default {
 .background-blob {
   overflow: hidden;
   position: absolute;
+  pointer-events:none;
   height: 100%; width: 100%;
 
   svg { position: absolute; }

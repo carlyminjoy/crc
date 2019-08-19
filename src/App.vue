@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 
-        <BackgroundBlob></BackgroundBlob>
+        <BackgroundBlob v-if='!state.isIe'></BackgroundBlob>
 
         <div class="outer-container">
 
@@ -120,7 +120,11 @@ export default {
             loading: true,
             results: {},
             latestScorecard: null,
-            showScore: false
+            showScore: false,
+            state: {
+                isIe: false,
+                isMozilla: false
+            }
 		}
     },
     computed: {
@@ -178,8 +182,13 @@ export default {
     mounted () {
         let vm = this;
 
+        var ua = window.navigator.userAgent;
+        vm.state.isIe = /MSIE|Trident/.test(ua);
+        vm.state.isMozilla = ua.includes('Firefox');
+
         let user = vm.$route.query.user;
         vm.getScoreCard(user);
+        
     }
 }
 </script>
@@ -214,6 +223,7 @@ export default {
 
             a {
                 display: contents;
+                height: 60px;
             }
 
             .cancer-council-logo {
@@ -331,9 +341,9 @@ export default {
             max-width: 500px;
             justify-content:space-between;
             align-items:center;
-            margin: 30px auto 0;
+            margin: 0 auto;
             flex-wrap: wrap;
-
+            position:relative;
 
             .line {
                 height: 1px;
@@ -347,6 +357,7 @@ export default {
                 left: calc(50% - 30px);
                 width: 60px;
                 text-align:center;
+                top: calc(50% - 28px);
                 
                 span.score-number {
                     font-size: 48px;
