@@ -355,8 +355,8 @@ export default {
             }
 
             .circle {
-                margin: 15px 0 0 0;
-                // padding: 0 30px;
+                margin: 0;
+                padding: 15px;
                 flex-basis: 150px;
                 flex-grow: 1;
                 max-width: 150px;
