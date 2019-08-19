@@ -42,6 +42,12 @@
 
                         <div class='line'></div>
 
+                        <transition name='score'>
+                            <div v-if='showScore' class="score-number-container">
+                                <span class="score-number">{{ results.total }}</span> 
+                            </div>
+                        </transition>
+
                         <vue-circle
                             :progress="results.total"
                             :size="150"
@@ -53,7 +59,7 @@
                             :start-angle="-(Math.PI / 2)"
                             insert-mode="append"
                             :thickness="10"
-                            :show-percent="true">
+                            :show-percent="false">
 
                         </vue-circle>
 
@@ -277,7 +283,8 @@ export default {
             results: '',
             scoredCategories: scoredCategories,
             steps: conversation.steps,
-            debug: !!debug
+            debug: !!debug,
+            showScore: false
 		}
     },
     validations: {
@@ -376,15 +383,7 @@ export default {
             let vm = this;
 
             setTimeout(() => (vm.state.showResults = true), timers.med)
-
-            let checkExists = setInterval(function() {
-                let percentText = document.querySelector('span.percent-text');
-                if (percentText.innerHTML == vm.results.total + '%') {
-                    percentText.innerHTML = vm.results.total;
-                    percentText.classList.add('show');
-                    clearInterval(checkExists);
-                }
-            }, 50);
+            setTimeout(() => (vm.showScore = true), timers.long)
         },
         scrollToScorecard() {
             var element = this.$refs.scorecardForm;
@@ -824,6 +823,20 @@ body {
         margin: 30px auto;
         flex-wrap: wrap;
 
+        .score-number-container {
+            position:absolute;
+            height: 48px;
+            left: calc(50% - 30px);
+            width: 60px;
+            text-align:center;
+            padding-bottom: 15px;
+            
+            span.score-number {
+                font-size: 48px;
+                font-weight: 600;
+            }
+        }
+
         .line {
             height: 1px;
             border-top: 2px solid $blue;
@@ -1193,6 +1206,13 @@ body {
 .flipcard-leave-to {
   opacity: 0;
   height:0;
+}
+
+.score-enter-active, .score-leave-active {
+  transition: opacity .3s;
+}
+.score-enter, .score-leave-to {
+  opacity: 0;
 }
 
 </style>
