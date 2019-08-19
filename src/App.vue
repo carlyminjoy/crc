@@ -5,7 +5,7 @@
 
         <div class="outer-container">
 
-             <div class="heading-container">
+             <div class="header-container">
                 <a href='https://cancerqld.org.au' target='_blank'>
                     <div class="cancer-council-logo">
                         <img src="https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/cancer_council.png" />
@@ -213,7 +213,7 @@ export default {
         background:#eee;
         padding: 10px 0;
 
-        .heading-container {
+        .header-container {
             display: flex;
             flex-direction: row;
             width: 100%;
@@ -255,10 +255,6 @@ export default {
         max-width: 200px;
         text-align: left;
         line-height: 1.8rem;
-
-        @media screen and (max-width: 600px) {
-            margin: 0;
-        }
 
         .yellow-fullstop {
             font-size: 40px;
@@ -404,6 +400,26 @@ export default {
             border-top: 1px solid #eee;
             // width: 100%;
             margin: 25px 15px;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        border-top: none;
+        .outer-container {
+            padding: 0;
+            .header-container {
+                border-bottom: 3px solid $yellow;
+                display:flex;
+                align-items:center;
+                h1 {
+                    line-height: 24px;
+                    font-size: 24px;
+                }
+                div.cancer-council-logo {
+                    margin-top: 0;
+                    margin-left: 10px;
+                }
+            }
         }
     }
 }
