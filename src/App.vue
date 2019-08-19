@@ -823,7 +823,7 @@ body {
         max-width: 500px;
         justify-content:space-between;
         align-items:center;
-        margin: 0 auto;
+        margin: 15px auto;
         flex-wrap: wrap;
         position:relative;
 
