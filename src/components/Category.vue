@@ -47,7 +47,7 @@
                 <feedback v-for='(section, i) in category.bad' :section='section' :good='false' :key='i'></feedback>
             </ul>
 
-            <template v-if="category.tips">
+            <template v-if="category.tips && category.tips.length > 0">
                 <h2 class="m0">Tips:</h2>
                 <ul class="tips">
                     <li v-for="(tip,index) in category.tips" :key="index" v-html='tip'></li>
@@ -113,7 +113,7 @@ export default {
                 })
             }
 
-            return tips;
+            return tips.length > 0 ? tips : null;
         },
         showResource(resource) {
             let vm = this;

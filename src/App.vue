@@ -47,6 +47,12 @@
 
                         <div class='line'></div>
 
+                        <transition name='score'>
+                            <div v-if='showScore' class="score-number-container">
+                                <span class="score-number">{{latestScorecard.scores.total}}</span> 
+                            </div>
+                        </transition>
+
                         <vue-circle
                             :progress="latestScorecard.scores.total"
                             :size="150"
@@ -58,7 +64,7 @@
                             :start-angle="-(Math.PI / 2)"
                             insert-mode="append"
                             :thickness="10"
-                            :show-percent="true">
+                            :show-percent="false">
 
                         </vue-circle>
 
@@ -113,7 +119,8 @@ export default {
 		return {
             loading: true,
             results: {},
-            latestScorecard: null
+            latestScorecard: null,
+            showScore: false
 		}
     },
     computed: {
@@ -150,20 +157,6 @@ export default {
 
             return categoryObj;
         },
-        showResults() {
-            let vm = this;
-
-            let checkExists = setInterval(function() {
-                if (vm.latestScorecard) {
-                    let percentText = document.querySelector('span.percent-text');
-                    if (percentText && (percentText.innerHTML == (vm.latestScorecard.scores.total + '%'))) {
-                        percentText.innerHTML = vm.latestScorecard.scores.total;
-                        percentText.style.opacity = 1;
-                        clearInterval(checkExists);
-                    }
-                }
-            }, 50);
-        },
         getScoreCard(user) {
             let vm = this;
 
@@ -174,6 +167,7 @@ export default {
                     this.results.forEach((card) => {
                         if (card.entry && !vm.latestScorecard) {
                             vm.latestScorecard = card.entry;
+                            setTimeout(() => vm.showScore = true, 500)
                             return;
                         }
                     })
@@ -186,7 +180,6 @@ export default {
 
         let user = vm.$route.query.user;
         vm.getScoreCard(user);
-        vm.showResults()
     }
 }
 </script>
@@ -348,19 +341,25 @@ export default {
                 width: 150px;
             }
 
+            .score-number-container {
+                position:absolute;
+                height: 48px;
+                left: calc(50% - 30px);
+                width: 60px;
+                text-align:center;
+                
+                span.score-number {
+                    font-size: 48px;
+                    font-weight: 600;
+                }
+            }
+
             .circle {
                 margin: 15px 0 0 0;
                 // padding: 0 30px;
                 flex-basis: 150px;
                 flex-grow: 1;
                 max-width: 150px;
-
-                span.percent-text {
-                    opacity: 0;
-                    transition: 0.2s;
-                    font-size: 48px!important;
-                    height: 48px!important;
-                }
             }
         }
 
@@ -391,6 +390,14 @@ export default {
             margin: 25px 15px;
         }
     }
+}
+
+.score-enter-active, .score-leave-active {
+  transition: opacity .3s;
+//   opacity: 1;
+}
+.score-enter, .score-leave-to {
+  opacity: 0;
 }
 
 .fade-enter-active, .fade-leave-active,
