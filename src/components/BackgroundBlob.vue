@@ -125,6 +125,7 @@ export default {
   overflow: hidden;
   position: absolute;
   height: 100%; width: 100%;
+  pointer-events:none;
 
   svg { position: absolute; }
   path { fill: #009bdc; }

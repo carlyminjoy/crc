@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-        <background-blob :finished="state.showResults"></background-blob>
+        <background-blob v-if='!state.isIe' :finished="state.showResults"></background-blob>
         <div class="outer-container">
         <div class="heading-container">
             <a href='https://cancerqld.org.au' target='_blank'>
@@ -166,7 +166,7 @@
 
             </div>
 
-            <div class="conversation-container mask" ref="conversationEl" :class="{ scroll : state.isIe }" v-if="!state.showResults">
+            <div class="conversation-container" ref="conversationEl" :class="{ scroll : state.isIe, mask: !state.isMozilla }" v-if="!state.showResults">
 
                 <template class="step-container" v-for="(step, index) in steps">
 
@@ -265,6 +265,7 @@ export default {
             resultID: null,
             state: {
                 isIe: false,
+                isMozilla: false,
                 showResults: false,
                 loading: false,
                 submitted: false,
@@ -572,6 +573,7 @@ export default {
 
         var ua = window.navigator.userAgent;
         vm.state.isIe = /MSIE|Trident/.test(ua);
+        vm.state.isMozilla = ua.includes('Firefox');
     }
 }
 </script>
@@ -676,6 +678,7 @@ body {
 
         a {
             display: contents;
+            height: 60px;
         }
 
         .cancer-council-logo {
@@ -820,8 +823,9 @@ body {
         max-width: 500px;
         justify-content:space-between;
         align-items:center;
-        margin: 30px auto;
+        margin: 0 auto;
         flex-wrap: wrap;
+        position:relative;
 
         .score-number-container {
             position:absolute;
@@ -830,6 +834,7 @@ body {
             width: 60px;
             text-align:center;
             padding-bottom: 15px;
+            top: calc(50% - 28px);
             
             span.score-number {
                 font-size: 48px;
@@ -849,16 +854,6 @@ body {
             flex-basis: 150px;
             flex-grow: 1;
             max-width: 150px;
-
-            span.percent-text {
-                opacity: 0;
-                transition: 0.2s;
-
-                &.show {
-                    font-size: 48px!important;
-                    opacity: 1;
-                }
-            }
         }
     }
 
