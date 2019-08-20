@@ -395,6 +395,11 @@ export default {
             padding-inline-start:0;
             margin-block-start:0;
             flex-wrap:wrap;
+            justify-content:flex-start;
+
+            .resource {
+                max-height: 300px;
+            }
         }
     }
 }
@@ -403,6 +408,13 @@ export default {
     .category {
         &.break::after {
             width: calc(100% - 30px);
+        }
+
+        div.blue > h2,
+        div.grey > h2,
+        div.resources-container > h2 {
+            font-size: 24px;
+            line-height: 26px;
         }
 
         .category-heading > div.heading-container {
@@ -415,6 +427,10 @@ export default {
             }
 
             .category-icons {
+                line-height:16px;
+                font-size: 16px;
+                height:16px;
+
                 span.yellow-text {
                     display:none;
                 }

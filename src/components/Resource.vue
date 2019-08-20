@@ -43,6 +43,8 @@ li.resource {
     flex-grow:1;
     display:flex;
     max-width: 350px;
+    position:relative;
+    overflow-y:hidden;
 
     a.img-link {
         padding:0;
@@ -56,6 +58,7 @@ li.resource {
             background-repeat:no-repeat;
             background-color: $blue;
             background-position: center;
+            display:block;
         }
 
         &.fullwidth {
@@ -81,6 +84,7 @@ li.resource {
 @media screen and (max-width: 600px) {
     li.resource {
         flex-wrap:wrap;
+        margin: 10px 0;
         a.img-link {
             height:150px;
         }
@@ -90,6 +94,11 @@ li.resource {
 @media screen and (max-width: 800px) {         
     li.resource {
         min-width:unset;
+        max-height: 280px;
+
+        a.img-link.download {
+            max-height: 280px;
+        }
     }
 }
 

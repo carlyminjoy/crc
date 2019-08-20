@@ -195,6 +195,13 @@ export default {
 
 <style lang='scss'>
 
+@font-face {
+    font-family: Foco CC;
+    src:    url('https://cancerqld.blob.core.windows.net/content/landing-pages/taxappeal/fonts/FocoCC_W_Rg.e56f62bc.woff'), 
+            url('https://cancerqld.blob.core.windows.net/content/landing-pages/taxappeal/fonts/FocoCC_W_Blk.fe3819a9.woff')
+            format('woff');
+}
+
 @import './styles/main.scss';
 @import './styles/variables.scss';
 @import './styles/responsive.scss';
@@ -403,10 +410,23 @@ export default {
         }
     }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 800px) {
         border-top: none;
         .outer-container {
             padding: 0;
+
+            .results-container {
+                .overview {
+                    padding: 0;
+
+                    h1.total-score {
+                        font-size: 24px;
+                        line-height: 26px;
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+
             .header-container {
                 border-bottom: 3px solid $yellow;
                 display:flex;
@@ -414,8 +434,9 @@ export default {
                 max-height: 100px;
 
                 h1 {
-                    line-height: 24px;
-                    font-size: 24px;
+                    line-height: 18px;
+                    font-size: 22px;
+                    font-weight: 800;
                 }
 
                 a {
