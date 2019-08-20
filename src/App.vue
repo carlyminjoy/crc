@@ -693,7 +693,7 @@ body {
         display: flex;
         flex-direction: row;
         width: 100%;
-        max-width: 1020px;
+        max-width: 660px;
         margin: 0 auto;
         position: relative;
         align-items:center;
