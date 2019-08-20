@@ -11,12 +11,12 @@
             <div class="ready" v-if="ready">
                 <div class='ask' v-html='question.text'></div>
 
-                <div class="responses" :class="{'hide' : selected }">
+                <div class="responses" :class="{'hide' : selected}">
 
                     <div v-for="(option, index) in question.options" :class="{ 'selected' : option.score === question.score }" :key="index">
 
                         <label :class='id' :for="id + index">{{ option.label }} </label>
-                        <input @click="addStep(option)" 
+                        <input @click="selectOption(option)" 
                                 :id="id + index" 
                                 :disabled="selected" 
                                 v-model="question.score" 
@@ -53,13 +53,15 @@ export default {
                 return v.toString(16);
             })
         },
-        addStep(option) {
-            this.selected = true;
-            if (this.question.score === null) {
-                this.question.score = option.score
+        selectOption(option) {
+            // if (this.question.score === null) {
+            this.question.score = option.score
+            // }
+
+            if (!this.selected) {
+                this.selected = true;   
+                this.$emit('addstep')
             }
-            
-            this.$emit('addstep')
         }
   },
   data() {
@@ -70,11 +72,14 @@ export default {
       }
   },
   mounted() {
-      let vm = this;
+        let vm = this;
 
-      vm.$emit('scrolltobottom', 'first')
-      setTimeout(() => (vm.ready = true) && vm.$emit('scrolltobottom', 'second'), timer)
+        vm.$emit('loading')
 
+        setTimeout(() => {
+            vm.ready = true;
+            setTimeout(() => vm.$emit('ready'), 100)
+        }, timer)
   }
 }
 </script>

@@ -143,7 +143,13 @@ export default {
       }
   },
   mounted() {
-      setTimeout(() => this.ready = true, timer)
+      let vm = this;
+      vm.$emit('scrolltobottom'), 100
+
+      setTimeout(() => {
+          this.ready = true;
+          setTimeout(() => vm.$emit('scrolltobottom'), 100)
+      }, timer)
   }
 }
 </script>
@@ -188,22 +194,26 @@ $dark-blue: #2c3e50;
     }
 
     .dots {
-        height: 30px;
+        display:flex;
+        height: 20px;
         width:30px;
         font-size:6px;
+        justify-content:center;
+        align-items:center;
         color:#555;
 
         .dot {
             animation-name:dot;
-            animation-duration:0.6s;
+            animation-duration:0.9s;
             animation-iteration-count: infinite;
+            margin: 1px;
 
             &:nth-child(2) {
-                animation-delay:0.2s;
+                animation-delay:0.3s;
             }
 
             &:nth-child(3) {
-                animation-delay:0.2s;
+                animation-delay:0.6s;
             }
         }
     }

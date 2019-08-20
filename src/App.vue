@@ -166,47 +166,51 @@
 
             </div>
 
-            <div class="conversation-container" ref="conversationEl" :class="{ scroll : state.isIe, mask: !state.isMozilla }" v-if="!state.showResults">
+            <div class='conversation-container-wrapper' :class="{ mask: !state.isMozilla}" ref="mobileConversationEl">
 
-                <template class="step-container" v-for="(step, index) in steps">
+                <div class="conversation-container" ref="conversationEl" v-if="!state.showResults">
 
-                    <transition name="fade" :key="index">
+                    <template class="step-container" v-for="(step, index) in steps">
 
-                        <div v-if="display(step) && index <= currentStep" class='ai-comment'>
+                        <transition name="fade" :key="index">
 
-                            <question v-if="step.question && !step.userInput" 
-                                    :question=step 
-                                    v-on:addstep="addStep()"
-                                    v-on:scrolltobottom='scrollToBottom()'></question>
+                            <div v-if="display(step) && index <= currentStep" class='ai-comment'>
 
-                            <weight v-else-if='["bmi", "waist"].includes(step.id)' 
-                                    :question=step 
-                                    :gender="steps.find(s => s.id === 'gender').score" 
-                                    v-on:addstep="addStep()"></weight>
+                                <question v-if="step.question && !step.userInput" 
+                                        :question=step 
+                                        v-on:addstep="addStep()"
+                                        v-on:loading='scrollToBottom'
+                                        v-on:ready='scrollToBottom'></question>
 
-                            <postcode v-else-if="step.userInput && step.id === 'postcode'" 
-                                    :question=step 
-                                    v-on:addstep="addStep()"
-                                    v-on:scrolltobottom='scrollToBottom()'></postcode>
+                                <weight v-else-if='["bmi", "waist"].includes(step.id)' 
+                                        :question=step 
+                                        :gender="steps.find(s => s.id === 'gender').score" 
+                                        v-on:addstep="addStep()"
+                                        v-on:scrolltobottom='scrollToBottom'></weight>
 
-                            <p v-else v-html='step.text'></p>
+                                <postcode v-else-if="step.userInput && step.id === 'postcode'" 
+                                        :question=step 
+                                        v-on:addstep="addStep()"
+                                        v-on:scrolltobottom='scrollToBottom'></postcode>
 
-                        </div>
+                                <comment v-else v-on:scrolltobottom='scrollToBottom' :text='step.text'></comment>
 
-                    </transition>
+                            </div>
 
-                    <transition name="fade" :key="index">
-                        <div v-if="step.score || step.score === 0" class='user-comment'>
+                        </transition>
 
-                            <p v-if="!step.options"> {{ step.userResponse }} </p>
+                        <transition name="fade" :key="index">
+                            <div v-if="step.score || step.score === 0" class='user-comment'>
 
-                            <p v-if="step.options" v-html="step.options.find((o) => o.score === step.score ).userResponse"></p>
+                                <comment v-if="!step.options" v-on:scrolltobottom='scrollToBottom' :text='step.userResponse'></comment>
+                                <comment v-if="step.options" v-on:scrolltobottom='scrollToBottom' :text="step.options.find((o) => o.score === step.score ).userResponse"></comment>
 
-                        </div>
-                    </transition>
+                            </div>
+                        </transition>
 
-                </template>
+                    </template>
 
+                </div>
             </div>
         </div>
 	</div>
@@ -217,7 +221,7 @@
 
 import { default as conversation } from './config/config.js'
 import { default as scoredCategories } from './config/scoredCategories.js'
-import { Question, Weight, Postcode, HeaderBlob, BackgroundBlob } from  './components/index.js'
+import { Question, Weight, Postcode, HeaderBlob, BackgroundBlob, Comment } from  './components/index.js'
 import { vmdButton, vmdTextField } from '@ccq/ccq-vue-components'
 import Form from './utils/Form.js'
 
@@ -253,6 +257,7 @@ export default {
         Question,
         Weight,
         Postcode,
+        Comment,
         HeaderBlob,
         BackgroundBlob,
         vmdButton,
@@ -317,15 +322,18 @@ export default {
             } else {
                 if (nextStep.question) {
                     vm.state.activeCategory = nextStep.category
-                    setTimeout(() => vm.scrollToBottom(), 1300)
+                    // setTimeout(() => vm.scrollToBottom(), 1300)
     
                     if (!nextStep.display(vm.steps)) {
-                        setTimeout(() => vm.currentStep++ && vm.scrollToBottom(), timers.shortest)
+                        setTimeout(() => vm.currentStep++ && vm.scrollToBottom(), timers.short)
 
                     }
     
                 }  else {
-                    setTimeout(() => vm.currentStep++ && vm.scrollToBottom(), (nextStep.delay ? timers.long : timers.med))
+                    setTimeout(() => {
+                        vm.currentStep++;
+                        // setTimeout(() => vm.scrollToBottom(), 150)
+                    }, (nextStep.delay ? timers.long : timers.med))
                 }
             }
         }
@@ -375,10 +383,10 @@ export default {
     },
     methods: {
         scrollToBottom() {
-            if (this.state.isIe) {
-                var element = this.$refs.conversationEl;
+            // if (this.state.isIe) {
+                var element = this.$refs.mobileConversationEl;
                 element.scrollTop = element.scrollHeight;
-            }
+            // }
         },
         showResults() {
             let vm = this;
@@ -666,7 +674,7 @@ body {
 
 
 .outer-container {
-    padding-bottom: 60px;
+    min-height: 100vh;
     background:#eee;
 
     .heading-container {
@@ -676,6 +684,7 @@ body {
         max-width: 100vw;
         margin: 0 auto;
         position: relative;
+        overflow-y:hidden;
 
         a {
             display: contents;
@@ -719,21 +728,21 @@ body {
         }
     }
 }
-.conversation-container {
-    &.mask {
-        -webkit-mask-image: -webkit-gradient(linear, left top, left 10%, from(rgba(0,0,0,0)), to(rgba(0,0,0,1)));
-    }
-    overflow-y:hidden;
 
-    &.scroll {
-        max-height: 550px;
-        display:block;
-    }
-    margin: 60px auto;
-    background:rgba(0,0,0,0);
+.conversation-container-wrapper {
+    position:relative;
+    min-height: 500px;
+    overflow-y:auto;
+    margin: 50px auto 0;
     padding: 30px;
     max-width: 600px;
     max-height: 500px;
+    &.mask {
+        -webkit-mask-image: -webkit-gradient(linear, left top, left 10%, from(rgba(0,0,0,0)), to(rgba(0,0,0,1)));
+    }
+}
+.conversation-container {
+    background:rgba(0,0,0,0);
     text-align:left;
     font-size:16px!important;
 
@@ -1121,29 +1130,32 @@ body {
             padding-bottom: 0;
 
             h1 {
+
                 margin: 20px 0 0 0;
                 padding-bottom: 0;
             }
 
             .heading-container {
-                margin-left: 10px;
-                margin-right: -10px;
                 overflow-x:hidden;
                 max-height:90px;
                 text-align:center;
                 display:flex;
                 align-items:center;
+                padding: 0;
 
                 h1.heading {
-                    margin: 5px 0 0 0;
-                    font-size: 24px;
-                    line-height: 24px;
-                    font-weight:800;
+                    margin: 0;
+                    font-size: 22px;
+                    line-height: 18px;
+                    font-weight:900;
                     padding:0;
                 }
+                a {
+                    padding-left: 10px;
+                }
                 a, a>div, a>div>img {
-                    height: 60px;
-                    max-height:60px;
+                    height: 55px;
+                    max-height:55px;
                     width: auto;
                     margin: 0;
                     display:block;
@@ -1156,6 +1168,10 @@ body {
                 margin: 30px auto 0;
                 /* padding-bottom: 30px; */
                 padding:30px 0 20px;
+
+                .narrow, .wide {
+                    min-width:unset;
+                }
 
                 .line {
                     display:none!important;
@@ -1174,19 +1190,22 @@ body {
                     }
                 }
             }
-            .conversation-container {
+            .conversation-container-wrapper {
+                height: calc(100vh - 180px);
+                min-height:calc(100vh - 180px);
+                margin: 0 auto;
+
                 &.mask {
                     -webkit-mask-image: -webkit-gradient(linear, left top, left 10%, from(rgba(0,0,0,0)), to(rgba(0,0,0,1)));
                 }
 
-                max-height:calc(100vh - 180px);
+                .conversation-container {
+                    margin: 10px auto 0;
 
-                padding: 10px;
-                margin: 20px auto 0;
-
-                .ai-comment,
-                .user-comment {
-                    max-width: 80%;
+                    .ai-comment,
+                    .user-comment {
+                        max-width: 80%;
+                    }
                 }
             }
         }
