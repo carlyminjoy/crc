@@ -712,7 +712,7 @@ body {
         }
 
         a {
-            display: contents;
+            display: block;
             height: 60px;
             max-height: 60px;
         }
@@ -722,7 +722,7 @@ body {
             border-radius: 5px; 
             box-shadow: 0px 0px 2px #00000016;
             margin-right: 10px;
-            height: 100%;
+            height: 60px;
             padding-left: 15px; 
             padding-right: 20px;
             image-rendering: -moz-crisp-edges; /* Firefox */

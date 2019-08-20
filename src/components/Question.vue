@@ -137,6 +137,7 @@ $dark-blue: #2c3e50;
 
     .ready {
         padding: 10px 15px 0 5px;
+        
 
         .ask {
             margin-bottom: 10px;
@@ -223,10 +224,8 @@ $dark-blue: #2c3e50;
                 display:none;
             }
 
-            @media screen and (max-width: 750px) {
-                label,input {
-                    max-height: 30px;
-                }
+            label,input {
+                max-height: 30px;
             }
 
             &.selected {
