@@ -1107,12 +1107,12 @@ body {
             &.rotate {
                 transform: rotateY(180deg);
 
-                    .front {
-                        opacity: 0;
+                    &>.front {
+                        opacity: 0!important;
                     }
 
-                    .back {
-                        opacity: 1;
+                    &>.back {
+                        opacity: 1!important;
                     }
                 
             }
