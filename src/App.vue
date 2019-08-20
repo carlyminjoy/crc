@@ -197,8 +197,13 @@ export default {
 
 @font-face {
     font-family: Foco CC;
-    src:    url('https://cancerqld.blob.core.windows.net/content/landing-pages/taxappeal/fonts/FocoCC_W_Rg.e56f62bc.woff'), 
-            url('https://cancerqld.blob.core.windows.net/content/landing-pages/taxappeal/fonts/FocoCC_W_Blk.fe3819a9.woff')
+    src:    url('https://cancerqld.blob.core.windows.net/content/landing-pages/taxappeal/fonts/FocoCC_W_Rg.e56f62bc.woff')
+            format('woff');
+}
+
+@font-face {
+    font-family: Foco CC Black;
+    src:    url('https://cancerqld.blob.core.windows.net/content/landing-pages/taxappeal/fonts/FocoCC_W_Blk.fe3819a9.woff')
             format('woff');
 }
 
@@ -433,10 +438,9 @@ export default {
                 align-items:center;
                 max-height: 100px;
 
-                h1 {
+                & > h1.heading {
                     line-height: 18px;
                     font-size: 22px;
-                    font-weight: 800;
                 }
 
                 a {
