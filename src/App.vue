@@ -228,6 +228,18 @@ export default {
             margin: 0 auto;
             position: relative;
 
+            h1.heading {
+                max-width: 200px;
+                text-align: left;
+                line-height: 1.8rem;
+                font-family: 'Foco CC Black';
+
+                .yellow-fullstop {
+                    font-size: 40px;
+                    color: $yellow;
+                }
+            }
+
             a {
                 display: contents;
                 height: 60px;
@@ -254,18 +266,6 @@ export default {
                     width: auto;
                 }
             }
-        }
-    }
-
-    h1.heading {
-        font-weight: 800;
-        max-width: 200px;
-        text-align: left;
-        line-height: 1.8rem;
-
-        .yellow-fullstop {
-            font-size: 40px;
-            color: $yellow;
         }
     }
 
