@@ -411,13 +411,24 @@ export default {
                 border-bottom: 3px solid $yellow;
                 display:flex;
                 align-items:center;
+                max-height: 100px;
+
                 h1 {
                     line-height: 24px;
                     font-size: 24px;
                 }
-                div.cancer-council-logo {
-                    margin-top: 0;
-                    margin-left: 10px;
+
+                a {
+                    height:55px;
+                    max-height:55px;
+                    padding-left: 10px;
+
+                    div.cancer-council-logo {
+                        margin: 0 0 0 10px;
+                        height: 55px;
+                        width: auto;
+                        padding: 0 15px 5px 5px;
+                    }
                 }
             }
         }
