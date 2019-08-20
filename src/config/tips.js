@@ -32,7 +32,7 @@ export default {
         processedMeat: [
             'Swap the pepperoni in your sandwich for egg, tuna or chicken for protein boost.'
         ],
-        wholegrain: [
+        fibre: [
             'Choose brown rice instead of white, swap white for wholemeal pasta and bread varieties and avoid processed breakfast cereals.'
         ]
     },
