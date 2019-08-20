@@ -166,7 +166,7 @@
 
             </div>
 
-            <div class='conversation-container-wrapper' :class="{ mask: !state.isMozilla}" ref="mobileConversationEl">
+            <div v-if='!state.showResults' class='conversation-container-wrapper' :class="{ mask: !state.isMozilla }" ref="mobileConversationEl">
 
                 <div class="conversation-container" ref="conversationEl" v-if="!state.showResults">
 
@@ -688,7 +688,6 @@ body {
 .outer-container {
     min-height: 100vh;
     background:#eee;
-    padding: 10px 0;
 
     .heading-container {
         display: flex;
