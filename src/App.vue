@@ -590,8 +590,13 @@ export default {
 
 @font-face {
     font-family: Foco CC;
-    src:    url('https://cancerqld.blob.core.windows.net/content/landing-pages/taxappeal/fonts/FocoCC_W_Rg.e56f62bc.woff'), 
-            url('https://cancerqld.blob.core.windows.net/content/landing-pages/taxappeal/fonts/FocoCC_W_Blk.fe3819a9.woff')
+    src:    url('https://cancerqld.blob.core.windows.net/content/landing-pages/taxappeal/fonts/FocoCC_W_Rg.e56f62bc.woff')
+            format('woff');
+}
+
+@font-face {
+    font-family: Foco CC Black;
+    src:    url('https://cancerqld.blob.core.windows.net/content/landing-pages/taxappeal/fonts/FocoCC_W_Blk.fe3819a9.woff')
             format('woff');
 }
 
@@ -683,15 +688,29 @@ body {
 .outer-container {
     min-height: 100vh;
     background:#eee;
+    padding: 10px 0;
 
     .heading-container {
         display: flex;
         flex-direction: row;
-        width: 660px;
-        max-width: 100vw;
+        width: 100%;
+        max-width: 1020px;
         margin: 0 auto;
         position: relative;
-        overflow-y:hidden;
+        align-items:center;
+
+        h1.heading {
+            max-width: 200px;
+            text-align: left;
+            line-height: 1.8rem;
+            font-family: 'Foco CC Black';
+            line-height:32px;
+
+            .yellow-fullstop {
+                font-size: 40px;
+                color: $yellow;
+            }
+        }
 
         a {
             display: contents;
@@ -703,34 +722,19 @@ body {
             background: white;
             border-radius: 5px; 
             box-shadow: 0px 0px 2px #00000016;
-            margin-top: 12px;
             margin-right: 10px;
             height: 100%;
-            padding-top: 3px;
-            padding-left: 15px; padding-right: 20px;
+            padding-left: 15px; 
+            padding-right: 20px;
             image-rendering: -moz-crisp-edges; /* Firefox */
             image-rendering: -o-crisp-edges; /* Opera */
             image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming) */
             image-rendering: crisp-edges;
             -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
-            // display: none;
 
             img {
                 height: 60px;
-                width: auto
-            }
-        }
-
-        h1.heading {
-            padding: 23px 0;
-            font-weight: 800;
-            max-width: 200px;
-            text-align: left;
-            line-height: 1.8rem;
-
-            .yellow-fullstop {
-                font-size: 40px;
-                color: $yellow;
+                width: auto;
             }
         }
     }
