@@ -588,6 +588,13 @@ export default {
 
 <style lang='scss'>
 
+@font-face {
+    font-family: Foco CC;
+    src:    url('https://cancerqld.blob.core.windows.net/content/landing-pages/taxappeal/fonts/FocoCC_W_Rg.e56f62bc.woff'), 
+            url('https://cancerqld.blob.core.windows.net/content/landing-pages/taxappeal/fonts/FocoCC_W_Blk.fe3819a9.woff')
+            format('woff');
+}
+
 $blue: #0099DA;
 $yellow: #FCD208;
 $dark-blue: #2c3e50;
