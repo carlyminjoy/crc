@@ -600,6 +600,9 @@ $dark-blue: #2c3e50;
 
 html {
     margin-top:unset!important;
+    .grecaptcha-badge {
+        display:none;
+    }
 }
 body {
     margin: 0;
@@ -670,11 +673,9 @@ body {
         display: flex;
         flex-direction: row;
         width: 660px;
-        max-width: 100%;
+        max-width: 100vw;
         margin: 0 auto;
         position: relative;
-
-        // * { animation: fade-in 1s forwards; }
 
         a {
             display: contents;
@@ -850,7 +851,7 @@ body {
         }
 
         .circle {
-            margin: 15px 0;
+            margin: 15px auto;
             // padding: 0 30px;
             flex-basis: 150px;
             flex-grow: 1;
@@ -1100,6 +1101,7 @@ body {
     }
 }
 
+
 @media screen and (max-width: 800px) {
     #app {
 
@@ -1128,17 +1130,23 @@ body {
                 margin-right: -10px;
                 overflow-x:hidden;
                 max-height:90px;
+                text-align:center;
+                display:flex;
+                align-items:center;
 
                 h1.heading {
-                    margin: 0;
+                    margin: 5px 0 0 0;
                     font-size: 24px;
                     line-height: 24px;
                     font-weight:800;
+                    padding:0;
                 }
                 a, a>div, a>div>img {
-                    height: 55px;
-                    max-height:55px;
+                    height: 60px;
+                    max-height:60px;
                     width: auto;
+                    margin: 0;
+                    display:block;
                 }
             }
 
