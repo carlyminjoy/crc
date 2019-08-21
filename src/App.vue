@@ -246,12 +246,13 @@ export default {
             }
 
             a {
-                display: contents;
+                display: block;
                 height: 60px;
                 max-height: 60px;
             }
 
             .cancer-council-logo {
+                height:60px;
                 background: white;
                 border-radius: 5px; 
                 box-shadow: 0px 0px 2px #00000016;
