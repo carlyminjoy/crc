@@ -11,14 +11,13 @@
             <div class="ready" v-if="ready">
                 <div class='ask' v-html='question.text'></div>
 
-                <div class="responses" :class="{'hide' : selected}">
+                <div class="responses">
 
                     <div v-for="(option, index) in question.options" :class="{ 'selected' : option.score === question.score }" :key="index">
 
                         <label :class='id' :for="id + index">{{ option.label }} </label>
                         <input @click="selectOption(option)" 
                                 :id="id + index" 
-                                :disabled="selected" 
                                 v-model="question.score" 
                                 type="radio" 
                                 :name="id + option.label" 
@@ -54,12 +53,10 @@ export default {
             })
         },
         selectOption(option) {
-            // if (this.question.score === null) {
             this.question.score = option.score
-            // }
 
             if (!this.selected) {
-                this.selected = true;   
+                this.selected = true;
                 this.$emit('addstep')
             }
         }
