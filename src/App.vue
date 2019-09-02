@@ -803,6 +803,7 @@ body {
         max-width:400px;
         margin: 6px 0 6px auto;
         height:auto;
+        align-self:flex-end;
         @extend %boxshadow;
     }
 }
