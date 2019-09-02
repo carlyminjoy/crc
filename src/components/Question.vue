@@ -11,7 +11,7 @@
             <div class="ready" v-if="ready">
                 <div class='ask' v-html='question.text'></div>
 
-                <div class="responses">
+                <div class="responses" :class="{ 'hide' : selected && ['weight', 'disclaimer'].includes(question.category) }">
 
                     <div v-for="(option, index) in question.options" :class="{ 'selected' : option.score === question.score }" :key="index">
 
@@ -222,7 +222,9 @@ $dark-blue: #2c3e50;
             }
 
             label,input {
-                max-height: 30px;
+                min-height: 25px;
+                max-height: 90px;
+                height:auto!important;
             }
 
             &.selected {

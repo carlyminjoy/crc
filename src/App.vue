@@ -322,7 +322,6 @@ export default {
             } else {
                 if (nextStep.question) {
                     vm.state.activeCategory = nextStep.category
-                    // setTimeout(() => vm.scrollToBottom(), 1300)
     
                     if (!nextStep.display(vm.steps)) {
                         setTimeout(() => vm.currentStep++ && vm.scrollToBottom(), timers.short)
@@ -332,7 +331,6 @@ export default {
                 }  else {
                     setTimeout(() => {
                         vm.currentStep++;
-                        // setTimeout(() => vm.scrollToBottom(), 150)
                     }, (nextStep.delay ? timers.long : timers.med))
                 }
             }
@@ -507,7 +505,7 @@ export default {
                     identify: vm.steps.find(s => s.id === 'identify').score
                 },
                 uv: {
-                    clothing: vm.steps.find(s => s.id === 'clothing'),
+                    clothing: vm.steps.find(s => s.id === 'clothing').score,
                     hat: vm.steps.find(s => s.id === 'hat').score,
                     sunscreen: vm.steps.find(s => s.id === 'sunscreen').score,
                     shade: vm.steps.find(s => s.id === 'shade').score,

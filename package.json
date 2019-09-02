@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx parcel ./src/index.html --out-dir dist --no-cache --log-level 1",
+    "start": "npx parcel ./src/index.html --out-dir dist --no-cache --no-source-maps",
     "build": "npx parcel build ./src/index.html --out-dir build --no-source-maps --no-cache --no-minify --public-url ./",
     "i-vsts-npm": "npm install -g vsts-npm-auth",
     "refreshToken": "vsts-npm-auth -config .npmrc"
