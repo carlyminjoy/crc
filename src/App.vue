@@ -316,7 +316,7 @@ export default {
 
             if (nextIsFinalStep) {
                 vm.state.activeCategory = 'results'
-                vm.calculateResults()
+                vm.calculateResults();
                 vm.showResults();
                 
             } else {
@@ -325,7 +325,6 @@ export default {
     
                     if (!nextStep.display(vm.steps)) {
                         setTimeout(() => vm.currentStep++ && vm.scrollToBottom(), timers.short)
-
                     }
     
                 }  else {
@@ -541,9 +540,9 @@ export default {
                     total: vm.results['physical activity']
                 },
                 screening: {
-                    breastScreening: vm.steps.find(s => s.id === 'breastScreening').score ? vm.steps.find(s => s.id === 'breastScreening').score : null,
-                    bowelScreening: vm.steps.find(s => s.id === 'bowelScreening').score ? vm.steps.find(s => s.id === 'bowelScreening').score : null,
-                    cervicalScreening: vm.steps.find(s => s.id === 'cervicalScreening').score ? vm.steps.find(s => s.id === 'cervicalScreening').score : null,
+                    breastScreening: vm.steps.find(s => s.id === 'breastScreening').score,
+                    bowelScreening: vm.steps.find(s => s.id === 'bowelScreening').score,
+                    cervicalScreening: vm.steps.find(s => s.id === 'cervicalScreening').score,
                     total: vm.results.screening
                 },
                 total: vm.results.total,
