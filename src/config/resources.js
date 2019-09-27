@@ -29,7 +29,7 @@ export default {
             text: `Dietary fibre factsheet`,
             cta: 'Download',
             download: true,
-            questionId: 'wholegrain'
+            questionId: 'fibre'
         },
         {
             url: 'https://cancerqld.blob.core.windows.net/resources/quest/Healthy%20Eating_%20FACTSHEET.pdf',
