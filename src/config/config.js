@@ -21,7 +21,7 @@ export default {
                     aiResponse: ""
                 }
             ],
-            text: `<em>The results of this quiz provide generalised recommendations on how you can reduce your cancer risk based on the answers you provide.<br><br> These should not be used as a substitute for advice from a qualified medical professional who can advise you about your own individual medical needs.<br><br>See our <a href='#' target='_blank'>disclaimer</a>.</em>`
+            text: `<em>The Cancer Risk Calculator provides generalised recommendations on how you can reduce your cancer risk based on your answers to a range of health-related questions. This information should not be used as a substitute for advice from a qualified medical professional who can advise you about your own individual medical needs.<br><br>See our <a href='#' target='_blank'>disclaimer</a>.</em>`
         },
         {
             question: false,
