@@ -29,166 +29,183 @@
 				Please check the link and try again.
 			</h3>
 
-			<div class="results-container" v-else-if="latestScorecard">
-				<div class="overview">
-					<h1 class="total-score">
-                        <strong>Hi {{ latestScorecard.firstName }},
+			<div class='results-container' v-else-if="latestScorecard">
+                <div class="tabs-container">
+                    <ul class='tabs'>
+                        <li :class="{active : tab == 'scorecard'}" @click="tab = 'scorecard'">
+                            <i class='fa fa-star'></i>Scorecard</li>
+                        <li :class="{active : tab == 'history'}" @click="tab = 'history'">
+                            <i class='fa fa-history'></i>History</li>
+                    </ul>
+                    <div class='slider' :class="{ 'right' : tab == 'history' }"></div>
+                </div>
 
-                        <span
-                            v-if="
-                                parseInt(latestScorecard.scores.total) ===
-                                    100"
-                        >
-                            well done!
-                        </span>
+                <div class="inner-container">
+                    <div class="overview">
+                        <h1 class="total-score">
+                            <strong>Hi {{ latestScorecard.firstName }},
 
-                        <span
-                            v-else-if="
-                                parseInt(latestScorecard.scores.total) >= 75"
-                        >
-                            you're doing well.
-                        </span>
+                            <span
+                                v-if="
+                                    parseInt(latestScorecard.scores.total) ===
+                                        100"
+                            >
+                                well done!
+                            </span>
 
-                        <span
-                            v-else-if="
-                                parseInt(latestScorecard.scores.total) >= 50"
-                        >
-                            you're on the right track.</span
-                        >
+                            <span
+                                v-else-if="
+                                    parseInt(latestScorecard.scores.total) >= 75"
+                            >
+                                you're doing well.
+                            </span>
 
-                        <span v-else
-                            >there's room for improvement.
-                        </span></strong>
+                            <span
+                                v-else-if="
+                                    parseInt(latestScorecard.scores.total) >= 50"
+                            >
+                                you're on the right track.</span
+                            >
 
-						<br />Your total score is:
-					</h1>
+                            <span v-else
+                                >there's room for improvement.
+                            </span></strong>
 
-					<div class="score-container">
-						<div class="line"></div>
+                            <br />Your total score is:
+                        </h1>
 
-						<transition name="score">
-							<div
-								v-if="showScore"
-								class="score-number-container"
-							>
-								<span class="score-number">{{
-									latestScorecard.scores.total
-								}}</span>
-							</div>
-						</transition>
+                        <div class="score-container">
+                            <div class="line"></div>
 
-						<vue-circle
-							:progress="latestScorecard.scores.total"
-							:size="150"
-							:reverse="false"
-							line-cap="butt"
-							:fill="{
-								gradient: ['#43A047', '#FCD208'],
-								gradientDirection: [30, 140, 140, 60]
-							}"
-							empty-fill="#eee"
-							:animation-start-value="0.0"
-							:start-angle="-(Math.PI / 2)"
-							insert-mode="append"
-							:thickness="10"
-							:show-percent="false"
-						>
-						</vue-circle>
+                            <transition name="score">
+                                <div
+                                    v-if="showScore"
+                                    class="score-number-container"
+                                    :class="{ 'compare' : previousScorecard }"
+                                >
+                                    <span class="score-number">
+                                        {{ latestScorecard.scores.total }}
+                                        <span class='compare-number' v-if='previousScorecard'>
+                                            <i class='fa fa-caret-up'></i>{{ latestScorecard.scores.total - previousScorecard.scores.total }}
+                                        </span>
+                                    </span>
 
-						<div class="line"></div>
-					</div>
+                                </div>
+                            </transition>
 
-					<p class="score-date">
-						Based on your answers from {{ date }}
-					</p>
+                            <vue-circle
+                                :progress="latestScorecard.scores.total"
+                                :size="150"
+                                :reverse="false"
+                                line-cap="butt"
+                                :fill="{
+                                    gradient: ['#43A047', '#FCD208'],
+                                    gradientDirection: [30, 140, 140, 60]
+                                }"
+                                empty-fill="#eee"
+                                :animation-start-value="0.0"
+                                :start-angle="-(Math.PI / 2)"
+                                insert-mode="append"
+                                :thickness="10"
+                                :show-percent="false"
+                            >
+                            </vue-circle>
 
-					<div v-if="previousScorecard && improvedCategories.length > 0" class='improvements'>
-                        <h3>
-                            In the last <strong>{{ dateDiff }} days</strong>, 
-                            your score has improved in:
+                            <div class="line"></div>
+                        </div>
+
+                        <p class="score-date">
+                            Based on your answers from {{ date }}
+                        </p>
+
+                        <div v-if="previousScorecard && improvedCategories.length > 0" class='improvements'>
+                            <h3>
+                                In the last <strong>{{ dateDiff }} days</strong>, 
+                                your score has improved in:
+                            </h3>
+
+                            <h2>
+                                {{ improvedCategories.join(', ') }}
+                            </h2>
+
+                            <h3>Keep up the good work!</h3>
+                        </div>
+
+                        <h3 class='explanation' v-if='!previousScorecard'>
+                            This score is out of 100 and calculates how much you are
+                            reducing your cancer risk through healthy lifestyle
+                            behaviours. The higher your score, the more ways you are
+                            currently reducing your cancer risk. <br /><br /><strong
+                                >Aim for 100 to improve your health!</strong
+                            >
                         </h3>
-
-                        <h2>
-                            {{ improvedCategories.join(', ') }}
-                        </h2>
-
-                        <h3>Keep up the good work!</h3>
                     </div>
 
-					<h3 class='explanation' v-if='!previousScorecard'>
-						This score is out of 100 and calculates how much you are
-						reducing your cancer risk through healthy lifestyle
-						behaviours. The higher your score, the more ways you are
-						currently reducing your cancer risk. <br /><br /><strong
-							>Aim for 100 to improve your health!</strong
-						>
-					</h3>
-				</div>
+                    <div v-if='!previousScorecard' class="guide-download">
+                        <div class="img-container">
+                            <img
+                                src="https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/guide-resource-cropped.png"
+                            />
+                        </div>
+                        <div class="content">
+                            <p>
+                                Our cut your cancer risk guide contains a broad
+                                overview on how you can reduce your cancer risk.
+                            </p>
+                            <download
+                                link="https://cancerqld.blob.core.windows.net/resources/quest/Cut%20your%20cancer%20risk_DL_v09%20(002).pdf"
+                                >Download</download
+                            >
+                        </div>
+                    </div>
 
-				<div v-if='!previousScorecard' class="guide-download">
-					<div class="img-container">
-						<img
-							src="https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/guide-resource-cropped.png"
-						/>
-					</div>
-					<div class="content">
-						<p>
-							Our cut your cancer risk guide contains a broad
-							overview on how you can reduce your cancer risk.
-						</p>
-						<download
-							link="https://cancerqld.blob.core.windows.net/resources/quest/Cut%20your%20cancer%20risk_DL_v09%20(002).pdf"
-							>Download</download
-						>
-					</div>
-				</div>
+                    <span v-for="(category, index) in scorecards" :key="index">
+                        <category
+                            :category="category"
+                            :index="index"
+                            :gender="latestScorecard.gender"
+                            :improvement='checkImprovement(category.name)'
+                            :decline='checkDecline(category.name)'
+                        ></category>
 
-				<span v-for="(category, index) in scorecards" :key="index">
-					<category
-						:category="category"
-						:index="index"
-						:gender="latestScorecard.gender"
-                        :improvement='checkImprovement(category.name)'
-                        :decline='checkDecline(category.name)'
-					></category>
+                        <div
+                            class="category-break"
+                            v-if="index + 1 < scorecards.length &&
+                                    scorecards[index].bad.length === 0 &&
+                                    scorecards[index + 1].bad.length > 0"
+                        ></div>
+                    </span>
 
-					<div
-						class="category-break"
-						v-if="index + 1 < scorecards.length &&
-								scorecards[index].bad.length === 0 &&
-								scorecards[index + 1].bad.length > 0"
-					></div>
-				</span>
+                    <h3 class='explanation' v-if='previousScorecard'>
+                        <br><br>
+                        This score is out of 100 and calculates how much you are
+                        reducing your cancer risk through healthy lifestyle
+                        behaviours. The higher your score, the more ways you are
+                        currently reducing your cancer risk. <br /><br /><strong
+                            >Aim for 100 to improve your health!</strong
+                        >
+                        <br><br>
+                    </h3>
 
-                <h3 class='explanation' v-if='previousScorecard'>
-                    <br><br>
-                    This score is out of 100 and calculates how much you are
-                    reducing your cancer risk through healthy lifestyle
-                    behaviours. The higher your score, the more ways you are
-                    currently reducing your cancer risk. <br /><br /><strong
-                        >Aim for 100 to improve your health!</strong
-                    >
-                    <br><br>
-                </h3>
+                    <div v-if='previousScorecard' class="guide-download">
+                        <div class="img-container">
+                            <img
+                                src="https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/guide-resource-cropped.png"
+                            />
+                        </div>
+                        <div class="content">
+                            <p>
+                                Our cut your cancer risk guide contains a broad
+                                overview on how you can reduce your cancer risk.
+                            </p>
+                            <download
+                                link="https://cancerqld.blob.core.windows.net/resources/quest/Cut%20your%20cancer%20risk_DL_v09%20(002).pdf"
+                                >Download</download
+                            >
+                        </div>
 
-                <div v-if='previousScorecard' class="guide-download">
-					<div class="img-container">
-						<img
-							src="https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/guide-resource-cropped.png"
-						/>
-					</div>
-					<div class="content">
-						<p>
-							Our cut your cancer risk guide contains a broad
-							overview on how you can reduce your cancer risk.
-						</p>
-						<download
-							link="https://cancerqld.blob.core.windows.net/resources/quest/Cut%20your%20cancer%20risk_DL_v09%20(002).pdf"
-							>Download</download
-						>
-					</div>
-
-				</div>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</div>
@@ -223,6 +240,7 @@ export default {
 			latestScorecard: null,
 			previousScorecard: null,
             showScore: false,
+            tab: 'scorecard',
 			state: {
 				isIe: false,
 				isMozilla: false
@@ -489,7 +507,6 @@ export default {
 
 	.results-container {
 		background: #fff;
-		padding: 30px;
 		border-radius: 8px;
 		max-width: 960px;
 		margin: 30px auto;
@@ -497,6 +514,57 @@ export default {
 		height: auto;
 		position: relative;
 		@extend %boxshadow;
+
+        .inner-container {
+            padding: 30px;
+        }
+
+        .tabs-container {
+            .slider {
+                width: 50%;
+                height: 2px;
+                background: $blue;
+                display:block;
+                transition: 0.5s ease;
+                position:relative;
+                left: 0;
+
+                &.right {
+                    transition: 0.5s ease;
+                    left: 50%;
+                }
+            }
+
+            .tabs {
+                display:flex;
+                list-style-type:none;
+                padding-inline-start:0;
+                flex-direction:row;
+                justify-content: space-between;
+                margin: 0;
+                font-size: 18px;
+                cursor: pointer;
+
+                li {
+                    text-align:center;
+                    text-transform:uppercase;
+                    padding: 20px 0 15px 0;
+                    flex-basis: 50%;
+                    flex-grow: 1;
+                    transition: 0.5s ease;
+
+                    &.active {
+                        transition: 0.5s ease;
+                        color:$blue;
+                    }
+
+                    i {
+                        margin-right: 20px;
+                    }
+                }
+            }
+        }
+
 
 		.guide-download {
 			display: flex;
@@ -580,7 +648,28 @@ export default {
 				text-align: center;
 				top: calc(50% - 28px);
 
-				span.score-number {
+                .compare-number {
+                    display:none;
+                    font-size: 16px;
+                    margin-top: -15px;
+                    font-weight: 800;
+
+                    i {
+                        margin-right: 6px;
+                        color: #5ebc5e;
+                        font-size: 24px;
+                    }
+                }
+
+                &.compare {
+                    top: calc(50% - 40px)!important;
+
+                    .compare-number {
+                        display:block;
+                    }
+                }
+
+				span.score-number{
 					font-size: 48px;
 					font-weight: 600;
 				}
