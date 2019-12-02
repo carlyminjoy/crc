@@ -148,8 +148,8 @@
 						:category="category"
 						:index="index"
 						:gender="latestScorecard.gender"
-                        :improvement='latestScorecard.scores[category.name] > previousScorecard.scores[category.name]'
-                        :decline='latestScorecard.scores[category.name] < previousScorecard.scores[category.name]'
+                        :improvement='checkImprovement(category.name)'
+                        :decline='checkDecline(category.name)'
 					></category>
 
 					<div
@@ -280,6 +280,23 @@ export default {
 		}
 	},
 	methods: {
+        checkImprovement(category) {
+            let vm = this;
+
+            if (!vm.previousScorecard) { return false }
+
+            return vm.latestScorecard.scores[category] > vm.previousScorecard.scores[category]
+        },
+        checkDecline(category) {
+            let vm = this;
+
+            console.log('category', category)
+            console.log('previousScorecard', vm.previousScorecard)
+
+            if (!vm.previousScorecard) { return false }
+
+            return vm.latestScorecard.scores[category] < vm.previousScorecard.scores[category]
+        },
 		getCategoryObj(category) {
 			let vm = this;
 
@@ -289,22 +306,27 @@ export default {
 
 			categoryObj.good = vm.latestScorecard.recommendations.filter(
 				rec => rec.category === category && rec.score == 100
-            ).map(question => {
-                let prevScore = vm.previousScorecard.recommendations.find(r => r.id == question.id).score;
-                question.improvement = question.score > prevScore
-                question.decline = question.score < prevScore
-                return question
-            })
-			categoryObj.bad = vm.latestScorecard.recommendations.filter(
-				rec => rec.category === category && rec.score != 100
-			).map(q => {
-                let prevScore = vm.previousScorecard.recommendations.find(r => r.id == q.id).score;
-                q.improvement = q.score > prevScore
-                q.decline = q.score < prevScore
-                return q
-            })
+            )
 
-            console.log('categoryObj', categoryObj)
+            categoryObj.bad = vm.latestScorecard.recommendations.filter(
+				rec => rec.category === category && rec.score != 100
+			)
+            
+            if (vm.previousScorecard) {
+                categoryObj.good = categoryObj.good.map(question => {
+                    let prevScore = vm.previousScorecard.recommendations.find(r => r.id == question.id).score;
+                    question.improvement = question.score > prevScore
+                    question.decline = question.score < prevScore
+                    return question
+                })
+
+                categoryObj.bad = categoryObj.bad.map(q => {
+                    let prevScore = vm.previousScorecard.recommendations.find(r => r.id == q.id).score;
+                    q.improvement = q.score > prevScore
+                    q.decline = q.score < prevScore
+                    return q
+                })
+            }
 
 			return categoryObj;
 		},
@@ -324,10 +346,10 @@ export default {
                         return sc
                     });
 
-                    vm.latestScorecard = vm.results[0].entry;
                     if (vm.results.length > 1) {
                         vm.previousScorecard = vm.results[1].entry;
                     }
+                    vm.latestScorecard = vm.results[0].entry;
 
                     setTimeout(() => (vm.showScore = true), 500);
 				})
