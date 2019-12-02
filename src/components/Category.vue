@@ -1,488 +1,533 @@
 <template>
-    
-    <div class="category" >
+	<div class="category">
+		<div class="category-heading" @click="expanded = !expanded">
+			<div class="heading-container">
+				<span>
+					<span class="img-container">
+						<img :src="icons[category.name]" />
+					</span>
 
-        <div class='category-heading'
-            @click='expanded = !expanded'>
-            
-            <div class='heading-container'>
-                <span>
-                    <span class='img-container'>
-                        <img :src='icons[category.name]' />
-                    </span>
+					<div class="caret-container">
+						<i v-if="improvement" class="fa fa-caret-up"></i>
+						<i v-if="decline" class="fa fa-caret-down"></i>
+					</div>
 
-                    {{ category.name.toUpperCase() }}
-                </span>
+					{{ category.name.toUpperCase() }}
+				</span>
 
-                <span class='category-icons'>
-                    <span v-if='category.bad.length === 0'><i class='fa fa-check-circle'></i></span>
+				<span class="category-icons">
+					<span v-if="category.bad.length === 0"
+						><i class="fa fa-check-circle"></i
+					></span>
 
-                    <template v-if='category.bad.length > 0'>
-                        <span class='numbered-exclamation'>{{category.bad.length}} &nbsp;</span>
-                        <i class='fa fa-exclamation-circle'></i>
-                    </template>
-                </span>
-            </div>
+					<template v-if="category.bad.length > 0">
+						<span class="numbered-exclamation"
+							>{{ category.bad.length }} &nbsp;</span
+						>
+						<i class="fa fa-exclamation-circle"></i>
+					</template>
+				</span>
+			</div>
 
-            <span class='expand-tag'>
-                <i v-if='!expanded' class='fa fa-chevron-down'></i>
-                <i v-else class='fa fa-chevron-up'></i>
-            </span>
+			<span class="expand-tag">
+				<i v-if="!expanded" class="fa fa-chevron-down"></i>
+				<i v-else class="fa fa-chevron-up"></i>
+			</span>
+		</div>
 
-        </div>
+		<div
+			class="blue"
+			:class="{ contracted: !expanded }"
+			v-if="category.good.length > 0"
+		>
+			<h2>You're doing great in the following areas:</h2>
 
-        <div class="blue" :class="{'contracted' : !expanded}" v-if="category.good.length > 0">
+			<ul>
+				<feedback
+					v-for="(section, i) in category.good"
+					:section="section"
+					:good="true"
+					:key="i"
+				></feedback>
+			</ul>
+		</div>
 
-            <h2>You're doing great in the following areas:</h2>
+		<div
+			class="grey"
+			:class="{ contracted: !expanded }"
+			v-if="category.bad.length > 0"
+		>
+			<h2>Areas for improvement:</h2>
+			<ul class="improvements">
+				<feedback
+					v-for="(section, i) in category.bad"
+					:section="section"
+					:good="false"
+					:key="i"
+				></feedback>
+			</ul>
 
-            <ul>
-                <feedback v-for='(section, i) in category.good' :section='section' :good='true' :key='i'></feedback>
-            </ul>
+			<template v-if="category.tips && category.tips.length > 0">
+				<h2 class="m0">Tips:</h2>
+				<ul class="tips">
+					<li
+						v-for="(tip, index) in category.tips"
+						:key="index"
+						v-html="tip"
+					></li>
+				</ul>
+			</template>
+		</div>
 
-        </div>
-
-        <div class="grey" :class="{'contracted' : !expanded}" v-if="category.bad.length > 0">
-            <h2>Areas for improvement:</h2>
-            <ul class='improvements'>
-                <feedback v-for='(section, i) in category.bad' :section='section' :good='false' :key='i'></feedback>
-            </ul>
-
-            <template v-if="category.tips && category.tips.length > 0">
-                <h2 class="m0">Tips:</h2>
-                <ul class="tips">
-                    <li v-for="(tip,index) in category.tips" :key="index" v-html='tip'></li>
-                </ul>
-            </template>
-
-        </div>
-
-        <div v-if='filteredResources.length > 0' class='resources-container' :class="{'contracted' : !expanded}">
-
-            <h2>Resources and links:</h2>
-            <ul class="resources">
-                <resource v-for='resource in filteredResources' :resource='resource'></resource>
-            </ul>
-
-        </div>
-
-    </div>
+		<div
+			v-if="filteredResources.length > 0"
+			class="resources-container"
+			:class="{ contracted: !expanded }"
+		>
+			<h2>Resources and links:</h2>
+			<ul class="resources">
+				<resource
+					v-for="(resource, index) in filteredResources"
+					:key="index"
+					:resource="resource"
+				></resource>
+			</ul>
+		</div>
+	</div>
 </template>
 
 <script>
-
-import { default as Tips } from './../config/tips.js'
-import { default as Icons } from './../config/icons.js'
-import { default as Resources } from './../config/resources.js'
-import { default as Resource } from './Resource.vue'
-import { default as Feedback } from './Feedback.vue'
+import { default as Tips } from './../config/tips.js';
+import { default as Icons } from './../config/icons.js';
+import { default as Resources } from './../config/resources.js';
+import { default as Resource } from './Resource.vue';
+import { default as Feedback } from './Feedback.vue';
 
 export default {
-    name: 'category',
-    props: ['category', 'index', 'gender'],
-    components: {
-        Feedback,
-        Resource
-    },
-	data () {
+	name: 'category',
+	props: ['category', 'index', 'gender', 'improvement', 'decline'],
+	components: {
+		Feedback,
+		Resource
+	},
+	data() {
 		return {
-            tips: Tips,
-            resources: Resources,
-            expanded: false,
-            icons: Icons
+			tips: Tips,
+			resources: Resources,
+			expanded: false,
+			icons: Icons
+		};
+	},
+	computed: {
+		filteredResources() {
+			let vm = this;
+			return vm.resources[vm.category.name].filter(r =>
+				vm.showResource(r)
+			);
 		}
-    },
-    computed: {
-        filteredResources() {
-            let vm = this;
-            return vm.resources[vm.category.name].filter(r => vm.showResource(r))
-        },
-    },
-    methods: {
-        getTips() {
-            let vm = this;
-            let tips = [];
+	},
+	methods: {
+		getTips() {
+			let vm = this;
+			let tips = [];
 
-            let tipQuestions = vm.tips[vm.category.name];
+			let tipQuestions = vm.tips[vm.category.name];
 
-            if (tipQuestions) {
-                Object.keys(tipQuestions).forEach(q => {
-                    let badCategoryObj = vm.category.bad.find((o) => o.id === q)
-                    if (badCategoryObj && !(badCategoryObj.bmi && parseInt(badCategoryObj.bmi) < 20)) {
-                        tipQuestions[q].forEach(t => tips.push(t))
-                    }
-                })
-            }
+			if (tipQuestions) {
+				Object.keys(tipQuestions).forEach(q => {
+					let badCategoryObj = vm.category.bad.find(o => o.id === q);
+					if (
+						badCategoryObj &&
+						!(
+							badCategoryObj.bmi &&
+							parseInt(badCategoryObj.bmi) < 20
+						)
+					) {
+						tipQuestions[q].forEach(t => tips.push(t));
+					}
+				});
+			}
 
-            return tips.length > 0 ? tips : null;
-        },
-        showResource(resource) {
-            let vm = this;
-            let category = vm.category;
+			return tips.length > 0 ? tips : null;
+		},
+		showResource(resource) {
+			let vm = this;
+			let category = vm.category;
 
-            let matchingQuestionId = category.bad.map(q => q.id).includes(resource.questionId)
-            let matchingGender = vm.gender === resource.gender
-            let conditionalDisplay = resource.hasOwnProperty('questionId') || resource.hasOwnProperty('gender')
+			let matchingQuestionId = category.bad
+				.map(q => q.id)
+				.includes(resource.questionId);
+			let matchingGender = vm.gender === resource.gender;
+			let conditionalDisplay =
+				resource.hasOwnProperty('questionId') ||
+				resource.hasOwnProperty('gender');
 
-            return !conditionalDisplay || matchingQuestionId || matchingGender
-        }
-    },
-    mounted() {
-        let vm = this;
+			return !conditionalDisplay || matchingQuestionId || matchingGender;
+		}
+	},
+	mounted() {
+		let vm = this;
 
-        vm.category.tips = vm.getTips();
-    }
-}
+		vm.category.tips = vm.getTips();
+	}
+};
 </script>
 
-
-<style lang='scss' >
-
+<style lang="scss">
 @import './../styles/variables.scss';
 
 .category {
-    background: #eee;
-    color: #fff;
-    margin: 15px;
-    @extend %boxshadow;
-    border-radius: 8px;
-    text-align:left;
-    transition: 0.3s;
+	background: #eee;
+	color: #fff;
+	margin: 15px;
+	@extend %boxshadow;
+	border-radius: 8px;
+	text-align: left;
+	transition: 0.3s;
 
-    .category-heading {
-        &:hover {
-            background: $blue;
-            cursor:pointer;
-        
-            & > div.heading-container span.category-icons .fa-check-circle {
-                color:#fff;
-            }
-        }
-        background: $dark-blue;
-        transition: 0.3s ease;
-        border-radius: 8px 8px 0 0;
-        display:flex;
-        justify-content:stretch;
+	.category-heading {
+		&:hover {
+			background: $blue;
+			cursor: pointer;
 
+			& > div.heading-container span.category-icons .fa-check-circle {
+				color: #fff;
+			}
+		}
+		background: $dark-blue;
+		transition: 0.3s ease;
+		border-radius: 8px 8px 0 0;
+		display: flex;
+		justify-content: stretch;
 
-        .img-container {
-            width: 40px;
-            text-align:center;
-            display:inline-block;
-            height: 40px;
-            justify-content:center;
-            align-items:center;
-            margin-right: 15px;
+		.caret-container {
+			width: 30px;
+			text-align: left;
 
-            img {
-                margin-top: 2px;
-                height:36px;
-            }
-        }
+			i.fa-caret-up {
+				color: #5ebc5e;
+			}
 
-        &>div.heading-container {
-            color:#fff;
-            padding: 10px 30px;
-            margin: 0;
-            flex-basis: 300px;
-            flex-grow: 1;
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            font-size: 24px;
-            font-family: 'Foco CC', 'Roboto', Arial, sans-serif;
+			i.fa-caret-down {
+				color: $yellow;
+			}
+		}
 
-            &>span:not(.category-icons) {
-                display:flex;
-                align-items:center;
-                line-height: 20px;
-            }
-            span.category-icons {
-                float:right;
-                width: 60px;
-                display:flex;
-                pointer-events:none;
-                // align-items:center;
-                justify-content:flex-end;
+		.img-container {
+			width: 40px;
+			text-align: center;
+			display: inline-block;
+			height: 40px;
+			justify-content: center;
+			align-items: center;
+			margin-right: 15px;
 
-                .blue-text {
-                    color: $blue;
-                }
+			img {
+				margin-top: 2px;
+				height: 36px;
+			}
+		}
 
-                .yellow-text {
-                    // color: $yellow;
-                    color:$dark-blue;
-                    background:$yellow;
-                    width: 25px;
-                    height:25px;
-                    border-radius: 50%;
-                    text-align:center;
-                    line-height:25px;
-                    font-size: 18px;
-                    font-weight: 800;
-                }
+		& > div.heading-container {
+			color: #fff;
+			padding: 10px 30px;
+			margin: 0;
+			flex-basis: 300px;
+			flex-grow: 1;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			font-size: 24px;
+			font-family: 'Foco CC', 'Roboto', Arial, sans-serif;
 
-                .fa-check-circle {
-                    color: $blue;
-                    transition: 0.3s ease;
-                }
+			& > span:not(.category-icons) {
+				display: flex;
+				align-items: center;
+				line-height: 20px;
+			}
+			span.category-icons {
+				float: right;
+				width: 60px;
+				display: flex;
+				pointer-events: none;
+				align-items: center;
+				justify-content: flex-end;
 
-                .fa-exclamation-circle {
-                    color: $yellow;
-                }
-            }
-        }
+				span.numbered-exclamation {
+					line-height: 24px;
+					height: 24px;
+					font-size: 24px;
+				}
 
-        span.expand-tag {
-            flex-basis: 40px;
-            max-width: 40px;
-            flex-shrink:1;
-            padding: 5px 10px;
-            color:#fff;
-            font-size: 24px;
-            border-radius: 0 8px 0 0;
-            transition: 0.5s ease;
-            text-align:center;
-            display:flex;
-            align-items:center;
-            justify-content:center;
+				.fa-check-circle {
+					color: $blue;
+					transition: 0.3s ease;
+				}
 
-            &.yellow-expand {
-                background:$yellow;
-            }
+				.fa-exclamation-circle {
+					color: $yellow;
+				}
+			}
+		}
 
-            &:hover {
-                opacity: 0.7;
-                cursor:pointer;
-            }
-        }
-    }
+		span.expand-tag {
+			flex-basis: 40px;
+			max-width: 40px;
+			flex-shrink: 1;
+			padding: 5px 10px;
+			color: #fff;
+			font-size: 24px;
+			border-radius: 0 8px 0 0;
+			transition: 0.5s ease;
+			text-align: center;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 
-    &>h2 {
-        padding: 15px 30px;
-        margin: 0;
-        color:#fff;
-    }
+			&.yellow-expand {
+				background: $yellow;
+			}
 
-    p, li {
-        margin: 0 0 4px 0;
-        font-size: 16px!important;
-    }
+			&:hover {
+				opacity: 0.7;
+				cursor: pointer;
+			}
+		}
+	}
 
-    .blue, .grey, .resources-container {
-        transition: max-height 0.5s ease, opacity 0.5s ease;
-        padding: 15px 30px;
-        max-height: 3000px;
+	& > h2 {
+		padding: 15px 30px;
+		margin: 0;
+		color: #fff;
+	}
 
-        .fa, .svg-inline--fa {
-            font-size: 20px!important;
-        }
-    }
+	p,
+	li {
+		margin: 0 0 4px 0;
+		font-size: 16px !important;
+	}
 
-    .blue.contracted, .grey.contracted, .resources-container.contracted {
-        transition: max-height 0.5s ease, opacity 0.5s ease;
-        padding: 0;
-        margin:0;
-        opacity: 0;
-        max-height: 0px;
-        height:0;
-        pointer-events:none;
+	.blue,
+	.grey,
+	.resources-container {
+		transition: max-height 0.5s ease, opacity 0.5s ease;
+		padding: 15px 30px;
+		max-height: 3000px;
 
-        * {
-            margin: 0;
-            padding: 0;
-            opacity: 0;
-            max-height: 0;
-        }
+		.fa,
+		.svg-inline--fa {
+			font-size: 20px !important;
+		}
+	}
 
-        ul, li {
-            display:none!important;
-        }
-    }
+	.blue.contracted,
+	.grey.contracted,
+	.resources-container.contracted {
+		transition: max-height 0.5s ease, opacity 0.5s ease;
+		padding: 0;
+		margin: 0;
+		opacity: 0;
+		max-height: 0px;
+		height: 0;
+		pointer-events: none;
 
-    .blue > div,
-    .grey > div {
-        display:flex;
-        flex-wrap:wrap;
-        padding: 10px 15px 0 0;
+		* {
+			margin: 0;
+			padding: 0;
+			opacity: 0;
+			max-height: 0;
+		}
 
-        p {
-            flex-basis: 200px;
-            min-width: 200px;
-            flex-grow: 1;
-        }
-    }
+		ul,
+		li {
+			display: none !important;
+		}
+	}
 
-    .blue {
-        background: $blue;
-        color:#fff;
+	.blue > div,
+	.grey > div {
+		display: flex;
+		flex-wrap: wrap;
+		padding: 10px 15px 0 0;
 
-        h2 {
-            color:#fff;
-        }
+		p {
+			flex-basis: 200px;
+			min-width: 200px;
+			flex-grow: 1;
+		}
+	}
 
-        ul {
-            display:flex;
-            flex-wrap: wrap;
-        
-            li{
-                flex-basis: 380px;
-                flex-grow:1;
-                min-width: 380px;
-                margin: 5px 0;
-                display:flex;
-                .fa, .svg-inline--fa {
-                    font-size: 20px;
-                    color:#fff;
-                    margin-right: 15px;
-                }
+	.blue {
+		background: $blue;
+		color: #fff;
 
-                p {
-                    margin: 0;
-                }
-            }
-        }
+		h2 {
+			color: #fff;
+		}
 
-    }
+		ul {
+			display: flex;
+			flex-wrap: wrap;
 
-    .grey {
-        background:$yellow;
-        color:$dark-blue;
+			li {
+				flex-basis: 380px;
+				flex-grow: 1;
+				min-width: 380px;
+				margin: 5px 0;
+				display: flex;
+				.fa,
+				.svg-inline--fa {
+					font-size: 20px;
+					color: #fff;
+					margin-right: 15px;
+				}
 
-        & > div {
-            margin: 20px auto;
-            border-top: 1px solid #dcdcdc;
-        }
+				p {
+					margin: 0;
+				}
+			}
+		}
+	}
 
-        ul.tips {
-            margin-top: 10px;
-            padding-inline-start:20px;
-        }
+	.grey {
+		background: $yellow;
+		color: $dark-blue;
 
-        ul.improvements {
-            list-style-type:none;
-            display:flex;
-            flex-wrap:wrap;
+		& > div {
+			margin: 20px auto;
+			border-top: 1px solid #dcdcdc;
+		}
 
-            li {
-                flex-basis: 380px;
-                flex-grow:1;
-                min-width: 380px;
-                margin: 5px 30px 5px 0;
-                display:flex;
+		ul.tips {
+			margin-top: 10px;
+			padding-inline-start: 20px;
+		}
 
-                .fa, .svg-inline--fa {
-                    margin-right: 15px;
-                    font-size: 24px;
-                }
-            }
-        }
+		ul.improvements {
+			list-style-type: none;
+			display: flex;
+			flex-wrap: wrap;
 
-        a {
-            text-decoration:none;
-            color:$blue;
-            font-weight:bold;
-        }
+			li {
+				flex-basis: 380px;
+				flex-grow: 1;
+				min-width: 380px;
+				margin: 5px 30px 5px 0;
+				display: flex;
 
-    }
-    .resources-container {
-        background:#eee;
-        color:$dark-blue;
-        padding: 15px 30px 30px 30px;
+				.fa,
+				.svg-inline--fa {
+					margin-right: 15px;
+					font-size: 24px;
+				}
+			}
+		}
 
-        .resources {
-            display:flex;
-            list-style-type:none;
-            padding-inline-start:0;
-            margin-block-start:0;
-            flex-wrap:wrap;
-            justify-content:flex-start;
+		a {
+			text-decoration: none;
+			color: $blue;
+			font-weight: bold;
+		}
+	}
+	.resources-container {
+		background: #eee;
+		color: $dark-blue;
+		padding: 15px 30px 30px 30px;
 
-            .resource {
-                max-height: 300px;
-            }
-        }
-    }
+		.resources {
+			display: flex;
+			list-style-type: none;
+			padding-inline-start: 0;
+			margin-block-start: 0;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+
+			.resource {
+				max-height: 300px;
+			}
+		}
+	}
 }
 
 @media screen and (max-width: 600px) {
-    .category {
-        &.break::after {
-            width: calc(100% - 30px);
-        }
+	.category {
+		&.break::after {
+			width: calc(100% - 30px);
+		}
 
-        div.blue > h2,
-        div.grey > h2,
-        div.resources-container > h2 {
-            font-size: 24px;
-            line-height: 26px;
-        }
+		div.blue > h2,
+		div.grey > h2,
+		div.resources-container > h2 {
+			font-size: 24px;
+			line-height: 26px;
+		}
 
-        .category-heading > div.heading-container {
-            font-size: 20px;
-            padding: 5px 10px;
+		.category-heading > div.heading-container {
+			font-size: 20px;
+			padding: 5px 10px;
 
-            span.img-container > img {
-                height: 30px;
-                margin-top: 4px;
-            }
+			span.img-container > img {
+				height: 30px;
+				margin-top: 4px;
+			}
 
-            .category-icons {
-                line-height:16px;
-                font-size: 16px;
-                height:16px;
+			.category-icons {
+				line-height: 16px;
+				font-size: 16px;
+				height: 16px;
 
-                span.yellow-text {
-                    display:none;
-                }
-                i.fa-exclamation-circle {
-                    display:inline-block;
-                }
-            }
-        }
-    }
+				span.yellow-text {
+					display: none;
+				}
+				i.fa-exclamation-circle {
+					display: inline-block;
+				}
+			}
+		}
+	}
 }
 
-@media screen and (max-width: 800px) {         
-    .category {
-        margin: 15px 0;
+@media screen and (max-width: 800px) {
+	.category {
+		margin: 15px 0;
 
-        .category-heading {
-            font-size: 16px;
+		.category-heading {
+			font-size: 16px;
 
-            & > div.heading-container {
-                font-size: 16px;
-                padding: 5px 0 5px 10px;
+			& > div.heading-container {
+				font-size: 16px;
+				padding: 5px 0 5px 10px;
 
-                span.img-container {
-                    margin-right: 10px;
-                }
-            }
+				span.img-container {
+					margin-right: 10px;
+				}
+			}
 
-            span.category-icons {
-                min-width: 30px;
-                width: 30px;
-                align-items:center;
+			span.category-icons {
+				min-width: 30px;
+				width: 30px;
+				align-items: center;
 
-                .numbered-exclamation {
-                    height: 16px;
-                    font-size: 16px;
-                }
-            }
-        }
+				.numbered-exclamation {
+					height: 16px;
+					font-size: 16px;
+				}
+			}
+		}
 
-        .blue > ul > li,
-        .grey > ul > li {
-            min-width: unset!important;
-            margin: 5px 0!important;
-        }
+		.blue > ul > li,
+		.grey > ul > li {
+			min-width: unset !important;
+			margin: 5px 0 !important;
+		}
 
-        .grey, .blue, .resources-container {
-            ul {
-                padding-inline-start:0;
-            } 
-        }
-    }
+		.grey,
+		.blue,
+		.resources-container {
+			ul {
+				padding-inline-start: 0;
+			}
+		}
+	}
 }
-
-
 </style>
