@@ -40,6 +40,7 @@
                     <div class='slider' :class="{ 'right' : tab == 'history' }"></div>
                 
                 <scorecard v-if='tab == "scorecard"'
+                    @viewhistory="tab = 'history'"
                     :latest-scorecard='latestScorecard'
                     :previous-scorecard='previousScorecard'>
                 </scorecard>
@@ -252,9 +253,9 @@ export default {
 		max-width: 960px;
 		margin: 30px auto;
 		margin-top: 0px;
-		height: auto;
+        height: auto;
 		position: relative;
-		@extend %boxshadow;
+        @extend %boxshadow;
 
         .tabs-container {
             .slider {

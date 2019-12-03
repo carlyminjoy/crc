@@ -97,6 +97,8 @@
 					>Aim for 100 to improve your health!</strong
 				>
 			</h3>
+
+            <button v-if='previousScorecard' class='history-btn' @click='viewHistory()'>VIEW YOUR HISTORY</button>
 		</div>
 
 		<div v-if="!previousScorecard" class="guide-download">
@@ -115,6 +117,7 @@
 					>Download</download
 				>
 			</div>
+            
 		</div>
 
 		<span v-for="(category, index) in categoryCards" :key="index">
@@ -203,11 +206,11 @@ export default {
                 if (cat !== 'total' 
                         && vm.previousScorecard.scores[cat] != undefined
                         && vm.latestScorecard.scores[cat] > vm.previousScorecard.scores[cat]) {
-                    improvedCategories.push(cat)
+                    improvedCategories.push(cat == 'uv' ? 'UV' : cat)
                 }
             })
 
-            if (improvedCategories.length > 0) {
+            if (improvedCategories.length > 1) {
                 improvedCategories[improvedCategories.length - 1] = ' & ' + improvedCategories[improvedCategories.length - 1]
             }
 
@@ -231,6 +234,9 @@ export default {
 		}
     },
     methods: {
+        viewHistory() {
+            this.$emit('viewhistory')
+        },  
         checkImprovement(category) {
             let vm = this;
 
@@ -246,35 +252,30 @@ export default {
             return vm.latestScorecard.scores[category] < vm.previousScorecard.scores[category]
         },
         getCategoryObj(category) {
-			let vm = this;
-
+            let vm = this;
+            let tiers = ['good', 'bad'];
 			let categoryObj = {
 				name: category
 			};
-
-			categoryObj.good = vm.latestScorecard.recommendations.filter(
-				rec => rec.category === category && rec.score == 100
-            )
-
-            categoryObj.bad = vm.latestScorecard.recommendations.filter(
-				rec => rec.category === category && rec.score != 100
-			)
             
-            if (vm.previousScorecard) {
-                categoryObj.good = categoryObj.good.map(question => {
-                    let prevScore = vm.previousScorecard.recommendations.find(r => r.id == question.id).score;
-                    question.improvement = question.score > prevScore
-                    question.decline = question.score < prevScore
-                    return question
-                })
+            tiers.forEach(tier => {
+                categoryObj[tier] = vm.latestScorecard.recommendations.filter(
+                    rec => rec.category === category && (tier == 'good' ? rec.score == 100 : rec.score != 100)
+                )
 
-                categoryObj.bad = categoryObj.bad.map(q => {
-                    let prevScore = vm.previousScorecard.recommendations.find(r => r.id == q.id).score;
-                    q.improvement = q.score > prevScore
-                    q.decline = q.score < prevScore
-                    return q
-                })
-            }
+                if (vm.previousScorecard) {
+                    categoryObj[tier] = categoryObj[tier].map(q => {
+                        let prevQuestion = vm.previousScorecard.recommendations.find(r => r.id == q.id);
+
+                        if (prevQuestion) {
+                            let prevScore = prevQuestion.score;
+                            q.improvement = q.score > prevScore
+                            q.decline = q.score < prevScore
+                            return q
+                        }
+                    })
+                }
+            })
 
 			return categoryObj;
 		},
@@ -326,7 +327,26 @@ export default {
 
 	h3.explanation {
 		max-width: 600px;
-	}
+    }
+    
+    button.history-btn {
+        text-align:center;
+        font-size: 14px;
+        text-decoration:none;
+        background: $yellow;
+        padding: 10px 30px;
+        border:none;
+        border-radius: 30px;
+        color:$dark-blue;
+        font-weight: 600;
+        transition: 0.3s ease-in-out;
+        cursor:pointer;
+        @extend %boxshadow;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
 
 	.guide-download {
 		display: flex;
