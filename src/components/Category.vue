@@ -104,7 +104,7 @@ import { default as Resource } from './Resource.vue';
 import { default as Feedback } from './Feedback.vue';
 
 export default {
-	name: 'category',
+	name: 'Category',
 	props: ['category', 'index', 'gender', 'improvement', 'decline'],
 	components: {
 		Feedback,
@@ -247,7 +247,7 @@ export default {
 			}
 			span.category-icons {
 				float: right;
-				width: 60px;
+				width: 30px;
 				display: flex;
 				pointer-events: none;
 				align-items: center;
@@ -504,13 +504,12 @@ export default {
 			}
 
 			span.category-icons {
-				min-width: 30px;
-				width: 30px;
+				min-width: 15px;
+				width: 15px;
 				align-items: center;
 
 				.numbered-exclamation {
-					height: 16px;
-					font-size: 16px;
+					display: none;
 				}
 			}
 		}

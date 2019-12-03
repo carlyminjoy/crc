@@ -1,110 +1,120 @@
 @media screen and (max-width: 600px) {
-    #app .outer-container .results-container {
-        padding: 15px;
+	#app .outer-container .results-container {
+		border-radius: 0;
+		margin: 0;
 
-        .score-container {
-            .line {
-                display:none;
-            }
-        }
+		.scorecard-container {
+			padding: 15px;
+			border-radius: 0;
 
-        .guide-download {
-            flex-wrap:wrap;
-            margin: 200px auto 30px;
-            max-width: 300px;
+			.overview {
+				padding: 0;
+			}
 
-            .content, .img-container {
-                flex-basis: 100%;
-            }
+			.score-container {
+				.line {
+					display: none;
+				}
+			}
 
-            .content {
-                text-align:center;
+			.guide-download {
+				flex-wrap: wrap;
+				margin: 200px auto 30px;
+				max-width: 300px;
 
-                a {
-                    margin: 0 auto;
-                }
-            }
+				.content,
+				.img-container {
+					flex-basis: 100%;
+				}
 
-            .img-container img {
-                left: 0;
-                bottom: unset;
-                top: -200px;
-                height: 200px;
-            }
-        }
+				.content {
+					text-align: center;
 
-        div > h2 {
-            margin-top: 0;
-        }
+					a {
+						margin: 0 auto;
+					}
+				}
 
-        
-    }
+				.img-container img {
+					left: 0;
+					bottom: unset;
+					top: -200px;
+					height: 200px;
+				}
+			}
+
+			div > h2 {
+				margin-top: 0;
+			}
+		}
+	}
 }
 
 @media screen and (max-width: 800px) {
-    #app {
-        .progress-bar {
-            li {
-                span {
-                    display:none;
-                }
-                flex-basis: 12%;
-            }
-        }
-        .outer-container {
-            padding-top: 0;
-            padding-bottom: 0;
+	#app {
+		.progress-bar {
+			li {
+				span {
+					display: none;
+				}
+				flex-basis: 12%;
+			}
+		}
+		.outer-container {
+			padding-top: 0;
+			padding-bottom: 0;
 
-            .results-container {
-                margin:0;
-                border-radius:0;
-                box-shadow: none;
-                border:none;
+			.scorecard-container {
+				margin: 0;
+				border-radius: 0;
+				box-shadow: none;
+				border: none;
 
-                .score-container {
-                    justify-content:center;
-                    .line {
-                        width: 80px;
-                        margin: 0 30px;
-                    }
-                }
+				.score-container {
+					justify-content: center;
+					.line {
+						width: 80px;
+						margin: 0 30px;
+					}
+				}
 
-                h1 {
-                    font-size: 32px;
-                    margin: 15px 0 0 0;
-                }
-                
-                
-            }
-        }
-    }
+				h1 {
+					font-size: 24px;
+					line-height: 28px;
+					margin: 15px 0 0 0;
+				}
+			}
+		}
+	}
 }
 
 @media screen and (max-width: 700px) {
-    .outer-container {
-        .heading-container {
-            max-width: 95%;
-            margin:0 auto;
-            .cancer-council-logo {
-                padding-left: 5px;
-                padding-right: 8px;
-                padding-top: 5px;
-                
-                img {
-                    height: 50px;
-                }
-            }
-                        
-            h1.heading {
-                margin-top: 28px;
-                padding-bottom: 0;
-                font-size: 25px;
-                line-height: 1.2rem;
-            }
-        }
-    }
+	.outer-container {
+		.heading-container {
+			max-width: 95%;
+			margin: 0 auto;
+			.cancer-council-logo {
+				padding-left: 5px;
+				padding-right: 8px;
+				padding-top: 5px;
+
+				img {
+					height: 50px;
+				}
+			}
+
+			h1.heading {
+				margin-top: 28px;
+				padding-bottom: 0;
+				font-size: 25px;
+				line-height: 1.2rem;
+			}
+		}
+	}
 }
 
 @media screen and (max-width: 1100px) {
-    .outer-container .heading-container .cancer-council-logo { margin-left: 3% }
+	.outer-container .heading-container .cancer-council-logo {
+		margin-left: 3%;
+	}
 }
