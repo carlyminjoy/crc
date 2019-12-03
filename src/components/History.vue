@@ -1,7 +1,9 @@
 <template>
 	<div class="history-container">
 		<h2>Scorehard History</h2>
-		<p>Your total scores out of 100 over time.</p>
+		<p>
+			An overview of all your total Cancer Risk Calculator scores.
+		</p>
 
 		<totals-chart
 			v-if="charts.total.data && scorecards.length > 1"
@@ -16,9 +18,9 @@
 
 		<h2>Category Scores</h2>
 		<p>
-			An overview of your category scores out of 100 from each Cancer Risk
-			Calculator completion.<br />Use the left and right arrows below to
-			view your category scores from different dates.
+			An overview of your category scores for each time you completed the
+			Cancer Risk Calculator.<br />Use the left and right arrows below to
+			view your scores from different dates.
 		</p>
 
 		<p class="date-select" v-if="scorecards[scorecardIndex]">
