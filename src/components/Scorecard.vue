@@ -321,7 +321,10 @@ export default {
 
 		h2 {
 			text-transform: capitalize;
-			font-family: 'Foco CC Black';
+            font-family: 'Foco CC Black';
+            margin: 15px auto!important;
+            font-size: 24px;
+            line-height: 28px;
 		}
 	}
 
@@ -345,6 +348,10 @@ export default {
 
         &:hover {
             opacity: 0.8;
+        }
+
+        @media (max-width: 767px) {
+            margin-bottom: 30px;
         }
     }
 

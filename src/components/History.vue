@@ -100,13 +100,13 @@ export default {
 		setCategoriesData() {
 			let data = {
 				labels: [
-					'alcohol',
-					'nutrition',
-					'physical activity',
-					'screening',
-					'smoking',
-					'uv',
-					'weight'
+					'Alcohol',
+					'Nutrition',
+					'Physical activity',
+					'Screening',
+					'Smoking',
+					'UV',
+					'Weight'
 				],
 				datasets: []
 			};
@@ -118,7 +118,9 @@ export default {
 				backgroundColor: `#F289B7`,
 				data: data.labels.map(
 					cat =>
-						this.scorecards[this.scorecardIndex].entry.scores[cat]
+						this.scorecards[this.scorecardIndex].entry.scores[
+							cat.toLowerCase()
+						]
 				)
 			});
 
@@ -176,7 +178,7 @@ export default {
 		padding: 30px;
 
 		@media screen and (max-width: 767px) {
-			padding: 15px;
+			padding: 15px 15px 30px 15px;
 
 			h1#history-title {
 				font-size: 24px;
