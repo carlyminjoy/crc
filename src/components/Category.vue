@@ -247,7 +247,7 @@ export default {
 			}
 			span.category-icons {
 				float: right;
-				width: 30px;
+				width: 60px;
 				display: flex;
 				pointer-events: none;
 				align-items: center;
