@@ -1,57 +1,57 @@
 {
-  "name": "scorecard",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "npx parcel ./src/index.html --out-dir dist --no-cache",
-    "build": "npx parcel build ./src/index.html --out-dir build --no-source-maps --no-minify --no-cache --public-url ./",
-    "i-vsts-npm": "npm install -g vsts-npm-auth",
-    "refreshToken": "vsts-npm-auth -config .npmrc"
-  },
-  "author": "",
-  "license": "ISC",
-  "alias": {
-    "vue": "./node_modules/vue/dist/vue.common.js"
-  },
-  "babel": {
-    "presets": [
-      [
-        "env",
-        {
-          "targets": {
-            "browsers": [
-              ">0.25%"
+    "name": "scorecard",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "npx parcel ./src/index.html --out-dir dist --no-cache --no-source-maps",
+        "build": "npx parcel build ./src/index.html --out-dir build --no-source-maps --no-minify --no-cache --public-url ./",
+        "i-vsts-npm": "npm install -g vsts-npm-auth",
+        "refreshToken": "vsts-npm-auth -config .npmrc"
+    },
+    "author": "",
+    "license": "ISC",
+    "alias": {
+        "vue": "./node_modules/vue/dist/vue.common.js"
+    },
+    "babel": {
+        "presets": [
+            [
+                "env",
+                {
+                    "targets": {
+                        "browsers": [
+                            ">0.25%"
+                        ]
+                    }
+                }
             ]
-          }
-        }
-      ]
-    ]
-  },
-  "dependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
-    "axios": "^0.19.0",
-    "babel-polyfill": "^6.26.0",
-    "chart.js": "^2.9.3",
-    "core-js": "^3.1.4",
-    "jquery": "^3.4.1",
-    "moment": "^2.24.0",
-    "node-sass": "^4.12.0",
-    "parcel-bundler": "^1.12.3",
-    "regenerator-runtime": "^0.13.3",
-    "sass-loader": "^7.1.0",
-    "vue": "^2.6.10",
-    "vue-chartjs": "^3.5.0",
-    "vue-router": "^3.0.6",
-    "vue2-circle-progress": "^1.2.3"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.7.0",
-    "@vue/cli-service": "^3.7.0",
-    "babel-preset-env": "^1.7.0",
-    "sass": "^1.20.1",
-    "vue-hot-reload-api": "^2.3.3",
-    "vue-template-compiler": "^2.5.21"
-  }
+        ]
+    },
+    "dependencies": {
+        "@babel/core": "^7.4.5",
+        "@babel/preset-env": "^7.4.5",
+        "axios": "^0.19.0",
+        "babel-polyfill": "^6.26.0",
+        "chart.js": "^2.9.3",
+        "core-js": "^3.1.4",
+        "jquery": "^3.4.1",
+        "moment": "^2.24.0",
+        "node-sass": "^4.12.0",
+        "parcel-bundler": "^1.12.3",
+        "regenerator-runtime": "^0.13.3",
+        "sass-loader": "^7.1.0",
+        "vue": "^2.6.10",
+        "vue-chartjs": "^3.5.0",
+        "vue-router": "^3.0.6",
+        "vue2-circle-progress": "^1.2.3"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "^3.7.0",
+        "@vue/cli-service": "^3.7.0",
+        "babel-preset-env": "^1.7.0",
+        "sass": "^1.20.1",
+        "vue-hot-reload-api": "^2.3.3",
+        "vue-template-compiler": "^2.5.21"
+    }
 }

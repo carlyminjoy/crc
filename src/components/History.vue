@@ -98,33 +98,42 @@ export default {
 			}
 		},
 		setCategoriesData() {
-			let data = {
-				labels: [
-					'Alcohol',
-					'Nutrition',
-					'Physical activity',
-					'Screening',
-					'Smoking',
-					'UV',
-					'Weight'
-				],
-				datasets: []
+			let labels = Object.keys(
+				this.scorecards[this.scorecardIndex].entry.scores
+			)
+				.map(l => l[0].toUpperCase() + l.slice(1))
+				.filter(k => k != 'Total');
+
+			this.charts.category.data = {
+				labels: labels,
+				datasets: [
+					{
+						label: moment
+							.unix(this.scorecards[this.scorecardIndex]._ts)
+							.format('MMM DD, YYYY'),
+						backgroundColor: `#F289B7`,
+						data: labels.map(
+							cat =>
+								this.scorecards[this.scorecardIndex].entry
+									.scores[cat.toLowerCase()]
+						)
+					}
+				]
 			};
 
-			data.datasets.push({
-				label: moment
-					.unix(this.scorecards[this.scorecardIndex]._ts)
-					.format('MMM DD, YYYY'),
-				backgroundColor: `#F289B7`,
-				data: data.labels.map(
-					cat =>
-						this.scorecards[this.scorecardIndex].entry.scores[
-							cat.toLowerCase()
-						]
-				)
-			});
-
-			this.charts.category.data = data;
+			this.charts.category.options = {
+				legend: false,
+				scales: {
+					xAxes: [
+						{
+							ticks: {
+								beginAtZero: true,
+								suggestedMax: 100
+							}
+						}
+					]
+				}
+			};
 		}
 	},
 	mounted() {
@@ -151,7 +160,7 @@ export default {
 				yAxes: [
 					{
 						ticks: {
-							suggestedMin: 0,
+							beginAtZero: true,
 							suggestedMax: 100
 						}
 					}
