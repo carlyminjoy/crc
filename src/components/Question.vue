@@ -216,7 +216,7 @@ $dark-blue: #2c3e50;
 
 			label,
 			input {
-				max-height: 50px;
+				max-height: 80px;
 			}
 
 			&.selected {

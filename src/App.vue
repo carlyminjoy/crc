@@ -433,7 +433,7 @@ export default {
     },
     created() {
         let url = window.location.href;
-        this.setup.debug = url.match(/debug/g);
+        this.setup.debug = !!(url.match(/debug/g));
         this.timers = this.setup.debug 
         ? {
             shortest: 1,
