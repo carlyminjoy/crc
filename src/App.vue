@@ -6,22 +6,13 @@
             <a href='https://cancerqld.org.au' target='_blank'>
                 <div class="cancer-council-logo">
                     <img src="https://cancerqld.blob.core.windows.net/content/landing-pages/cancer-risk-quiz/cancer_council.png" />
-                </div>                
+                </div>
             </a>
             <header-blob></header-blob>
             <h1 class='heading'>Cancer Risk Calculator<span class="yellow-fullstop">.</span></h1>
         </div>
 
-            <ul class="progress-bar">
-                <li v-for="(route, index) in routes" :key="index"
-                    :class="{ 'active' : currentStep && index <= routes.indexOf(state.activeCategory) }">
-
-                    <span>{{ route == 'uv' ? 'UV' : route }}</span>
-
-                </li>
-            </ul>
-
-            <div class="results-container" :class="{ ie: state.isIe }" v-if="state.showResults">
+            <div v-if="state.showResults" class="results-container" :class="{ ie: state.isIe }">
 
                 <div class='overview'>
                 
@@ -31,7 +22,7 @@
 
                         <span v-else-if='parseInt(results.total) >= 75'>
                         Well done, you're doing well. </span>
-                        
+
                         <span v-else-if='parseInt(results.total) >= 50'>
                         Well done, you're on the right track.</span>
 
@@ -166,52 +157,8 @@
 
             </div>
 
-            <div v-if='!state.showResults' class='conversation-container-wrapper' :class="{ mask: !state.isMozilla }" ref="mobileConversationEl">
+            <quiz v-else :timers='timers' @completed='completeQuiz'></quiz>
 
-                <div class="conversation-container" ref="conversationEl" v-if="!state.showResults">
-
-                    <template class="step-container" v-for="(step, index) in steps">
-
-                        <transition name="fade" :key="index">
-
-                            <div v-if="display(step) && index <= currentStep" class='ai-comment'>
-
-                                <question v-if="step.question && !step.userInput" 
-                                        :question=step 
-                                        v-on:addstep="addStep()"
-                                        v-on:loading='scrollToBottom'
-                                        v-on:ready='scrollToBottom'></question>
-
-                                <weight v-else-if='["bmi", "waist"].includes(step.id)' 
-                                        :question=step 
-                                        :gender="steps.find(s => s.id === 'gender').score" 
-                                        v-on:addstep="addStep()"
-                                        v-on:scrolltobottom='scrollToBottom'></weight>
-
-                                <postcode v-else-if="step.userInput && step.id === 'postcode'" 
-                                        :question=step 
-                                        v-on:addstep="addStep()"
-                                        v-on:scrolltobottom='scrollToBottom'></postcode>
-
-                                <comment v-else v-on:scrolltobottom='scrollToBottom' :text='step.text'></comment>
-
-                            </div>
-
-                        </transition>
-
-                        <transition name="fade" :key="index">
-                            <div v-if="step.score || step.score === 0" class='user-comment'>
-
-                                <comment v-if="!step.options" v-on:scrolltobottom='scrollToBottom' :text='step.userResponse'></comment>
-                                <comment v-if="step.options" v-on:scrolltobottom='scrollToBottom' :text="step.options.find((o) => o.score === step.score ).userResponse"></comment>
-
-                            </div>
-                        </transition>
-
-                    </template>
-
-                </div>
-            </div>
         </div>
 	</div>
 </template>
@@ -219,9 +166,8 @@
 
 <script>
 
-import { default as conversation } from './config/config.js'
 import { default as scoredCategories } from './config/scoredCategories.js'
-import { Question, Weight, Postcode, HeaderBlob, BackgroundBlob, Comment } from  './components/index.js'
+import { Question, Weight, Postcode, HeaderBlob, BackgroundBlob, Comment, Quiz } from  './components/index.js'
 import { vmdButton, vmdTextField } from '@ccq/ccq-vue-components'
 import Form from './utils/Form.js'
 
@@ -231,24 +177,6 @@ import { required, email, minLength, maxLength } from 'vuelidate/lib/validators'
 
 import VueCircle from 'vue2-circle-progress'
 import axios from 'axios'
-import JQuery from 'jquery'
-let $ = JQuery
-
-let url = window.location.href;
-let debug = url.match(/debug/g);
-const timers = debug 
-? {
-    shortest: 1,
-    short: 1,
-    med: 1,
-    long: 1
-} 
-: {
-    shortest: 500,
-    short: 1000,
-    med: 2000,
-    long: 3000
-}
 
 export default {
     name: 'app',
@@ -262,7 +190,8 @@ export default {
         BackgroundBlob,
         vmdButton,
         vmdTextField,
-        VueCircle
+        VueCircle,
+        Quiz
     },
 	data () {
 		return {
@@ -288,9 +217,10 @@ export default {
             currentStep : null,
             results: '',
             scoredCategories: scoredCategories,
-            steps: conversation.steps,
-            debug: !!debug,
-            showScore: false
+            steps: null,
+            debug: false,
+            showScore: false,
+            timers: null
 		}
     },
     validations: {
@@ -307,72 +237,11 @@ export default {
             },
         }
     },
-    watch: {
-        currentStep (next, prev) {
-            let vm = this;
-
-            let nextStep = vm.steps[next]
-            let nextIsFinalStep = vm.steps[next].id === 'final'
-
-            if (nextIsFinalStep) {
-                vm.state.activeCategory = 'results'
-                vm.calculateResults()
-                vm.showResults();
-                
-            } else {
-                if (nextStep.question) {
-                    vm.state.activeCategory = nextStep.category
-                    // setTimeout(() => vm.scrollToBottom(), 1300)
-    
-                    if (!nextStep.display(vm.steps)) {
-                        setTimeout(() => vm.currentStep++ && vm.scrollToBottom(), timers.short)
-
-                    }
-    
-                }  else {
-                    setTimeout(() => {
-                        vm.currentStep++;
-                        // setTimeout(() => vm.scrollToBottom(), 150)
-                    }, (nextStep.delay ? timers.long : timers.med))
-                }
-            }
-        }
-    },
     computed: {
         formDisabled() {
             let vm = this;
 
             return vm.form.firstName.length <= 1 || vm.form.emailAddress.length <= 6
-        },
-        displayScreening() {
-            let vm = this;
-
-            let age = vm.steps.find(s => s.id === 'age').score;
-            let gender = vm.steps.find(s => s.id === 'gender').score;
-
-            if (!(age || gender)) { return false }
-
-            return  (["64", "74"].includes(age) && gender !== 'o') || 
-                    (["39", "49"].includes(age) && gender === "f")
-        },
-        routes() {
-            let generatedRoutes = [
-                'personal',
-                'uv', 
-                'smoking',
-                'alcohol',
-                'nutrition',
-                'weight',
-                'physical activity'
-            ]
-            
-            if (this.displayScreening) {
-                generatedRoutes.push('screening')
-            } 
-
-            generatedRoutes.push('results')
-
-            return generatedRoutes
         },
         submitBtnDisabled() {
             let vm = this;
@@ -382,12 +251,6 @@ export default {
         }
     },
     methods: {
-        scrollToBottom() {
-            // if (this.state.isIe) {
-                var element = this.$refs.mobileConversationEl;
-                element.scrollTop = element.scrollHeight;
-            // }
-        },
         showResults() {
             let vm = this;
 
@@ -412,7 +275,7 @@ export default {
                     category: q.category,
                     answer: answer ? answer.userResponse : q.userResponse,
                     score: Math.round(q.score),
-                    recommendation: answer ? answer.aiResponse : q.aiResponse
+                    recommendation: answer ? answer.recommendation : q.recommendation
                 }
 
                 if (q.id === 'bmi') { obj.bmi = q.bmi }
@@ -444,6 +307,13 @@ export default {
                 .catch(error => vm.state.errors = error)
                 .finally(() => vm.state.loading = false)
         },
+        completeQuiz(steps) {
+            this.steps = steps;
+
+            this.calculateResults()
+            this.storeResults()
+            this.showResults()
+        },
         calculateResults() {
             let vm = this;
 
@@ -468,7 +338,6 @@ export default {
 
             results.total = Math.round(total / Object.keys(results).length)
             vm.results = results;
-            vm.storeResults()
         },
         storeResults() {
             let vm = this;
@@ -557,27 +426,27 @@ export default {
             axios.post(url, postData)
                 .then(r => vm.resultID = r.data.RowKey)
                 .catch((e) => console.log(e))
-        },
-        addStep() {
-            let vm = this;
-
-            vm.scrollToBottom()
-
-            setTimeout(() => {
-                vm.steps[vm.currentStep].userResponded = true
-                vm.display(vm.steps[vm.currentStep + 1]) ? vm.currentStep++ : vm.currentStep += 2
-                vm.scrollToBottom()
-            }, timers.short)
-        },
-        display(step) {
-            let vm = this;
-            return step.display(vm.steps);
+        }
+    },
+    created() {
+        let url = window.location.href;
+        this.debug = url.match(/debug/g);
+        this.timers = this.debug 
+        ? {
+            shortest: 1,
+            short: 1,
+            med: 1,
+            long: 1
+        } 
+        : {
+            shortest: 500,
+            short: 1000,
+            med: 2000,
+            long: 3000
         }
     },
     mounted () {
         let vm = this;
-
-        vm.currentStep = 0;
 
         var ua = window.navigator.userAgent;
         vm.state.isIe = /MSIE|Trident/.test(ua);
