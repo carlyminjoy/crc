@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-        <background-blob v-if='!state.isIe' :finished="state.showResults"></background-blob>
+        <background-blob v-if='!setup.isIe' :finished="state.showResults"></background-blob>
         <div class="outer-container">
         <div class="heading-container">
             <a href='https://cancerqld.org.au' target='_blank'>
@@ -12,7 +12,7 @@
             <h1 class='heading'>Cancer Risk Calculator<span class="yellow-fullstop">.</span></h1>
         </div>
 
-            <div v-if="state.showResults" class="results-container" :class="{ ie: state.isIe }">
+            <div v-if="state.showResults" class="results-container" :class="{ ie: setup.isIe }">
 
                 <div class='overview'>
                 
@@ -34,7 +34,7 @@
                         <div class='line'></div>
 
                         <transition name='score'>
-                            <div v-if='showScore' class="score-number-container">
+                            <div v-if='state.showScore' class="score-number-container">
                                 <span class="score-number">{{ results.total }}</span> 
                             </div>
                         </transition>
@@ -195,18 +195,20 @@ export default {
     },
 	data () {
 		return {
-            sourceIdentifier: 'cancerriskquiz-webform-c9dc3b17',
-            resultID: null,
+            setup: {
+                debug: false,
+                isIe: false
+            },
             state: {
-                isIe: false,
-                isMozilla: false,
                 showResults: false,
+                showScore: false,
                 loading: false,
                 submitted: false,
-                errors: false,
-                activeCategory: 'personal'
+                errors: false
             },
             form: {
+                resultID: null,
+                sourceIdentifier: 'cancerriskquiz-webform-c9dc3b17',
                 firstName: '',
                 emailAddress: ''
             },
@@ -214,12 +216,9 @@ export default {
                 red: [],
                 green: []
             },
-            currentStep : null,
-            results: '',
             scoredCategories: scoredCategories,
             steps: null,
-            debug: false,
-            showScore: false,
+            results: '',
             timers: null
 		}
     },
@@ -255,7 +254,7 @@ export default {
             let vm = this;
 
             setTimeout(() => (vm.state.showResults = true), timers.med)
-            setTimeout(() => (vm.showScore = true), timers.long)
+            setTimeout(() => (vm.state.showScore = true), timers.long)
         },
         scrollToScorecard() {
             var element = this.$refs.scorecardForm;
@@ -299,10 +298,10 @@ export default {
                 postcode: vm.steps.find(s => s.id === 'postcode').score,
                 scores: vm.results,
                 recommendations: vm.getRecommendations(),
-                RowKey: vm.resultID
+                RowKey: vm.form.resultID
             })
 
-            form.submit(vm.sourceIdentifier, true)
+            form.submit(vm.form.sourceIdentifier, true)
                 .then(response => vm.state.submitted = true)
                 .catch(error => vm.state.errors = error)
                 .finally(() => vm.state.loading = false)
@@ -319,21 +318,17 @@ export default {
 
             let results = {};
             let total = 0;
-
             let scoredSteps = vm.steps.filter(s => s.scoredQuestion && s.score !== null)
             let categories = new Set(scoredSteps.map(s => s.category))
 
             categories.forEach(category => {
-                if (category !== 'personal') {
-
-                    let questions = scoredSteps.filter(s => s.category == category)
-                    let totalScore = questions.reduce((a, b) => ({ score: a.score + b.score })).score
-                    let categoryTotal = Math.round(totalScore  / questions.length)
-                    
-                    results[category] = categoryTotal
-                    vm.categoryResults[categoryTotal === 100 ? 'green' :  'red'].push(category)
-                    total += categoryTotal
-                }
+                let questions = scoredSteps.filter(s => s.category == category)
+                let totalScore = questions.reduce((a, b) => ({ score: a.score + b.score })).score
+                let categoryTotal = Math.round(totalScore  / questions.length)
+                
+                results[category] = categoryTotal
+                vm.categoryResults[categoryTotal === 100 ? 'green' :  'red'].push(category)
+                total += categoryTotal
             })
 
             results.total = Math.round(total / Object.keys(results).length)
@@ -418,20 +413,20 @@ export default {
                     total: vm.results.screening
                 },
                 total: vm.results.total,
-                debug: vm.debug
+                debug: vm.setup.debug
             }
 
             let url = 'https://prod-16.australiaeast.logic.azure.com:443/workflows/472070d88d9f4f4899e2c2ad200967d0/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=caau2HrVCDbyNa256L0-a38ko8Q3r-rMJnkaPWxTOng'
 
             axios.post(url, postData)
-                .then(r => vm.resultID = r.data.RowKey)
+                .then(r => vm.form.resultID = r.data.RowKey)
                 .catch((e) => console.log(e))
         }
     },
     created() {
         let url = window.location.href;
-        this.debug = url.match(/debug/g);
-        this.timers = this.debug 
+        this.setup.debug = url.match(/debug/g);
+        this.timers = this.setup.debug 
         ? {
             shortest: 1,
             short: 1,
@@ -449,8 +444,7 @@ export default {
         let vm = this;
 
         var ua = window.navigator.userAgent;
-        vm.state.isIe = /MSIE|Trident/.test(ua);
-        vm.state.isMozilla = ua.includes('Firefox');
+        vm.setup.isIe = /MSIE|Trident/.test(ua);
     }
 }
 </script>
