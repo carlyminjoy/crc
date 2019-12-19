@@ -1,5 +1,5 @@
 <template>
-	<div id="app">
+	<v-app id="app">
         <background-blob v-if='!setup.isIe' :finished="state.showResults"></background-blob>
         <div class="outer-container">
         <div class="heading-container">
@@ -136,16 +136,34 @@
                     <h3>You'll get access to your personalised scorecard that breaks down your results and provides you with tips and resources to help you reduce your cancer risk.</h3><br>
                     <h3>We'll follow up in a few months so you can retake your Cancer Risk Calculator and compare your results.</h3> <br><br>
 
-                    <form v-if='!state.submitted'>
-                        <vmd-text-field class='narrow' label='First Name' v-model="$v.form.firstName.$model" :invalid='$v.form.firstName.$error'></vmd-text-field>
-                        <vmd-text-field class='wide' label='Email Address' type='email' v-model="$v.form.emailAddress.$model" :invalid='$v.form.emailAddress.$error'></vmd-text-field>
+                    <v-form v-if='!state.submitted'>
+                        <v-row>
+                            <v-col cols="12" sm="6">
+                                <v-text-field 
+                                    filled
+                                    background-color="#fff"
+                                    label='First Name' 
+                                    v-model="form.firstName" 
+                                    :rules="[rules.required]"></v-text-field>
+                            </v-col>
+
+                            <v-col cols="12" sm="6">
+                                <v-text-field 
+                                    filled
+                                    background-color="#fff"
+                                    label='Email Address'
+                                    v-model="form.emailAddress" 
+                                    :rules="[rules.required, rules.email]"></v-text-field>
+                            </v-col>
+
+                        </v-row>
 
                         <p>By submitting this form, you are agreeing to our <a href='https://cancerqld.org.au/about-us/our-privacy-policy/read-our-privacy-position-statement/' target='_blank'>Privacy Collection Statement</a>.</p>
 
                         <div class='submit-container'>
-                            <vmd-button class='scorecard' :disabled="state.loading || $v.$anyError || formDisabled" :loading="state.loading" text='Get Scorecard' @click="sendResults()"></vmd-button>
-                        </div>
-                    </form>
+                            <vmd-button class='scorecard' :disabled="state.loading || formDisabled" :loading="state.loading" text='Get Scorecard' @click="sendResults()"></vmd-button>
+                        </div> 
+                    </v-form>
 
                     <div v-else class='confirmation-msg'>
                         <i class='fa fa-check-circle'></i>
@@ -160,7 +178,7 @@
             <quiz v-else :timers='timers' @completed='completeQuiz'></quiz>
 
         </div>
-	</div>
+	</v-app>
 </template>
 
 
@@ -172,15 +190,12 @@ import { vmdButton, vmdTextField } from '@ccq/ccq-vue-components'
 import Form from './utils/Form.js'
 
 import { setTimeout } from 'timers';
-import { validationMixin } from 'vuelidate';
-import { required, email, minLength, maxLength } from 'vuelidate/lib/validators'; 
 
 import VueCircle from 'vue2-circle-progress'
 import axios from 'axios'
 
 export default {
     name: 'app',
-    mixins: [validationMixin],
     components: {
         Question,
         Weight,
@@ -212,6 +227,13 @@ export default {
                 firstName: '',
                 emailAddress: ''
             },
+            rules: {
+                required: value => !!value || 'Required.',
+                email: value => {
+                    const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    return pattern.test(value) || 'Invalid e-mail.'
+                }
+            },
             categoryResults: {
                 red: [],
                 green: []
@@ -221,20 +243,6 @@ export default {
             results: '',
             timers: null
 		}
-    },
-    validations: {
-        form: {
-            firstName: {
-                required,
-                minLength: minLength(3),
-                maxLength: maxLength(50)
-            },
-            emailAddress: {
-                required,
-                email,
-                maxLength: maxLength(80)
-            },
-        }
     },
     computed: {
         formDisabled() {
@@ -253,8 +261,8 @@ export default {
         showResults() {
             let vm = this;
 
-            setTimeout(() => (vm.state.showResults = true), timers.med)
-            setTimeout(() => (vm.state.showScore = true), timers.long)
+            setTimeout(() => (vm.state.showResults = true), vm.timers.med)
+            setTimeout(() => (vm.state.showScore = true), vm.timers.long)
         },
         scrollToScorecard() {
             var element = this.$refs.scorecardForm;
@@ -512,6 +520,14 @@ body {
     h1 {
         margin: 0;
     }
+
+    &.v-application {
+        display:unset;
+
+        ol, ul {
+            padding-left: unset;
+        }
+    }
 }
 
 .progress-bar {
@@ -718,7 +734,7 @@ body {
             width: 60px;
             text-align:center;
             padding-bottom: 15px;
-            top: calc(50% - 28px);
+            top: calc(50% - 35px);
             
             span.score-number {
                 font-size: 48px;
@@ -828,39 +844,18 @@ body {
                 line-height:14px!important;
             }
 
-            div.mdc-text-field {
-                background:white;
-                border-radius: 4px;
-                flex-grow: 1;
-                margin: 5px;
-                flex-basis: 100%;
+            div.v-input {
+                margin: 10px;
 
-                label.mdc-floating-label {
-                    font-size: 14px!important;
-                    line-height: 14px!important;
-                }
-
-                &.narrow {
-                    min-width: 200px;
-                    flex-basis: 200px;
-                }
-
-                &.wide {
-                    min-width: 300px;
-                    flex-basis: 300px;
+                .v-messages__message {
+                    color:#fff;
                 }
             }
 
-            p {
-                margin: 20px auto;
-                font-size: 14px;
-                
-                a {
-                    text-decoration:none;
-                    font-weight:bold;
-                    color:$blue;
-                }
+            div.col-12 {
+                padding: 0!important;
             }
+
         }
     }
 

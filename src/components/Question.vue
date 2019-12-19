@@ -17,9 +17,7 @@
 						:class="{ selected: option.score === question.score }"
 						:key="index"
 					>
-						<label :class="id" :for="id + index"
-							>{{ option.label }}
-						</label>
+						<label :class="id" :for="id + index">{{ option.label }} </label>
 						<input
 							type="radio"
 							:id="id + index"
@@ -48,14 +46,11 @@ export default {
 			if (this.question.id) {
 				return this.question.id;
 			}
-			return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
-				/[xy]/g,
-				function(c) {
-					var r = (Math.random() * 16) | 0,
-						v = c == 'x' ? r : (r & 0x3) | 0x8;
-					return v.toString(16);
-				}
-			);
+			return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+				var r = (Math.random() * 16) | 0,
+					v = c == 'x' ? r : (r & 0x3) | 0x8;
+				return v.toString(16);
+			});
 		},
 		selectOption(option) {
 			this.question.score = option.score;
@@ -112,12 +107,9 @@ export default {
 
 <style lang="scss" scoped>
 %boxshadow {
-	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09),
-		0 3px 3px rgba(0, 0, 0, 0.12);
-	-moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09),
-		0 3px 3px rgba(0, 0, 0, 0.12);
-	-ms-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09),
-		0 3px 3px rgba(0, 0, 0, 0.12);
+	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
+	-moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
+	-ms-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
 	-o-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
 }
@@ -197,16 +189,11 @@ $dark-blue: #2c3e50;
 			padding: 5px 10px;
 			text-align: center;
 			transition: 0.3s;
-			-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09),
-				0 3px 3px rgba(0, 0, 0, 0.12);
-			-moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.09),
-				0 2px 2px rgba(0, 0, 0, 0.12);
-			-ms-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.09),
-				0 2px 2px rgba(0, 0, 0, 0.12);
-			-o-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.09),
-				0 2px 2px rgba(0, 0, 0, 0.12);
-			box-shadow: 0 3px 6px rgba(0, 0, 0, 0.09),
-				0 2px 2px rgba(0, 0, 0, 0.12);
+			-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
+			-moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.09), 0 2px 2px rgba(0, 0, 0, 0.12);
+			-ms-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.09), 0 2px 2px rgba(0, 0, 0, 0.12);
+			-o-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.09), 0 2px 2px rgba(0, 0, 0, 0.12);
+			box-shadow: 0 3px 6px rgba(0, 0, 0, 0.09), 0 2px 2px rgba(0, 0, 0, 0.12);
 			&:hover {
 				background: $blue;
 				color: #fff;
@@ -229,7 +216,7 @@ $dark-blue: #2c3e50;
 
 			label,
 			input {
-				max-height: 30px;
+				max-height: 50px;
 			}
 
 			&.selected {
