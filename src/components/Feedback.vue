@@ -23,13 +23,37 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+
+.grey {
+    i.caret {
+        color: rgb(44, 62, 80);
+    }
+}
+
 div.icons {
     display:flex;
     justify-content:space-between;
 
     i.caret {
-        width: 30px;
-        margin-right: 0!important;
+        width: 20px;
+        margin-right: 15px!important;
+        border-radius: 50%;
+        text-align:center;
+        height: 20px;
+        line-height: 20px;
+        font-size: 24px!important;
+        
+        // font-size: 16px!important;
+
+        // &.fa-caret-up {
+        //     color: #5ebc5e;
+        //     background: rgb(44, 62, 80);
+        // }
+
+        // &.fa-caret-down {
+        //     color: #FCD208;
+        //     background: rgb(44, 62, 80);
+        // }
     }
 }
 </style>

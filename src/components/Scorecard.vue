@@ -40,10 +40,12 @@
 								class="compare-number"
 								v-if="previousScorecard"
 							>
-								<i class="fa fa-caret-up"></i
+								<i v-if='latestScorecard.scores.total > previousScorecard.scores.total' class="fa fa-caret-up"></i
+								>
+                                <i v-else class="fa fa-caret-down"></i
 								>{{
-									latestScorecard.scores.total -
-										previousScorecard.scores.total
+									Math.abs(latestScorecard.scores.total -
+										previousScorecard.scores.total)
 								}}
 							</span>
 						</span>
@@ -99,6 +101,11 @@
 			</h3>
 
             <button v-if='previousScorecard' class='history-btn' @click='viewHistory()'>VIEW YOUR HISTORY</button>
+
+            <p class='info-text'>
+                Look for the arrows to see if your score has increased 
+                <i class='fa fa-caret-up'></i> or decreased <i class='fa fa-caret-down'></i> since your last attempt.
+            </p>
 		</div>
 
 		<div v-if="!previousScorecard" class="guide-download">
@@ -302,6 +309,15 @@ export default {
 
 .scorecard-container {
     padding: 30px;
+
+    i {
+        &.fa-caret-up {
+            color: #5ebc5e;
+        }
+        &.fa-caret-down {
+            color: $yellow;
+        }
+    }
     
     @media screen and (max-width: 767px) {
         padding: 15px;
@@ -330,6 +346,18 @@ export default {
 
 	h3.explanation {
 		max-width: 600px;
+    }
+
+    p.info-text {
+        margin-top: 30px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        i {
+            font-size: 32px;
+            padding: 0 10px;
+        }
     }
     
     button.history-btn {
@@ -444,8 +472,7 @@ export default {
 
 				i {
 					margin-right: 6px;
-					color: #5ebc5e;
-					font-size: 24px;
+                    font-size: 24px;
 				}
 			}
 
