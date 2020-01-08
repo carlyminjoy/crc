@@ -379,30 +379,30 @@ export default {
                     identify: vm.steps.find(s => s.id === 'identify').score
                 },
                 uv: {
-                    clothing: Math.round(vm.steps.find(s => s.id === 'clothing').score),
-                    hat: Math.round(vm.steps.find(s => s.id === 'hat').score),
-                    sunscreen: Math.round(vm.steps.find(s => s.id === 'sunscreen').score),
-                    shade: Math.round(vm.steps.find(s => s.id === 'shade').score),
-                    checkSkin: Math.round(vm.steps.find(s => s.id === 'checkSkin').score),
-                    professionalCheckSkin: Math.round(vm.steps.find(s => s.id === 'professionalCheckSkin').score),
-                    sunglasses: Math.round(vm.steps.find(s => s.id === 'sunglasses').score),
+                    clothing: vm.steps.find(s => s.id === 'clothing').score,
+                    hat: vm.steps.find(s => s.id === 'hat').score,
+                    sunscreen: vm.steps.find(s => s.id === 'sunscreen').score,
+                    shade: vm.steps.find(s => s.id === 'shade').score,
+                    checkSkin: vm.steps.find(s => s.id === 'checkSkin').score,
+                    professionalCheckSkin: vm.steps.find(s => s.id === 'professionalCheckSkin').score,
+                    sunglasses: vm.steps.find(s => s.id === 'sunglasses').score,
                     total: vm.results.uv
                 },
                 smoking: {
-                    smokingStatus: Math.round(vm.steps.find(s => s.id === 'smokingStatus').score),
-                    householdSmoke: Math.round(vm.steps.find(s => s.id === 'householdSmoke').score),
+                    smokingStatus: vm.steps.find(s => s.id === 'smokingStatus').score,
+                    householdSmoke: vm.steps.find(s => s.id === 'householdSmoke').score,
                     total: vm.results.smoking
                 },
                 alcohol: {
-                    standardDrinks: Math.round(vm.steps.find(s => s.id === 'standardDrinks').score),
+                    standardDrinks: vm.steps.find(s => s.id === 'standardDrinks').score,
                     total: vm.results.alcohol
                 },
                 nutrition: {
-                    fruit: Math.round(vm.steps.find(s => s.id === 'fruit').score),
-                    vegetables: Math.round(vm.steps.find(s => s.id === 'vegetables').score),
-                    fibre: Math.round(vm.steps.find(s => s.id === 'fibre').score),
-                    redMeat: Math.round(vm.steps.find(s => s.id === 'redMeat').score),
-                    processedMeat: Math.round(vm.steps.find(s => s.id === 'processedMeat').score),
+                    fruit: vm.steps.find(s => s.id === 'fruit').score,
+                    vegetables: vm.steps.find(s => s.id === 'vegetables').score,
+                    fibre: vm.steps.find(s => s.id === 'fibre').score,
+                    redMeat: vm.steps.find(s => s.id === 'redMeat').score,
+                    processedMeat: vm.steps.find(s => s.id === 'processedMeat').score,
                     total: vm.results.nutrition
                 },
                 weight: {
@@ -411,13 +411,13 @@ export default {
                     total: vm.results.weight
                 },
                 physicalActivity: {
-                    exercise: Math.round(vm.steps.find(s => s.id === 'exercise').score),
+                    exercise: vm.steps.find(s => s.id === 'exercise').score,
                     total: vm.results['physical activity']
                 },
                 screening: {
-                    breastScreening: vm.steps.find(s => s.id === 'breastScreening').score ? Math.round(vm.steps.find(s => s.id === 'breastScreening').score) : null,
-                    bowelScreening: vm.steps.find(s => s.id === 'bowelScreening').score ? Math.round(vm.steps.find(s => s.id === 'bowelScreening').score) : null,
-                    cervicalScreening: vm.steps.find(s => s.id === 'cervicalScreening').score ? Math.round(vm.steps.find(s => s.id === 'cervicalScreening').score) : null,
+                    breastScreening: vm.steps.find(s => s.id === 'breastScreening').score,
+                    bowelScreening: vm.steps.find(s => s.id === 'bowelScreening').score,
+                    cervicalScreening: vm.steps.find(s => s.id === 'cervicalScreening').score,
                     total: vm.results.screening
                 },
                 total: vm.results.total,
@@ -684,6 +684,7 @@ body {
         max-width:400px;
         margin: 6px 0 6px auto;
         height:auto;
+        align-self:flex-end;
         @extend %boxshadow;
     }
 }

@@ -5,9 +5,25 @@ export default {
             text: "Hello! Over the next few minutes, we’ll be asking you some questions to recommend ways you can reduce your cancer risk."
         },
         {
+            id: 'disclaimer',
+            question: true,
+            display: () => true,
+            userResponded: false,
+            category: 'disclaimer',
+            score: null,
+            aiResponded: false,
+            options: [{
+                label: "I understand",
+                score: true,
+                userResponse: "I understand.",
+                aiResponse: ""
+            }],
+            text: `<em>The Cancer Risk Calculator provides generalised recommendations on how you can reduce your cancer risk based on your answers to a range of health-related questions. This information should not be used as a substitute for advice from a qualified medical professional who can advise you about your own individual medical needs.<br><br>See our <a href='#' target='_blank'>disclaimer</a>.</em>`
+        },
+        {
             question: false,
             display: () => true,
-            text: `<em>The results of this quiz provide generalised recommendations on how you can reduce your cancer risk based on the answers you provide.<br><br> These should not be used as a substitute for advice from a qualified medical professional who can advise you about your own individual medical needs.<br><br>See our <a href='#' target='_blank'>disclaimer</a>.</em>`
+            text: "Okay, let's begin!"
         },
         {
             id: 'age',
@@ -455,13 +471,13 @@ export default {
                 },
                 {
                     label: "1 - 2",
-                    score: 33,
+                    score: 33.3,
                     userResponse: "I eat 1 -2 serves of vegetables in a typical day.",
                     recommendation: "Good start! But you should try to eat at least 5 serves of vegetables every day."
                 },
                 {
                     label: "3 - 4",
-                    score: 66,
+                    score: 66.6,
                     userResponse: "I eat 3 - 4 serves of vegetables in a typical day.",
                     recommendation: "Good start! But you should try to eat at least 5 serves of vegetables every day."
                 },
@@ -705,13 +721,13 @@ export default {
                 },
                 {
                     label: "1 - 2",
-                    score: 33,
+                    score: 33.3,
                     userResponse: "I am physically active for 30 minutes or more for 1 - 2 days in a typical week.",
                     recommendation: "You're on the right track! To reduce your cancer risk, aim for 1 hour of moderate intensity or 30 minutes of vigorous intensity physical activity every day."
                 },
                 {
                     label: "3 - 4",
-                    score: 66,
+                    score: 66.6,
                     userResponse: "I am physically active for 30 minutes or more for 3 - 4 days in a typical week.",
                     recommendation: "You're on the right track! To reduce your cancer risk, aim for 1 hour of moderate intensity or 30 minutes of vigorous intensity physical activity every day."
                 },

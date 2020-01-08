@@ -10,7 +10,7 @@
 			<div class="ready" v-if="ready">
 				<div class="ask" v-html="question.text"></div>
 
-				<div class="responses">
+				<div class="responses" :class="{ 'hide' : selected && ['weight', 'disclaimer'].includes(question.category) }">
 					<div
 						v-for="(option, index) in question.options"
 						@click="selectOption(option)"
@@ -39,6 +39,7 @@ let debug = url.match(/debug/g);
 const timer = debug ? 1 : 1200;
 
 export default {
+<<<<<<< HEAD
 	name: 'Question',
 	props: ['question'],
 	methods: {
@@ -79,6 +80,49 @@ export default {
 		}, timer);
 	}
 };
+=======
+  name: 'Question',
+  props: [
+      'question'
+  ],
+  methods: {
+      getGuid() {
+            if (this.question.id) {
+                return this.question.id
+            }
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            })
+        },
+        selectOption(option) {
+            this.question.score = option.score
+
+            if (!this.selected) {
+                this.selected = true;
+                this.$emit('addstep')
+            }
+        }
+  },
+  data() {
+      return {
+          id: this.getGuid(),
+          ready: false,
+          selected: false
+      }
+  },
+  mounted() {
+        let vm = this;
+
+        vm.$emit('loading')
+
+        setTimeout(() => {
+            vm.ready = true;
+            setTimeout(() => vm.$emit('ready'), 100)
+        }, timer)
+  }
+}
+>>>>>>> cancer-risk-quiz
 </script>
 
 <style lang="scss">
@@ -119,6 +163,7 @@ $yellow: #fcd208;
 $dark-blue: #2c3e50;
 
 .question {
+<<<<<<< HEAD
 	max-height: 20px;
 	max-width: 30px;
 	transition: 0.3s ease;
@@ -225,6 +270,119 @@ $dark-blue: #2c3e50;
 			}
 		}
 	}
+=======
+
+    max-height: 20px;
+    max-width: 30px;
+    transition: 0.3s ease;
+
+    &.expanded {
+        max-height:500px;
+        max-width: 500px;
+    }
+
+    .ready {
+        padding: 10px 15px 0 5px;
+        
+
+        .ask {
+            margin-bottom: 10px;
+            
+        }
+    }
+
+    .dots {
+        display:flex;
+        height: 20px;
+        width:30px;
+        font-size:6px;
+        justify-content:center;
+        align-items:center;
+        color:#555;
+
+        .dot {
+            animation-name:dot;
+            animation-duration:0.9s;
+            animation-iteration-count: infinite;
+            margin: 1px;
+
+            &:nth-child(2) {
+                animation-delay:0.3s;
+            }
+
+            &:nth-child(3) {
+                animation-delay:0.6s;
+            }
+        }
+    }
+
+    .responses {
+        display:flex;
+        flex-wrap: wrap;
+        flex-direction:row;
+        max-height: 500px;
+        opacity: 1;
+        height:auto;
+        transition:  0.2s ease;
+
+        &.hide {
+            height: 0;
+            opacity: 0;
+
+            & > div {
+                height:0;
+                opacity:0;
+            }
+        }
+        
+        & > div {
+            margin: 0 10px 10px 0;
+            // flex-basis: 80px;
+            flex-grow: 1;
+            border-radius: 4px;
+            background:#eee;
+            padding: 5px 10px;
+            text-align:center;
+            transition: 0.3s;
+            -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.09), 0 3px 3px rgba(0, 0, 0, 0.12);
+            -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.09), 0 2px 2px rgba(0, 0, 0, 0.12);
+            -ms-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.09), 0 2px 2px rgba(0, 0, 0, 0.12);
+            -o-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.09), 0 2px 2px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.09), 0 2px 2px rgba(0, 0, 0, 0.12);
+            &:hover {
+                background: $blue;
+                color:#fff;
+            }
+
+            label {
+                padding-top: 2px;
+                display:flex;
+                height: 100%;
+                width: 100%;
+                justify-content:center;
+                align-items:center;
+                cursor:pointer;
+                max-width: 350px;
+            }
+
+
+            input {
+                display:none;
+            }
+
+            label,input {
+                min-height: 25px;
+                max-height: 90px;
+                height:auto!important;
+            }
+
+            &.selected {
+                background:$dark-blue;
+                color:#fff;
+            }
+        }
+    }
+>>>>>>> cancer-risk-quiz
 }
 
 @keyframes dot {
