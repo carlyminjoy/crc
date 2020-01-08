@@ -16,14 +16,10 @@
 				</span>
 
 				<span class="category-icons">
-					<span v-if="category.bad.length === 0"
-						><i class="fa fa-check-circle"></i
-					></span>
+					<span v-if="category.bad.length === 0"><i class="fa fa-check-circle"></i></span>
 
 					<template v-if="category.bad.length > 0">
-						<span class="numbered-exclamation"
-							>{{ category.bad.length }} &nbsp;</span
-						>
+						<span class="numbered-exclamation">{{ category.bad.length }} &nbsp;</span>
 						<i class="fa fa-exclamation-circle"></i>
 					</template>
 				</span>
@@ -35,62 +31,32 @@
 			</span>
 		</div>
 
-		<div
-			class="blue"
-			:class="{ contracted: !expanded }"
-			v-if="category.good.length > 0"
-		>
+		<div class="blue" :class="{ contracted: !expanded }" v-if="category.good.length > 0">
 			<h2>You're doing great in the following areas:</h2>
 
 			<ul>
-				<feedback
-					v-for="(section, i) in category.good"
-					:section="section"
-					:good="true"
-					:key="i"
-				></feedback>
+				<feedback v-for="(section, i) in category.good" :section="section" :good="true" :key="i"></feedback>
 			</ul>
 		</div>
 
-		<div
-			class="grey"
-			:class="{ contracted: !expanded }"
-			v-if="category.bad.length > 0"
-		>
+		<div class="grey" :class="{ contracted: !expanded }" v-if="category.bad.length > 0">
 			<h2>Areas for improvement:</h2>
 			<ul class="improvements">
-				<feedback
-					v-for="(section, i) in category.bad"
-					:section="section"
-					:good="false"
-					:key="i"
-				></feedback>
+				<feedback v-for="(section, i) in category.bad" :section="section" :good="false" :key="i"></feedback>
 			</ul>
 
 			<template v-if="category.tips && category.tips.length > 0">
 				<h2 class="m0">Tips:</h2>
 				<ul class="tips">
-					<li
-						v-for="(tip, index) in category.tips"
-						:key="index"
-						v-html="tip"
-					></li>
+					<li v-for="(tip, index) in category.tips" :key="index" v-html="tip"></li>
 				</ul>
 			</template>
 		</div>
 
-		<div
-			v-if="filteredResources.length > 0"
-			class="resources-container"
-			:class="{ contracted: !expanded }"
-		>
+		<div v-if="filteredResources.length > 0" class="resources-container" :class="{ contracted: !expanded }">
 			<h2>Resources and links:</h2>
 			<ul class="resources">
-				<resource
-					v-for="(resource, index) in filteredResources"
-					:key="index"
-					:resource="resource"
-				></resource>
+				<resource v-for="(resource, index) in filteredResources" :key="index" :resource="resource"></resource>
 			</ul>
 		</div>
 	</div>
@@ -121,9 +87,7 @@ export default {
 	computed: {
 		filteredResources() {
 			let vm = this;
-			return vm.resources[vm.category.name].filter(r =>
-				vm.showResource(r)
-			);
+			return vm.resources[vm.category.name].filter(r => vm.showResource(r));
 		}
 	},
 	methods: {
@@ -136,13 +100,7 @@ export default {
 			if (tipQuestions) {
 				Object.keys(tipQuestions).forEach(q => {
 					let badCategoryObj = vm.category.bad.find(o => o.id === q);
-					if (
-						badCategoryObj &&
-						!(
-							badCategoryObj.bmi &&
-							parseInt(badCategoryObj.bmi) < 20
-						)
-					) {
+					if (badCategoryObj && !(badCategoryObj.bmi && parseInt(badCategoryObj.bmi) < 20)) {
 						tipQuestions[q].forEach(t => tips.push(t));
 					}
 				});
@@ -154,13 +112,9 @@ export default {
 			let vm = this;
 			let category = vm.category;
 
-			let matchingQuestionId = category.bad
-				.map(q => q.id)
-				.includes(resource.questionId);
+			let matchingQuestionId = category.bad.map(q => q.id).includes(resource.questionId);
 			let matchingGender = vm.gender === resource.gender;
-			let conditionalDisplay =
-				resource.hasOwnProperty('questionId') ||
-				resource.hasOwnProperty('gender');
+			let conditionalDisplay = resource.hasOwnProperty('questionId') || resource.hasOwnProperty('gender');
 
 			return !conditionalDisplay || matchingQuestionId || matchingGender;
 		}
