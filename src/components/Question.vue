@@ -10,7 +10,10 @@
 			<div class="ready" v-if="ready">
 				<div class="ask" v-html="question.text"></div>
 
-				<div class="responses" :class="{ 'hide' : selected && ['weight', 'disclaimer'].includes(question.category) }">
+				<div
+					class="responses"
+					:class="{ hide: selected && ['weight', 'disclaimer'].includes(question.category) }"
+				>
 					<div
 						v-for="(option, index) in question.options"
 						@click="selectOption(option)"
@@ -39,7 +42,6 @@ let debug = url.match(/debug/g);
 const timer = debug ? 1 : 1200;
 
 export default {
-<<<<<<< HEAD
 	name: 'Question',
 	props: ['question'],
 	methods: {
@@ -80,49 +82,6 @@ export default {
 		}, timer);
 	}
 };
-=======
-  name: 'Question',
-  props: [
-      'question'
-  ],
-  methods: {
-      getGuid() {
-            if (this.question.id) {
-                return this.question.id
-            }
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            })
-        },
-        selectOption(option) {
-            this.question.score = option.score
-
-            if (!this.selected) {
-                this.selected = true;
-                this.$emit('addstep')
-            }
-        }
-  },
-  data() {
-      return {
-          id: this.getGuid(),
-          ready: false,
-          selected: false
-      }
-  },
-  mounted() {
-        let vm = this;
-
-        vm.$emit('loading')
-
-        setTimeout(() => {
-            vm.ready = true;
-            setTimeout(() => vm.$emit('ready'), 100)
-        }, timer)
-  }
-}
->>>>>>> cancer-risk-quiz
 </script>
 
 <style lang="scss">
@@ -283,11 +242,11 @@ $dark-blue: #2c3e50;
 
     .ready {
         padding: 10px 15px 0 5px;
-        
+
 
         .ask {
             margin-bottom: 10px;
-            
+
         }
     }
 
@@ -334,7 +293,7 @@ $dark-blue: #2c3e50;
                 opacity:0;
             }
         }
-        
+
         & > div {
             margin: 0 10px 10px 0;
             // flex-basis: 80px;
