@@ -102,7 +102,7 @@
 
             <button v-if='previousScorecard' class='history-btn' @click='viewHistory()'>VIEW YOUR HISTORY</button>
 
-            <p class='info-text'>
+            <p v-if='previousScorecard' class='info-text'>
                 Look for the arrows to see if your score has increased 
                 <i class='fa fa-caret-up'></i> or decreased <i class='fa fa-caret-down'></i> since your last attempt.
             </p>
