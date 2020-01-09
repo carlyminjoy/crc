@@ -78,9 +78,3 @@ An array of response objects that render to the screen as radio options.
 The first endpoint is hit when a user completes the form with their details, sending over their detailed answers, scores and recommendations to Cosmos DB through the `form-submit` proxy. The scorecard application grabs all Cosmos entries for each email for display and comparison.
 
 The second endpoint is hit everytime a user completes the questionnaire, regardless of whether they enter their details or not. Their details are anonymously sent to table storage `ccqformstorage` > `cancerriskquiz` for analysis in BI.
-
-## Scorecard
-
-### Overview
-
-The scorecard application uses the `user` url parameter to grab all Cosmos entries for that email on load. It then displays the user's total and category scores, recommendations, and relevant resources for their latest answers.
