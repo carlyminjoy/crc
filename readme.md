@@ -75,6 +75,6 @@ An array of response objects that render to the screen as radio options.
 -   `/formsubmit`
 -   `https://prod-16.australiaeast.logic.azure.com/workflows/472070d88d9f4f4899e2c2ad200967d0/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=caau2HrVCDbyNa256L0-a38ko8Q3r-rMJnkaPWxTOng` (all submissions)
 
-The first endpoint is hit when a user completes the form with their details, sending over their detailed answers, scores and recommendations to Cosmos DB through the `form-submit` proxy. The scorecard application grabs all Cosmos entries for each email for display and comparison.
+The first endpoint is hit when a user completes the form with their details, sending over their detailed answers, scores and recommendations to Cosmos DB through the `form-submit` proxy. Once their Cosmos entry is in the event grid, the Logic App `process-cancerriskquiz-la` is triggered, adding the Cosmos ID to table storage tied to their hashed email so future submissions can be tied back to the same user.
 
-The second endpoint is hit everytime a user completes the questionnaire, regardless of whether they enter their details or not. Their details are anonymously sent to table storage `ccqformstorage` > `cancerriskquiz` for analysis in BI.
+The second endpoint is hit everytime a user completes the questionnaire, regardless of whether they enter their details or not. Their details are anonymously sent to table storage `ccqformstorage` > `cancerriskquiz` for analysis in BI. This endpoint goes through the Logic App `process-allquizresults-la`.
